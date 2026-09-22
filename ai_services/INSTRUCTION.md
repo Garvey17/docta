@@ -1,111 +1,133 @@
-# Sub-Team 1 Directive: Computer Vision & Multimodal AI Engine
+# ML Engineer Guide: Model Training, Standalone Stubs & App Integration
 
-## 1. Directory Boundary & Autonomous Scope
-> [!IMPORTANT]
-> **Strict Directory Boundary**: As the Sub-Team 1 Autonomous Agent, you must operate exclusively within `/subteam-1-cv-multimodal/`. You are prohibited from modifying files in other subteam directories. All outputs must conform to the canonical interfaces defined in `/PROJECT_ORCHESTRATION.md`.
+## 1. Role & Purpose
+> [!NOTE]
+> **Audience**: This document is an **operational guide for the Machine Learning Engineer**. 
+> All computer vision model training (dataset curation, bounding box labeling, hyperparameter tuning, and evaluation) is conducted **manually by the ML Team**. Coding agents should NOT attempt automated training pipelines.
+> 
+> This guide details:
+> 1. The target specifications for manual model training.
+> 2. How to provide dummy/stub predictions so the Backend and Frontend teams can develop without blocking on ML training.
+> 3. Step-by-step instructions on **how to connect your trained model to the live docta backend** upon training completion.
 
 ---
 
 ## 2. Directory Structure Tree
 
 ```
-subteam-1-cv-multimodal/
+ai_services/
 ├── data/
-│   ├── raw/                           # Raw collected image dataset (10 classes)
-│   ├── processed/                     # 640x640 preprocessed & augmented images
+│   ├── raw/                           # Raw collected image dataset (10 Nigerian classes)
+│   ├── processed/                     # 640x640 processed images and YOLO label TXTs
 │   │   ├── train/
 │   │   ├── val/
 │   │   └── test/
 │   └── dataset.yaml                   # YOLO dataset configuration
 ├── models/
 │   ├── weights/
-│   │   └── best.pt                    # Trained YOLOv8/v11 model weights
+│   │   └── best.pt                    # [ML Hand-off] Trained YOLOv8/v11 PyTorch weights
 │   ├── portion_density.json           # Food item density and reference volume registry
-│   └── yolo_config.yaml               # Hyperparameters for training
+│   └── yolo_config.yaml               # Hyperparameters used for manual training
 ├── src/
 │   ├── __init__.py
-│   ├── dataset_preprocessor.py        # Albumentations pipeline & letterboxing
-│   ├── train_yolo.py                  # Ultralytics training script
+│   ├── stub_predictor.py              # Dummy predictor for independent backend development
 │   ├── volumetric_estimator.py        # Area-to-volume pixel-to-gram conversion
 │   ├── multimodal_fusion.py           # Google GenAI (Gemini Flash) reasoning engine
-│   ├── pipeline.py                    # Unified inference pipeline entrypoint
+│   ├── pipeline.py                    # Master inference entrypoint connecting to Backend
+│   ├── test_connection.py             # Validation script to verify model connection
 │   └── schemas.py                     # Pydantic v2 data models
-├── tests/
-│   ├── __init__.py
-│   ├── test_preprocessor.py
-│   ├── test_volumetric.py
-│   ├── test_multimodal_fusion.py
-│   └── test_pipeline.py
-├── scripts/
-│   ├── download_samples.py            # Fixture downloader for sample images
-│   └── evaluate_metrics.py            # Precision, Recall, mAP50 evaluation
 ├── requirements.txt
-└── README.md
+└── INSTRUCTION.md
 ```
 
 ---
 
-## 3. Detailed Functional Requirements
+## 3. Dummy / Stub Mode for Independent Development
 
-### 3.1. Target Food Classes
-The vision model detects 10 localized Nigerian culinary classes:
-1. `jollof_rice` (Nigerian Jollof Rice)
-2. `egusi_soup` (Egusi Melon Seed Soup)
-3. `amala` (Yam Flour Paste)
-4. `suya` (Spiced Skewered Beef)
-5. `pounded_yam` (Iyan / Pounded Yam)
-6. `eba` (Cassava Garri Swalllow)
-7. `fried_plantain` (Dodo)
-8. `goat_meat` (Asun / Stewed Goat Meat)
-9. `fried_fish` (Fried Tilapia / Mackerel)
-10. `moi_moi` (Steamed Bean Cake)
+To allow the **Backend Team (`backend/`)** and **Frontend Team (`frontend/`)** to build authentication, database logging, canvas bounding box overlays, and UI sliders immediately, `ai_services/` provides a **Stub Predictor** (`src/stub_predictor.py`).
+
+### 3.1. How the Stub Predictor Works
+When live model weights are not yet generated or when `USE_STUB_PREDICTOR=true` is set:
+* `src/stub_predictor.py` immediately returns deterministic dummy detection payloads containing realistic bounding boxes, class names (`jollof_rice`, `fried_plantain`), and gram weights.
+* If a text prompt is passed (e.g., *"3 pieces of dodo"*), the stub applies simulated override logic so downstream teams can verify text parsing.
+
+### 3.2. Stub Implementation Pattern (`src/stub_predictor.py`)
+```python
+import time
+from typing import Optional, Dict, Any
+from .schemas import MultimodalVisionOutput, DetectedItem
+
+class StubPredictor:
+    """Returns deterministic dummy predictions for unblocked backend/frontend testing."""
+    
+    @staticmethod
+    def predict(image_bytes: bytes, text_prompt: Optional[str] = None) -> MultimodalVisionOutput:
+        start_time = time.time()
+        
+        # Simulated dummy items matching canonical contracts
+        items = [
+            DetectedItem(
+                dish_id="jollof_rice",
+                display_name="Nigerian Jollof Rice",
+                confidence=0.94,
+                bounding_box=[0.125, 0.240, 0.550, 0.780],
+                estimated_volume_cm3=320.0,
+                density_g_cm3=0.85,
+                estimated_weight_g=272.0,
+                text_override_applied=False,
+                reasoning="Visual area estimation based on reference plate ratio."
+            ),
+            DetectedItem(
+                dish_id="fried_plantain",
+                display_name="Fried Plantain (Dodo)",
+                confidence=0.89,
+                bounding_box=[0.580, 0.310, 0.890, 0.650],
+                estimated_volume_cm3=140.0,
+                density_g_cm3=0.78,
+                estimated_weight_g=150.0 if text_prompt and "dodo" in text_prompt.lower() else 109.2,
+                text_override_applied=bool(text_prompt and "dodo" in text_prompt.lower()),
+                reasoning="Text prompt specified portion override." if text_prompt and "dodo" in text_prompt.lower() else "Visual area heuristic."
+            )
+        ]
+        
+        duration_ms = (time.time() - start_time) * 1000 + 45.0  # Simulated inference latency
+        return MultimodalVisionOutput(
+            detected_items=items,
+            raw_prompt=text_prompt,
+            processing_time_ms=round(duration_ms, 2)
+        )
+```
 
 ---
 
-### 3.2. Preprocessing & Albumentations Augmentation
-All training and inference images must undergo consistent preprocessing:
-* Resizing with aspect-ratio preserving letterboxing to $640 \times 640 \times 3$.
-* Albumentations Pipeline:
-  * Random Rotation: $\pm 15^\circ$ ($p = 0.5$).
-  * Horizontal Flip: $p = 0.5$.
-  * Color Jitter (Brightness $\pm 20\%$, Contrast $\pm 20\%$, Saturation $\pm 15\%$).
-  * Gaussian Blur: kernel size $(3, 3)$ ($p = 0.2$).
-* Split distribution: 70% Train, 20% Validation, 10% Test.
+## 4. Manual Model Training Specifications (ML Team)
+
+### 4.1. 10 Target Nigerian Food Classes
+Train the model on the following classes:
+`jollof_rice`, `egusi_soup`, `amala`, `suya`, `pounded_yam`, `eba`, `fried_plantain`, `goat_meat`, `fried_fish`, `moi_moi`.
+
+### 4.2. Training Targets
+* **Architecture**: Ultralytics YOLOv8m or YOLOv11m.
+* **Resolution**: $640 \times 640$.
+* **Performance Goal**: $\text{mAP50} \ge 0.85$ across all 10 classes.
+* **Volumetric Conversion Formula**:
+  $$V_{\text{item}} (\text{cm}^3) = \left( \frac{A_{\text{box}}}{A_{\text{plate}}} \right) \times V_{\text{reference}} \times \text{depth\_factor}$$
+  $$W_{\text{gram}} = V_{\text{item}} \times \text{density}$$
 
 ---
 
-### 3.3. YOLO Model Training
-* Architecture: Ultralytics YOLOv8m or YOLOv11m.
-* Training constraints:
-  * Image size: $640$
-  * Batch size: $16$ (or $32$ depending on GPU memory)
-  * Epochs: $\ge 100$ with early stopping (patience = 15)
-  * Optimizer: `AdamW`, learning rate $\text{lr0} = 0.001$, cosine LR scheduler.
-* Metric Target: $\text{mAP50} \ge 0.85$ across all 10 classes.
-* Output Artifact: Save optimal model weights to `models/weights/best.pt`.
+## 5. How to Connect the Trained Model to the docta App
 
----
+Follow these exact steps once manual model training is complete:
 
-### 3.4. Volumetric Pixel-to-Gram Estimator
-Calculate volumetric mass through plate-relative surface area estimation:
+### Step 1: Copy Model Weights
+Copy the best model weights checkpoint into the weights directory:
+```bash
+cp /path/to/your/trained/runs/detect/train/weights/best.pt ai_services/models/weights/best.pt
+```
 
-1. **Normalized Box Area Calculation**:
-   $$A_{\text{box}} = (x_{\max} - x_{\min}) \times (y_{\max} - y_{\min}) \times (640 \times 640)$$
-
-2. **Reference Plate Area Ratio**:
-   Assume standard circular or square dinner plate diameter occupies $A_{\text{plate}} = 600 \times 600 = 360,000\text{ px}^2$.
-   $$\text{Area Ratio } R = \frac{A_{\text{box}}}{A_{\text{plate}}}$$
-
-3. **Volumetric Estimation**:
-   Given reference serving volume $V_{\text{reference}}$ (standardized to $450\text{ cm}^3$ for a full plate mound):
-   $$V_{\text{item}} (\text{cm}^3) = R \times V_{\text{reference}} \times \text{depth\_factor}$$
-   *(where $\text{depth\_factor}$ is $1.0$ for mounded swallow/rice, $0.6$ for flat meats/plantains, $0.8$ for soups).*
-
-4. **Gram Weight Calculation**:
-   Using localized food density $\rho$ loaded from `models/portion_density.json`:
-   $$W_{\text{estimated}} (\text{g}) = V_{\text{item}} \times \rho$$
-
-#### Food Density Registry (`models/portion_density.json`)
+### Step 2: Calibrate Food Density Values
+Ensure `ai_services/models/portion_density.json` contains accurate densities and depth factors:
 ```json
 {
   "jollof_rice": { "density_g_cm3": 0.85, "depth_factor": 1.0, "ref_serving_g": 250.0 },
@@ -121,76 +143,62 @@ Calculate volumetric mass through plate-relative surface area estimation:
 }
 ```
 
----
-
-### 3.5. Multimodal Vision-Text Fusion via Gemini Flash
-Integrate `google-genai` SDK using Gemini Flash (`gemini-2.5-flash` or `gemini-1.5-flash`).
-
-#### Multimodal Reasoning Protocol:
-1. **Inputs**:
-   * Raw user image (Base64 / bytes).
-   * YOLO detected bounding boxes with preliminary labels and visual weights.
-   * Optional user text prompt (e.g., *"2 big wraps of amala with half bowl egusi and 3 pieces of goat meat"*).
-2. **Override Logic**:
-   * If the user explicitly mentions piece counts, portion fractions, or specific weight (e.g., *"3 pieces of goat meat"*, *"half wrap"*), the text prompt **strictly overrides** the visual area estimate.
-   * If no text prompt is provided or if the prompt is generic (e.g., *"my lunch"*), use the CV volumetric calculated gram weight.
-   * Flag each item with `text_override_applied: boolean`.
-3. **Structured Response Constraint**: Enforce JSON output format using Gemini Structured Outputs.
-
----
-
-## 4. Input & Output Contracts
-
-### 4.1. Python Calling Interface (`Pipeline.analyze`)
+### Step 3: Implement the Inference Pipeline (`src/pipeline.py`)
+Ensure `ai_services/src/pipeline.py` exposes the standard entrypoint used by the backend orchestrator:
 ```python
-from pydantic import BaseModel
-from typing import List, Optional
+import os
+from typing import Optional
+from ultralytics import YOLO
+from .schemas import MultimodalVisionOutput
+from .volumetric_estimator import VolumetricEstimator
+from .multimodal_fusion import GeminiMultimodalFusion
+from .stub_predictor import StubPredictor
 
-class DetectedItem(BaseModel):
-    dish_id: str
-    display_name: str
-    confidence: float
-    bounding_box: List[float]  # [x_min, y_min, x_max, y_max] normalized (0.0 - 1.0)
-    estimated_volume_cm3: float
-    density_g_cm3: float
-    estimated_weight_g: float
-    text_override_applied: bool
-    reasoning: str
+class FoodInferencePipeline:
+    def __init__(self, weights_path: str = "models/weights/best.pt"):
+        self.use_stub = os.getenv("USE_STUB_PREDICTOR", "false").lower() == "true"
+        if not self.use_stub and os.path.exists(weights_path):
+            self.model = YOLO(weights_path)
+            self.volumetric = VolumetricEstimator("models/portion_density.json")
+            self.fusion = GeminiMultimodalFusion(api_key=os.getenv("GEMINI_API_KEY"))
+        else:
+            self.model = None
 
-class MultimodalVisionOutput(BaseModel):
-    detected_items: List[DetectedItem]
-    raw_prompt: Optional[str] = None
-    processing_time_ms: float
+    def analyze(self, image_bytes: bytes, text_prompt: Optional[str] = None) -> MultimodalVisionOutput:
+        # Fallback to stub if model is missing or stub flag enabled
+        if self.use_stub or self.model is None:
+            return StubPredictor.predict(image_bytes, text_prompt)
+        
+        # 1. YOLO Object Detection
+        # 2. Volumetric Weight Calculation
+        # 3. Gemini Multimodal Fusion with text prompt overrides
+        # Returns MultimodalVisionOutput
 ```
 
----
-
-## 5. Testing & Validation Commands
-
+### Step 4: Verify Model Connection Standalone
+Run the connection verification script to confirm weights, volumetric estimation, and Gemini API integration:
 ```bash
-# 1. Install Sub-team 1 dependencies
-pip install -r requirements.txt
+# Set Gemini API key
+export GEMINI_API_KEY="your_api_key_here"
 
-# 2. Run data preprocessor & verify 640x640 output
-python src/dataset_preprocessor.py --input data/raw --output data/processed
-
-# 3. Train YOLO model
-python src/train_yolo.py --epochs 100 --batch 16 --data data/dataset.yaml
-
-# 4. Evaluate mAP50 performance
-python scripts/evaluate_metrics.py --weights models/weights/best.pt --data data/dataset.yaml
-
-# 5. Run full unit and integration test suite
-pytest tests/ -v --cov=src --cov-report=term-missing
+# Run integration test
+python src/test_connection.py --image data/sample_meal.jpg --prompt "2 wraps of amala"
 ```
+
+### Step 5: Notify Backend Team & Enable Live Mode
+Inform the Backend Team that live weights are deployed. In `backend/.env`, set:
+```env
+USE_MOCK_AI=false
+AI_MODEL_WEIGHTS_PATH="../ai_services/models/weights/best.pt"
+```
+The FastAPI backend orchestrator will automatically route live requests through your trained model.
 
 ---
 
-## 6. Definition of Done (DoD) Checklist
+## 6. Verification Checklist for ML Engineer
 
-- [ ] `data/processed/` generates valid $640 \times 640$ images and YOLO format labels.
-- [ ] `train_yolo.py` successfully executes and saves weights to `models/weights/best.pt`.
-- [ ] Model achieves $\text{mAP50} \ge 0.85$ across all 10 Nigerian food classes.
-- [ ] `volumetric_estimator.py` converts bounding box coordinates and density into gram weights matching test benchmarks within $\pm 10\%$.
-- [ ] `multimodal_fusion.py` connects to Gemini Flash and correctly parses user text overrides into structured JSON.
-- [ ] `pytest tests/` runs with 100% pass rate and $\ge 85\%$ test coverage.
+- [ ] `models/weights/best.pt` exists and is loadable by `ultralytics.YOLO`.
+- [ ] `models/portion_density.json` has entries for all 10 classes.
+- [ ] `src/stub_predictor.py` runs and returns valid data when weights are absent.
+- [ ] `python src/test_connection.py` successfully returns normalized bounding boxes and gram weights.
+- [ ] Gemini Flash fusion parses text prompt overrides correctly.

@@ -2,79 +2,122 @@
 
 ## 1. Executive Summary & System Vision
 **docta** is an edge-optimized, multimodal, and localized nutrition intelligence platform engineered specifically for African and Nigerian dietary compositions. It bridges the critical accuracy gap in mainstream global diet-tracking applications by integrating:
-1. Custom-trained Computer Vision (YOLOv8/v11) specialized on complex, mixed, and stew-heavy West African dishes.
+1. Custom-trained Computer Vision (YOLOv8/v11) specialized on complex, mixed, and stew-heavy West African dishes (managed by the ML Team in `ai_services/`).
 2. Geometric volumetric portion estimation coupled with localized food density tables.
 3. Multimodal Large Language Model (Gemini Flash) vision-text reasoning for conversational disambiguation and portion overrides.
-4. High-performance Retrieval-Augmented Generation (RAG) powered by Qdrant Vector Search over the FAO/INFOODS West African Food Composition Table (WAFCT 2019).
-5. Asynchronous, high-throughput microservices architecture delivering end-to-end meal analysis in under 2.0 seconds.
+4. High-performance Retrieval-Augmented Generation (RAG) powered by Qdrant Vector Search over the FAO/INFOODS West African Food Composition Table (WAFCT 2019) (managed in `data_pipeline/`).
+5. Asynchronous, high-throughput microservices architecture delivering end-to-end meal analysis in under 2.0 seconds (managed in `backend/`).
+6. Mobile-first Progressive Web App (PWA) with WebRTC camera capture and interactive bounding box canvas (managed in `frontend/`).
 
 ---
 
-## 2. End-to-End System Architecture
+## 2. Directory Structure & Team Ownership
+
+```
+docta/
+├── ai_services/                       # [ML Team] Manual YOLO Training, Volumetric & Gemini Multimodal Fusion
+│   └── INSTRUCTION.md                 # ML Engineer Integration & Model Connection Guide
+├── data_pipeline/                     # [Data/RAG Team] FAO WAFCT 2019 Ingestion, Qdrant Vector Search & Scaling
+│   └── INSTRUCTION.md                 # Data Team & Autonomous Agent Instructions
+├── backend/                           # [Backend Team] FastAPI Gateway, PostgreSQL, JWT Auth, Orchestrator
+│   └── INSTRUCTION.md                 # Backend Team & Autonomous Agent Instructions
+├── frontend/                          # [Frontend Team] Next.js 14 PWA, WebRTC Camera, Canvas Overlay, Dashboard
+│   └── INSTRUCTION.md                 # Frontend Team & Autonomous Agent Instructions
+├── PROJECT_ORCHESTRATION.md           # Master System Blueprint, Mock Strategy & API Contracts
+└── README.md
+```
+
+---
+
+## 3. End-to-End System Architecture & Dataflow
 
 ```mermaid
 flowchart TD
-    subgraph Client Layer [Sub-team 4: Frontend PWA]
+    subgraph Client Layer [Frontend Team: frontend/]
         User([User / Client Device]) -->|1. Capture Image & Text| CameraUI[Camera & Text Input Feed]
         CameraUI -->|2. Multipart POST| API_Gateway[FastAPI Gateway /api/v1/analyze]
         BBoxOverlay[Bounding Box Canvas Overlay] <---|8. Render Boxes & Macros| API_Gateway
         PortionSlider[Interactive Portion Adjuster] -->|9. Approve Log /api/v1/meals/log| API_Gateway
     end
 
-    subgraph Service Layer [Sub-team 3: Backend & MLOps]
+    subgraph Service Layer [Backend Team: backend/]
         API_Gateway -->|3. Orchestrate Payload| Orchestrator[Analysis Orchestrator Service]
         Orchestrator -->|7. Persist Meal & Items| Postgres[(PostgreSQL / Supabase)]
     end
 
-    subgraph AI Inference Layer [Sub-team 1: CV & Multimodal AI]
-        Orchestrator -->|4a. Image Tensor (640x640)| YOLO[YOLOv8/v11 Object Detection]
+    subgraph AI Inference Layer [ML Team: ai_services/]
+        Orchestrator -->|4a. Image Tensor / File| YOLO[YOLOv8/v11 Object Detection]
         YOLO -->|BBoxes & Visual Classes| VolumetricEngine[Volumetric Pixel-to-Gram Estimator]
         VolumetricEngine -->|Visual Weights & Boxes| GeminiFusion[Gemini Flash Multimodal Fusion]
         Orchestrator -->|4b. Text Prompt + Image + Boxes| GeminiFusion
         GeminiFusion -->|5. Fused Dish Classes & Gram Weights| Orchestrator
     end
 
-    subgraph Knowledge Layer [Sub-team 2: Nutrition Data & RAG]
-        Orchestrator -->|6. Query Dish Names & Grams| RAGEngine[Qdrant Semantic RAG Engine]
-        RAGEngine -->|Vector Lookup: all-MiniLM-L6-v2| QdrantDB[(Qdrant Vector DB / WAFCT 2019)]
-        QdrantDB -->|Matched Per-100g Nutrition| ScalingEngine[Macronutrient Scaling Calculator]
+    subgraph Knowledge Layer [Data Team: data_pipeline/]
+        Orchestrator -->|6. Query Dish Names & Grams| RAGEngine[RIQ Lookup & Qdrant RAG Engine]
+        RAGEngine -->|Check 5-Dish RIQ Table| RIQLookup[(Recipe-Ingredient-Quantity Table)]
+        RAGEngine -->|Vector Lookup: all-MiniLM-L6-v2| QdrantDB[(Qdrant Vector DB / Composite WAFCT)]
+        RIQLookup -->|Weighted Composite Nutrition| ScalingEngine[Macronutrient Scaling Calculator]
+        QdrantDB -->|Matched Per-100g Nutrition| ScalingEngine
         ScalingEngine -->|Scaled Total & Itemized Nutrients| Orchestrator
     end
 ```
 
 ---
 
-## 3. System Dataflow & Latency SLA Breakdown
+## 4. Independent Development & Dummy Content Strategy
 
-The maximum permissible end-to-end latency budget for `/api/v1/analyze` is **$2000\text{ ms}$ ($2.0\text{ s}$)**.
+To ensure each team can develop and test independently without blocking each other, every module is equipped with **Dummy / Mock Fallback Modes**.
 
-| Sequence Stage | Source $\rightarrow$ Destination | Payload Description | SLA Target |
-| :--- | :--- | :--- | :--- |
-| **1. Ingestion** | Frontend $\rightarrow$ Backend | `multipart/form-data` (JPEG image $\le 5\text{MB}$, optional `text_prompt`) | $< 150\text{ ms}$ |
-| **2. CV Detection** | Backend $\rightarrow$ YOLO Inference | $640\times 640$ Preprocessed Tensor $\rightarrow$ Bounding boxes, class labels, visual confidence | $< 180\text{ ms}$ |
-| **3. Volume & Fusion** | YOLO + Text $\rightarrow$ Gemini Flash | BBoxes + Area-to-Volume Heuristic + User prompt $\rightarrow$ LLM Structured Output | $< 800\text{ ms}$ |
-| **4. Vector Retrieval** | Fusion $\rightarrow$ Qdrant RAG | Embedding search (`all-MiniLM-L6-v2`) over FAO WAFCT collections | $< 120\text{ ms}$ |
-| **5. Macro Scaling** | RAG $\rightarrow$ Scaling Engine | Arithmetic multiplication: $\text{Nutrient} = (\text{WAFCT}_{100g} / 100) \times \text{Weight}$ | $< 20\text{ ms}$ |
-| **6. Persistence** | Backend $\rightarrow$ PostgreSQL | Insert records into `meals` and `meal_items` tables | $< 80\text{ ms}$ |
-| **7. Serialization** | Backend $\rightarrow$ Frontend | Return `AnalyzeMealResponse` JSON to Client UI | $< 50\text{ ms}$ |
-| **Total Target** | **End-to-End Budget** | **User Capture $\rightarrow$ Interactive Review Screen** | **$< 1400\text{ ms}$** (Buffer: $600\text{ ms}$) |
+```mermaid
+flowchart LR
+    Frontend[frontend/ Dev Server] -.->|NEXT_PUBLIC_USE_MOCK=true| MockFE[Frontend Mock Store]
+    Frontend -->|Live Mode| Backend[backend/ FastAPI]
+    Backend -.->|USE_MOCK_AI=true| MockAI[Mock Vision & Multimodal Service]
+    Backend -.->|USE_MOCK_RAG=true| MockRAG[Mock WAFCT & Nutrition Service]
+    Backend -->|Live AI| AIService[ai_services/ Manual ML Model]
+    Backend -->|Live RAG| DataPipeline[data_pipeline/ Qdrant Index]
+```
+
+### 4.1. Mock Configuration by Module
+
+| Module | Mock Trigger Environment Flag | Fallback Behavior When Live Service Is Unavailable |
+| :--- | :--- | :--- |
+| **`frontend/`** | `NEXT_PUBLIC_USE_MOCK=true` | Returns hardcoded sample analysis with bounding boxes, simulated delay (800ms), and mock dashboard summary. Runs with zero backend dependency. |
+| **`backend/`** | `USE_MOCK_AI=true`<br>`USE_MOCK_RAG=true` | Injects deterministic mock AI responses (`jollof_rice`, `fried_plantain`) and mock RAG macro calculations. Database and Auth remain fully testable without GPU or Qdrant running. |
+| **`data_pipeline/`** | `USE_IN_MEMORY_FALLBACK=true` | Serves semantic searches and scaling queries directly from `data/fallback_defaults.json` and in-memory WAFCT seed data when Qdrant is offline. |
+| **`ai_services/`** | `USE_STUB_PREDICTOR=true` | Exposes a lightweight stub predictor that simulates YOLO bounding boxes and Gemini Flash fusion outputs while the ML engineer performs manual dataset training. |
 
 ---
 
-## 4. Canonical Shared API Contracts & Data Types
+## 5. ML Engineer Hand-off & Model Connection Guide
 
-All sub-teams must strictly align with these unified JSON schemas and data types.
+> [!NOTE]
+> All AI model training (dataset curation, labeling, hyperparameter tuning, YOLO training) is performed **manually by the ML Team**. Coding agents should NOT attempt automated model training.
 
-### 4.1. Coordinate System for Bounding Boxes
-All bounding box coordinates are normalized floats in the interval $[0.0, 1.0]$ structured as:
+### How to Connect the Manually Trained Model to the Application:
+1. **Export Trained Weights**: The ML engineer trains the model manually on GPU hardware and exports the final PyTorch weights to:
+   ```
+   ai_services/models/weights/best.pt
+   ```
+2. **Update Portion & Density Registry**: Populate `ai_services/models/portion_density.json` with empirical food density ($\text{g/cm}^3$) and depth factors.
+3. **Configure Gemini Flash API Key**: Set `GEMINI_API_KEY` in `.env` for multimodal vision-text reasoning.
+4. **Expose Inference Entrypoint**: Ensure `ai_services/src/pipeline.py` implements the standard `analyze_image(image_bytes, text_prompt=None)` method.
+5. **Switch Backend Flag**: In `backend/.env`, toggle `USE_MOCK_AI=false`. The backend orchestrator will automatically load and run the live inference pipeline.
+
+---
+
+## 6. Canonical Shared API Contracts & Data Types
+
+All sub-teams and mock generators must strictly align with these standardized schemas.
+
+### 6.1. Bounding Box Coordinates
+All bounding box coordinates are normalized floats in the range $[0.0, 1.0]$:
 $$\text{bbox} = [x_{\min}, y_{\min}, x_{\max}, y_{\max}]$$
-Where:
-* $x_{\min}, x_{\max}$: Horizontal offsets relative to image width ($0.0 = \text{leftmost}, 1.0 = \text{rightmost}$).
-* $y_{\min}, y_{\max}$: Vertical offsets relative to image height ($0.0 = \text{topmost}, 1.0 = \text{bottommost}$).
 
-### 4.2. Core JSON Data Schemas
+### 6.2. Master JSON Payload Schemas
 
-#### A. Intermediate CV Detection Payload (Sub-team 1 $\rightarrow$ Sub-team 3)
+#### A. Intermediate AI Detection Payload (`ai_services` $\rightarrow$ `backend`)
 ```json
 {
   "detected_items": [
@@ -106,7 +149,7 @@ Where:
 }
 ```
 
-#### B. Full Analyze Meal Response (Sub-team 3 API $\rightarrow$ Sub-team 4 Frontend)
+#### B. Full Analyze Meal Response (`backend` $\rightarrow$ `frontend`)
 `POST /api/v1/analyze`
 ```json
 {
@@ -171,7 +214,7 @@ Where:
 }
 ```
 
-#### C. Log Approved Meal Request (Sub-team 4 Frontend $\rightarrow$ Sub-team 3 API)
+#### C. Log Approved Meal Request (`frontend` $\rightarrow$ `backend`)
 `POST /api/v1/meals/log`
 ```json
 {
@@ -210,7 +253,7 @@ Where:
 }
 ```
 
-#### D. Dashboard Daily Summary (Sub-team 3 API $\rightarrow$ Sub-team 4 Frontend)
+#### D. Dashboard Daily Summary (`backend` $\rightarrow$ `frontend`)
 `GET /api/v1/dashboard/summary?date=2026-09-22`
 ```json
 {
@@ -254,21 +297,9 @@ Where:
 
 ---
 
-## 5. Directory Scope & Ownership Matrix
+## 7. Inter-Team Integration Rules & Best Practices
 
-| Directory Path | Sub-Team Identifier | Primary Responsibilities |
-| :--- | :--- | :--- |
-| `/subteam-1-cv-multimodal` | **CV & Multimodal AI** | YOLOv8/v11 training, Albumentations pipeline, volumetric heuristics, Gemini Flash multimodal vision-text fusion. |
-| `/subteam-2-data-rag` | **Nutrition Data & RAG** | FAO WAFCT 2019 data normalization, Qdrant vector indexing, hybrid semantic search, macro scaling engine. |
-| `/subteam-3-backend-mlops` | **Backend & MLOps** | FastAPI gateway, PostgreSQL schemas & SQLAlchemy ORM, authentication, service orchestration, Docker Compose. |
-| `/subteam-4-frontend-ux` | **Frontend & UX** | Next.js 14 App Router, WebRTC camera capture, Canvas bounding box overlay, interactive meal editor, dashboard. |
-
----
-
-## 6. Cross-Module Integration Rules & Contract Governance
-
-1. **Strict Directory Encapsulation**: Each subagent must strictly limit write operations to its assigned directory. Cross-module imports are prohibited unless interfacing via standard REST endpoints or published package libraries.
-2. **Mock-First Contract Verification**: Before downstream dependencies (e.g. Sub-team 1 model or Sub-team 2 Qdrant index) are completed, Sub-team 3 and Sub-team 4 must utilize mock data compliant with Section 4 schemas to ensure unblocked parallel development.
-3. **Pydantic Validation**: All inter-service communications must be validated via Pydantic v2 schemas at runtime. Any field missing or mismatching in typing will trigger a standardized `422 Unprocessable Entity` response.
-4. **Environment Configuration**: Secrets and endpoints are configured strictly via standard `.env` variables (e.g. `GEMINI_API_KEY`, `QDRANT_HOST`, `DATABASE_URL`, `NEXT_PUBLIC_API_URL`).
-5. **Continuous Quality Gates**: Each module contains independent test suites (`pytest`, `jest`) that must achieve $\ge 80\%$ unit test coverage before merging.
+1. **Strict Folder Boundaries**: Each team or agent must restrict changes to its designated directory (`ai_services/`, `data_pipeline/`, `backend/`, `frontend/`).
+2. **Mock-First Verification**: Always ensure your module can build, run, and pass tests in Mock mode prior to integrating with live counterpart services.
+3. **Contract Stability**: Modifying schema definitions in Section 6 requires cross-team consensus.
+4. **Environment Configuration**: Store all URLs, keys, and mock switches in `.env` files matching the project standards.

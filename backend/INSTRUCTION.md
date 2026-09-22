@@ -1,15 +1,15 @@
-# Sub-Team 3 Directive: Core API, Database & MLOps Engine
+# Backend Directive: Core API, Database & MLOps Engine
 
 ## 1. Directory Boundary & Autonomous Scope
 > [!IMPORTANT]
-> **Strict Directory Boundary**: As the Sub-Team 3 Autonomous Agent, you must operate exclusively within `/subteam-3-backend-mlops/`. All inter-module orchestrations must be executed through clean client interfaces or published modules conforming to `/PROJECT_ORCHESTRATION.md`.
+> **Strict Directory Boundary**: As the Backend Agent, you must operate strictly within `/backend/`. All database schemas, API routes, and service clients must strictly conform to the canonical contracts defined in `/PROJECT_ORCHESTRATION.md`.
 
 ---
 
 ## 2. Directory Structure Tree
 
 ```
-subteam-3-backend-mlops/
+backend/
 ├── alembic/                           # Database migration scripts
 │   ├── versions/
 │   └── env.py
@@ -33,9 +33,11 @@ subteam-3-backend-mlops/
 │   │   ├── __init__.py
 │   │   ├── auth_service.py            # Password hashing (bcrypt) & JWT issuance
 │   │   ├── storage_service.py         # Local / S3 / Supabase image uploader
-│   │   ├── cv_client.py               # Sub-team 1 Vision Pipeline bridge
-│   │   ├── rag_client.py              # Sub-team 2 RAG Engine bridge
-│   │   └── orchestrator_service.py    # Pipeline coordinator (<2.0s SLA)
+│   │   ├── mock_ai_service.py         # Dummy AI service for independent development
+│   │   ├── mock_rag_service.py        # Dummy RAG service for independent development
+│   │   ├── cv_client.py               # Live bridge to ai_services/
+│   │   ├── rag_client.py              # Live bridge to data_pipeline/
+│   │   └── orchestrator_service.py    # Pipeline coordinator with fallback switches (<2.0s SLA)
 │   └── routers/                       # FastAPI endpoint route controllers
 │       ├── __init__.py
 │       ├── auth_router.py             # /api/v1/auth
@@ -55,129 +57,133 @@ subteam-3-backend-mlops/
 ├── docker-compose.yml                 # Orchestration for FastAPI, Postgres & Qdrant
 ├── alembic.ini
 ├── requirements.txt
-└── README.md
+└── INSTRUCTION.md
 ```
 
 ---
 
-## 3. Detailed Functional Requirements
+## 3. Dummy / Mock Content Strategy for Independent Development
 
-### 3.1. Relational Database Schema (SQLAlchemy 2.0 / PostgreSQL)
+To allow Backend engineers and autonomous coding agents to develop, test, and deploy database models, authentication, and endpoint orchestration without waiting for the ML Team to complete training or Qdrant to be indexed:
 
-#### 1. `users` Table
-* `id` (UUID, Primary Key, default=uuid4)
-* `email` (String, Unique, Index, Nullable=False)
-* `hashed_password` (String, Nullable=False)
-* `daily_calorie_target` (Integer, default=2000)
-* `target_protein_g` (Float, default=100.0)
-* `target_fat_g` (Float, default=60.0)
-* `target_carbs_g` (Float, default=250.0)
-* `created_at` (DateTime with timezone, default=utcnow)
-* `updated_at` (DateTime with timezone, onupdate=utcnow)
+### 3.1. Mock Configuration in `.env`
+```env
+# Backend Environment Flags
+DATABASE_URL=postgresql+asyncpg://postgres:postgres@localhost:5432/docta_db
+JWT_SECRET=supersecretjwtkeydocta2026
+JWT_ALGORITHM=HS256
+ACCESS_TOKEN_EXPIRE_MINUTES=1440
 
-#### 2. `meals` Table
-* `id` (UUID, Primary Key, default=uuid4)
-* `user_id` (UUID, ForeignKey("users.id", ondelete="CASCADE"), Index, Nullable=False)
-* `image_url` (String, Nullable=True)
-* `raw_text_prompt` (Text, Nullable=True)
-* `meal_type` (Enum: `"breakfast"`, `"lunch"`, `"dinner"`, `"snack"`, default=`"lunch"`)
-* `total_calories_kcal` (Float, Nullable=False)
-* `total_protein_g` (Float, Nullable=False)
-* `total_fat_g` (Float, Nullable=False)
-* `total_carbs_g` (Float, Nullable=False)
-* `total_fiber_g` (Float, default=0.0)
-* `total_sodium_mg` (Float, default=0.0)
-* `logged_at` (DateTime with timezone, Index, Nullable=False)
-* `created_at` (DateTime with timezone, default=utcnow)
+# Independent Development Fallback Switches
+USE_MOCK_AI=true     # Set to false once ML team finishes training in ai_services/
+USE_MOCK_RAG=true    # Set to false once data_pipeline/ Qdrant index is live
+```
 
-#### 3. `meal_items` Table
-* `id` (UUID, Primary Key, default=uuid4)
-* `meal_id` (UUID, ForeignKey("meals.id", ondelete="CASCADE"), Index, Nullable=False)
-* `food_name` (String, Nullable=False)
-* `wafct_code` (String, Nullable=True)
-* `gram_weight` (Float, Nullable=False)
-* `calories_kcal` (Float, Nullable=False)
-* `protein_g` (Float, Nullable=False)
-* `fat_g` (Float, Nullable=False)
-* `carbs_g` (Float, Nullable=False)
-* `fiber_g` (Float, default=0.0)
-* `sodium_mg` (Float, default=0.0)
-* `calcium_mg` (Float, default=0.0)
-* `iron_mg` (Float, default=0.0)
-* `bounding_box` (JSONB / Array of 4 floats `[x_min, y_min, x_max, y_max]`, Nullable=True)
+### 3.2. Mock Service Behavior
+* **`src/services/mock_ai_service.py`**: Injects simulated detection payloads containing Nigerian Jollof Rice ($272\text{g}$) and Fried Plantain ($150\text{g}$) with normalized bounding box coordinates and simulated latency ($\sim 50\text{ms}$).
+* **`src/services/mock_rag_service.py`**: Computes accurate nutrition breakdowns from bundled static WAFCT profiles without network calls.
+* **Seamless Live Switch**: When `USE_MOCK_AI=false`, `orchestrator_service.py` dynamically delegates calls to `src/services/cv_client.py` (`ai_services/src/pipeline.py`), requiring zero code refactoring.
 
 ---
 
-### 3.2. Core API Endpoints
+## 4. Database Schema Specifications (SQLAlchemy 2.0 Async)
 
-#### 1. Authentication (`/api/v1/auth`)
-* `POST /api/v1/auth/signup`: Accepts `email`, `password`. Creates user, returns JWT access token.
-* `POST /api/v1/auth/login`: Validates credentials, returns JWT bearer token (`access_token`, `token_type: "bearer"`).
+### 4.1. `users` Table
+* `id`: UUID, Primary Key.
+* `email`: String, Unique, Index, Not Null.
+* `hashed_password`: String, Not Null.
+* `daily_calorie_target`: Integer, default=2000.
+* `target_protein_g`: Float, default=100.0.
+* `target_fat_g`: Float, default=60.0.
+* `target_carbs_g`: Float, default=250.0.
+* `created_at`, `updated_at`: DateTime(timezone=True).
 
-#### 2. Multimodal Analysis Orchestration (`/api/v1/analyze`)
-* `POST /api/v1/analyze`:
-  * Accepts `image: UploadFile` (JPEG/PNG $\le 10\text{MB}$) and optional `text_prompt: Optional[str]`.
-  * Asynchronously coordinates:
-    1. Uploads image to storage service $\rightarrow$ generates URL.
-    2. Invokes CV/Multimodal engine (`Sub-team 1`) with image and user text prompt.
-    3. Transforms detected item labels into RAG queries for nutrition scaling (`Sub-team 2`).
-    4. Merges nutrition data with bounding box coordinates.
-  * **SLA Constraint**: Must return completed payload in **$< 2.0\text{ seconds}$**.
+### 4.2. `meals` Table
+* `id`: UUID, Primary Key.
+* `user_id`: UUID, ForeignKey("users.id", ondelete="CASCADE"), Index, Not Null.
+* `image_url`: String, Nullable.
+* `raw_text_prompt`: Text, Nullable.
+* `meal_type`: Enum (`"breakfast"`, `"lunch"`, `"dinner"`, `"snack"`), default=`"lunch"`.
+* `total_calories_kcal`, `total_protein_g`, `total_fat_g`, `total_carbs_g`, `total_fiber_g`, `total_sodium_mg`: Float.
+* `logged_at`: DateTime(timezone=True), Index, Not Null.
 
-#### 3. Meal Logging (`/api/v1/meals/log`)
-* `POST /api/v1/meals/log`:
-  * Saves finalized user-approved meal items and nutrition aggregates to PostgreSQL within a single atomic database transaction.
-
-#### 4. Dashboard Analytics (`/api/v1/dashboard/summary`)
-* `GET /api/v1/dashboard/summary?date=YYYY-MM-DD`:
-  * Aggregates all meals logged by current authenticated user for target date.
-  * Calculates consumed vs. target calories and macronutrients, remaining allowances, and historical meal breakdown.
-
----
-
-### 3.3. Middleware & Security
-* **CORS**: Configure `CORSMiddleware` permitting frontend origins (`http://localhost:3000`, production domain).
-* **JWT Guard**: Dependency `get_current_user` enforcing bearer token verification on all protected endpoints.
-* **Request ID & Timing**: Middleware adding `X-Request-ID` and `X-Response-Time-Ms` headers for observability.
+### 4.3. `meal_items` Table
+* `id`: UUID, Primary Key.
+* `meal_id`: UUID, ForeignKey("meals.id", ondelete="CASCADE"), Index, Not Null.
+* `food_name`: String, Not Null.
+* `wafct_code`: String, Nullable.
+* `gram_weight`: Float, Not Null.
+* `calories_kcal`, `protein_g`, `fat_g`, `carbs_g`, `fiber_g`, `sodium_mg`, `calcium_mg`, `iron_mg`: Float.
+* `bounding_box`: JSONB / Array of 4 floats `[x_min, y_min, x_max, y_max]`.
 
 ---
 
-## 4. Testing & Validation Commands
+## 5. API Endpoints & SLA Targets
+
+1. **`POST /api/v1/auth/signup` & `POST /api/v1/auth/login`**: User registration and JWT token creation.
+2. **`POST /api/v1/analyze`**: Accepts multipart `image` and optional `text_prompt`. Orchestrates CV/Vision detection and RAG nutrition scaling. Strict SLA: **$< 2.0\text{ seconds}$**.
+3. **`POST /api/v1/meals/log`**: Saves approved meal items and totals atomically.
+4. **`GET /api/v1/dashboard/summary?date=YYYY-MM-DD`**: Aggregates target vs consumed calories and macros for current user.
+
+---
+
+## 6. Testing & Validation Commands
 
 ```bash
-# 1. Install Sub-team 3 dependencies
+# 1. Install dependencies
 pip install -r requirements.txt
 
-# 2. Start PostgreSQL and Qdrant services
-docker-compose up -d postgres qdrant
+# 2. Run test suite in Mock Mode (zero external dependencies required)
+pytest tests/ -v --cov=src --cov-report=term-missing
 
-# 3. Apply database migrations
+# 3. Start PostgreSQL container
+docker-compose up -d postgres
+
+# 4. Run database migrations
 alembic upgrade head
 
-# 4. Start FastAPI server locally
+# 5. Start FastAPI development server
 uvicorn src.main:app --host 0.0.0.0 --port 8000 --reload
-
-# 5. Run test suite
-pytest tests/ -v --cov=src --cov-report=term-missing
 ```
 
 ---
 
-## 5. Docker Infrastructure Configuration
+## 7. Definition of Done (DoD) Checklist
 
-The `docker-compose.yml` must orchestrate:
-1. `postgres`: PostgreSQL 16 on port `5432` with healthcheck.
-2. `qdrant`: Qdrant Vector DB on port `6333`.
-3. `api`: FastAPI application on port `8000` with hot-reloading in development.
+- [ ] Mock services allow full execution of `/api/v1/analyze` without external ML weights or vector databases.
+- [ ] SQLAlchemy models and Alembic migrations execute cleanly against PostgreSQL.
+- [ ] JWT authentication and route guard dependencies validated.
+- [ ] `/api/v1/meals/log` commits atomic records with verified rollback on error.
+- [ ] `/api/v1/dashboard/summary` correctly computes consumed sums and target deltas.
+- [ ] Test coverage exceeds $85\%$ in `tests/`.
+
 
 ---
 
-## 6. Definition of Done (DoD) Checklist
+## Automated Task Completion & Submission Protocol
 
-- [ ] Database models and Alembic migration scripts generate valid schemas on PostgreSQL.
-- [ ] JWT authentication lifecycle (signup, login, token refresh, route protection) verified.
-- [ ] `POST /api/v1/analyze` coordinates CV and RAG services, returning normalized responses in $< 2.0\text{s}$.
-- [ ] `POST /api/v1/meals/log` commits atomic transactions for meal and itemized child rows.
-- [ ] `GET /api/v1/dashboard/summary` computes accurate macro sums and remaining targets.
-- [ ] `docker-compose up` spins up healthy containers across FastAPI, Postgres, and Qdrant.
-- [ ] Unit and integration test coverage $\ge 85\%$.
+When all functional requirements are implemented and local unit tests pass, execute the following submission sequence in the terminal:
+
+### Step 1: Pre-Submission Health Check
+Run the local test suite for your module. Do NOT push if any test fails.
+* `pytest` (or `npm run build` for Frontend)
+
+### Step 2: Automated Commit, Push & PR Creation
+Execute these exact bash commands:
+
+```bash
+# 1. Switch to (or create) the dedicated sub-team branch
+git checkout -B docta-backend
+
+# 2. Stage and commit changes
+git add .
+git commit -m "feat(docta-backend): completed subteam task deliverables"
+
+# 3. Push branch to GitHub
+git push origin docta-backend
+
+# 4. Open Pull Request via GitHub CLI
+gh pr create \
+  --title "feat(docta-backend): Completed Backend Deliverables" \
+  --body "Automated PR generated by Coding Agent upon completing INSTRUCTION.md tasks. All local tests passed." \
+  --base main

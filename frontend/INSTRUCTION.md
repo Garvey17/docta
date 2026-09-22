@@ -1,20 +1,20 @@
-# Sub-Team 4 Directive: Mobile-First PWA & Dashboard UX
+# Frontend Directive: Mobile-First PWA & Dashboard UX
 
 ## 1. Directory Boundary & Autonomous Scope
 > [!IMPORTANT]
-> **Strict Directory Boundary**: As the Sub-Team 4 Autonomous Agent, you must operate strictly within `/subteam-4-frontend-ux/`. All backend API interactions must conform to the contracts specified in `/PROJECT_ORCHESTRATION.md`.
+> **Strict Directory Boundary**: As the Frontend Agent, you must operate strictly within `/frontend/`. All API integrations and client data types must align with the canonical contracts defined in `/PROJECT_ORCHESTRATION.md`.
 
 ---
 
 ## 2. Directory Structure Tree
 
 ```
-subteam-4-frontend-ux/
+frontend/
 ├── public/
 │   ├── manifest.json                  # Web App Manifest for mobile PWA install
 │   ├── sw.js                          # Service worker for offline caching
 │   ├── icons/                         # App icon set (192x192, 512x512, maskable)
-│   └── favicon.ico
+│   └── dummy_meal.jpg                 # Sample placeholder image for offline mock review
 ├── src/
 │   ├── app/                           # Next.js 14 App Router
 │   │   ├── layout.tsx                 # Root layout with PWA meta & AuthProvider
@@ -36,8 +36,8 @@ subteam-4-frontend-ux/
 │   │   └── Navbar.tsx                 # Mobile bottom navigation bar
 │   ├── hooks/
 │   │   ├── useCamera.ts               # WebRTC stream controller & permission handler
-│   │   ├── useAnalyzeMeal.ts          # Multipart POST hook to /api/v1/analyze
-│   │   └── useDashboard.ts            # Daily summary fetcher & SWR/React Query cache
+│   │   ├── useAnalyzeMeal.ts          # Multipart POST hook with mock fallback
+│   │   └── useDashboard.ts            # Daily summary fetcher with mock fallback
 │   ├── store/
 │   │   ├── authStore.ts               # Zustand store for JWT token & user profile
 │   │   └── mealDraftStore.ts          # Zustand store for active analysis & edits
@@ -45,6 +45,7 @@ subteam-4-frontend-ux/
 │   │   └── api.ts                     # TypeScript definitions matching backend contracts
 │   └── lib/
 │       ├── apiClient.ts               # Axios / Fetch client with auth interceptor
+│       ├── mockData.ts                # Deterministic dummy responses for offline dev
 │       └── utils.ts                   # Formatting & calculation utilities
 ├── tests/
 │   ├── CameraFeed.test.tsx
@@ -53,137 +54,135 @@ subteam-4-frontend-ux/
 ├── tailwind.config.ts
 ├── tsconfig.json
 ├── package.json
-└── README.md
+└── INSTRUCTION.md
 ```
 
 ---
 
-## 3. Detailed Functional Requirements
+## 3. Dummy / Mock Content Strategy for Independent Development
 
-### 3.1. Progressive Web App (PWA) Configuration
-* **Manifest (`public/manifest.json`)**:
-  * `name`: `"docta - Nigerian Nutrition Intelligence"`
-  * `short_name`: `"docta"`
-  * `display`: `"standalone"`
-  * `orientation`: `"portrait"`
-  * `background_color`: `"#0F172A"`
-  * `theme_color`: `"#10B981"` (Emerald Green)
-* **Service Worker (`public/sw.js`)**: Cache static assets and app shell for instant cold starts.
+To enable the Frontend team and autonomous agents to design, build, and test the entire mobile PWA without requiring a running backend, database, or ML models:
+
+### 3.1. Mock Configuration in `.env.local`
+```env
+NEXT_PUBLIC_API_URL=http://localhost:8000
+NEXT_PUBLIC_USE_MOCK=true  # Set to false to connect to live backend
+```
+
+### 3.2. Static Mock Fixtures (`src/lib/mockData.ts`)
+When `NEXT_PUBLIC_USE_MOCK=true`, the API client and custom hooks intercept network requests and return instant simulated responses after an artificial delay ($\sim 600\text{ms}$):
+
+```typescript
+import { AnalyzeMealResponse, DailyDashboardSummary } from '@/types/api';
+
+export const MOCK_ANALYZE_RESPONSE: AnalyzeMealResponse = {
+  analysisId: 'anlz_mock_001',
+  status: 'success',
+  processingDurationMs: 820.0,
+  imageUrl: '/dummy_meal.jpg',
+  detectedItems: [
+    {
+      itemId: 'item_1',
+      dishId: 'jollof_rice',
+      displayName: 'Nigerian Jollof Rice',
+      confidence: 0.94,
+      boundingBox: [0.125, 0.240, 0.550, 0.780],
+      weightG: 272.0,
+      wafctCode: '01_042',
+      similarityScore: 0.942,
+      isFallback: false,
+      nutrients: {
+        caloriesKcal: 380.8,
+        proteinG: 7.3,
+        fatG: 10.9,
+        carbsG: 62.6,
+        fiberG: 2.7,
+        sodiumMg: 489.6,
+        calciumMg: 21.8,
+        ironMg: 1.9
+      }
+    },
+    {
+      itemId: 'item_2',
+      dishId: 'fried_plantain',
+      displayName: 'Fried Ripe Plantain (Dodo)',
+      confidence: 0.89,
+      boundingBox: [0.580, 0.310, 0.890, 0.650],
+      weightG: 150.0,
+      wafctCode: '02_018',
+      similarityScore: 0.961,
+      isFallback: false,
+      nutrients: {
+        caloriesKcal: 312.0,
+        proteinG: 1.8,
+        fatG: 14.1,
+        carbsG: 48.0,
+        fiberG: 3.6,
+        sodiumMg: 6.0,
+        calciumMg: 15.0,
+        ironMg: 0.9
+      }
+    }
+  ],
+  totalNutrition: {
+    totalCaloriesKcal: 692.8,
+    totalProteinG: 9.1,
+    totalFatG: 25.0,
+    totalCarbsG: 110.6,
+    totalFiberG: 6.3,
+    totalSodiumMg: 495.6
+  }
+};
+```
 
 ---
 
-### 3.2. Camera Feed & Prompt Input (`CameraFeed.tsx`)
-* Utilize WebRTC HTML5 `navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })`.
-* Provide immediate fallback to native file input:
-  `<input type="file" accept="image/*" capture="environment" />`
-* Overlay interactive controls:
-  * Shutter button to capture frame as JPEG blob.
-  * Voice / Text Prompt input box (e.g. *"half wrap amala with 2 meats"*).
-  * Loading state with animated pulse indicator while waiting for `/api/v1/analyze`.
+## 4. Detailed Component & UX Specifications
 
----
+### 4.1. Camera Capture Feed (`CameraFeed.tsx`)
+* Uses `navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })`.
+* Provides immediate fallback to native file input: `<input type="file" accept="image/*" capture="environment" />`.
+* Includes voice/text prompt override box (e.g. *"2 wraps of amala with extra meat"*).
 
-### 3.3. Canvas Bounding Box Overlay (`BoundingOverlay.tsx`)
-* Accept image source and array of detected items with normalized coordinates $[x_{\min}, y_{\min}, x_{\max}, y_{\max}] \in [0.0, 1.0]$.
-* Dynamically map normalized coordinates to the rendered display dimensions:
+### 4.2. Canvas Bounding Box Overlay (`BoundingOverlay.tsx`)
+* Maps normalized ratios $[x_{\min}, y_{\min}, x_{\max}, y_{\max}] \in [0.0, 1.0]$ to rendered canvas pixels:
   $$\text{Rendered } X = x_{\min} \times \text{canvas.width}$$
   $$\text{Rendered } Y = y_{\min} \times \text{canvas.height}$$
   $$\text{Rendered Width} = (x_{\max} - x_{\min}) \times \text{canvas.width}$$
   $$\text{Rendered Height} = (y_{\max} - y_{\min}) \times \text{canvas.height}$$
-* Render stylized translucent boundary boxes with high-contrast colored borders and class badge tags (e.g., `"Jollof Rice - 272g"`).
-* Enable tap-to-select: clicking a bounding box highlights the corresponding item in the portion editor list.
+* Renders bounding borders with pill badge overlays (e.g., `"Jollof Rice - 272g"`).
+* Tapping a bounding box selects the corresponding item in the review list.
 
----
-
-### 3.4. Interactive Meal Review & Portion Adjuster (`review/page.tsx`)
-* Display detected food items in editable cards.
-* **PortionSlider**: Provide a smooth slider control ($50\text{g}$ to $1000\text{g}$ with step $5\text{g}$) for each detected item.
-* **Instant Macro Recalculation**: Adjusting the gram weight slider must instantly recalculate calories and macronutrients on the client side in real time using linear ratio scaling:
+### 4.3. Interactive Review & Portion Slider (`review/page.tsx`)
+* Provides interactive gram weight slider ($50\text{g} - 1000\text{g}$, step $5\text{g}$).
+* Instantly recalculates calories and macros on the client side:
   $$\text{New Nutrient} = \left( \frac{\text{Baseline Nutrient}}{\text{Baseline Weight}} \right) \times \text{Adjusted Weight}$$
-* "Confirm & Save Meal" button dispatches payload to `POST /api/v1/meals/log` and redirects to the dashboard.
+* "Log Meal" button posts payload to `/api/v1/meals/log` (or saves to mock store if in mock mode).
 
----
-
-### 3.5. Daily Macro Progress Dashboard (`app/page.tsx`)
-* **Calorie Ring**: Render SVG / Recharts circular progress ring illustrating consumed vs. target daily calories and remaining allowance.
-* **Macronutrient Bars**: Render 3 animated linear progress bars for:
-  * Protein (g / target g)
-  * Fats (g / target g)
-  * Carbohydrates (g / target g)
-* **Date Navigator**: Allow user to toggle between today and historical dates.
-* **Logged Meals Feed**: Chronological list of logged meals (Breakfast, Lunch, Dinner) showing meal images, time, calorie badges, and itemized summaries.
-
----
-
-## 4. TypeScript Interface Alignment
-
-All API response parsing must conform to `src/types/api.ts`:
-
-```typescript
-export interface BoundingBox {
-  xMin: number;
-  yMin: number;
-  xMax: number;
-  yMax: number;
-}
-
-export interface NutrientBreakdown {
-  caloriesKcal: number;
-  proteinG: number;
-  fatG: number;
-  carbsG: number;
-  fiberG: number;
-  sodiumMg: number;
-  calciumMg: number;
-  ironMg: number;
-}
-
-export interface DetectedMealItem {
-  itemId: string;
-  dishId: string;
-  displayName: string;
-  confidence: number;
-  boundingBox: [number, number, number, number]; // [x_min, y_min, x_max, y_max]
-  weightG: number;
-  wafctCode: string;
-  nutrients: NutrientBreakdown;
-}
-
-export interface AnalyzeMealResponse {
-  analysisId: string;
-  status: string;
-  imageUrl: string;
-  detectedItems: DetectedMealItem[];
-  totalNutrition: {
-    totalCaloriesKcal: number;
-    totalProteinG: number;
-    totalFatG: number;
-    totalCarbsG: number;
-    totalFiberG: number;
-    totalSodiumMg: number;
-  };
-}
-```
+### 4.4. Dashboard Analytics (`app/page.tsx`)
+* Circular progress ring displaying consumed vs. daily target calories.
+* Linear progress bars for Protein, Fats, and Carbohydrates.
+* Historical logged meal cards with thumbnails and calorie badges.
 
 ---
 
 ## 5. Testing & Validation Commands
 
 ```bash
-# 1. Install Sub-team 4 dependencies
+# 1. Install dependencies
 npm install
 
-# 2. Start Next.js development server
+# 2. Start Next.js development server in Mock Mode
 npm run dev
 
-# 3. Run TypeScript typecheck & ESLint
+# 3. Run typecheck & linter
 npm run type-check
 npm run lint
 
 # 4. Run component unit tests
 npm test
 
-# 5. Build production bundle & verify PWA assets
+# 5. Build production bundle
 npm run build
 ```
 
@@ -191,10 +190,40 @@ npm run build
 
 ## 6. Definition of Done (DoD) Checklist
 
-- [ ] Mobile PWA manifest and service worker load without errors in Lighthouse audit.
-- [ ] `CameraFeed.tsx` streams live WebRTC video on mobile browsers and falls back cleanly to file upload.
-- [ ] `BoundingOverlay.tsx` accurately draws bounding boxes over images across varying viewport aspect ratios.
-- [ ] `PortionSlider.tsx` enables real-time client-side macro updates without UI stutter.
-- [ ] Dashboard displays circular calorie ring and macro progress bars mapped to user targets.
-- [ ] TypeScript strict mode passes with 0 type errors across the entire module.
-- [ ] Jest / React Testing Library tests achieve $\ge 80\%$ test coverage.
+- [ ] App launches and operates completely standalone in Mock Mode (`NEXT_PUBLIC_USE_MOCK=true`).
+- [ ] `CameraFeed.tsx` streams live WebRTC video and captures snapshot blobs.
+- [ ] `BoundingOverlay.tsx` accurately draws bounding boxes on meal images across responsive viewports.
+- [ ] `PortionSlider.tsx` updates item and meal total macros in real time without lag.
+- [ ] Dashboard displays calorie progress ring, macro bars, and meal history cards.
+- [ ] Zero TypeScript errors and unit test coverage $\ge 80\%$.
+
+
+---
+
+## Automated Task Completion & Submission Protocol
+
+When all functional requirements are implemented and local unit tests pass, execute the following submission sequence in the terminal:
+
+### Step 1: Pre-Submission Health Check
+Run the local test suite for your module. Do NOT push if any test fails.
+* `pytest` (or `npm run build` for Frontend)
+
+### Step 2: Automated Commit, Push & PR Creation
+Execute these exact bash commands:
+
+```bash
+# 1. Switch to (or create) the dedicated sub-team branch
+git checkout -B docta-frontend
+
+# 2. Stage and commit changes
+git add .
+git commit -m "feat(docta-frontend): completed subteam task deliverables"
+
+# 3. Push branch to GitHub
+git push origin docta-frontend
+
+# 4. Open Pull Request via GitHub CLI
+gh pr create \
+  --title "feat(docta-frontend): Completed Frontend Deliverables" \
+  --body "Automated PR generated by Coding Agent upon completing INSTRUCTION.md tasks. All local tests passed." \
+  --base main
