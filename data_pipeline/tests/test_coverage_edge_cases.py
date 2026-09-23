@@ -224,3 +224,43 @@ def test_validate_prerequisites_cli_error_printing(tmp_path, monkeypatch, capsys
     captured = capsys.readouterr()
     assert exit_code == 1
     assert "Prerequisite validation failed" in captured.out or "FATAL" in captured.err
+
+
+def test_validate_prerequisites_with_xlsx_only(tmp_path):
+    """Verify validate_prerequisites detects NCT_Nigeria.xlsx when JSON is absent."""
+    import shutil
+    data_dir = tmp_path / "xlsx_test_dir"
+    data_dir.mkdir()
+    shutil.copy("data/recipe_ingredient_lookup.json", data_dir / "recipe_ingredient_lookup.json")
+    if Path("data/NCT_Nigeria.xlsx").exists():
+        shutil.copy("data/NCT_Nigeria.xlsx", data_dir / "NCT_Nigeria.xlsx")
+        res = validate_prerequisites(data_dir=data_dir, auto_recover=False)
+        assert res["status"] == "passed"
+        assert "NCT_Nigeria.xlsx" in res["fct_file"]
+
+
+def test_validate_prerequisites_with_csv_only(tmp_path):
+    """Verify validate_prerequisites detects raw_wafct_2019.csv when JSON and XLSX absent."""
+    import shutil
+    data_dir = tmp_path / "csv_test_dir"
+    data_dir.mkdir()
+    shutil.copy("data/recipe_ingredient_lookup.json", data_dir / "recipe_ingredient_lookup.json")
+    if Path("data/raw_wafct_2019.csv").exists():
+        shutil.copy("data/raw_wafct_2019.csv", data_dir / "raw_wafct_2019.csv")
+        res = validate_prerequisites(data_dir=data_dir, auto_recover=False)
+        assert "raw_wafct_2019.csv" in res["fct_file"]
+
+
+def test_text_embedder_engine_modes():
+    """Verify TextEmbedder with sentence_transformers mock engine."""
+    import numpy as np
+    embedder = TextEmbedder()
+    embedder._engine = "sentence_transformers"
+    class DummyST:
+        def encode(self, texts, normalize_embeddings=True):
+            return np.ones((len(texts), 384), dtype=np.float32)
+    embedder._st_model = DummyST()
+    vecs = embedder.embed_texts(["hello world"])
+    assert len(vecs) == 1
+    assert len(vecs[0]) == 384
+

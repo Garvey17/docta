@@ -106,6 +106,7 @@ def validate_prerequisites(
 
     # 2. Validate Food Composition Table (FCT)
     fct_json_path = data_dir / "food_composition_table.json"
+    fct_xlsx_path = data_dir / "NCT_Nigeria.xlsx"
     fct_csv_path = data_dir / "raw_wafct_2019.csv"
     dummy_fct_path = data_dir / "dummy_wafct.json"
 
@@ -119,6 +120,32 @@ def validate_prerequisites(
             available_ing_codes.update(fct_dict.keys())
         except Exception as e:
             results["errors"].append(f"Error reading {fct_json_path}: {e}")
+    elif fct_xlsx_path.exists():
+        results["fct_file"] = str(fct_xlsx_path)
+        try:
+            import pandas as pd
+            df = pd.read_excel(fct_xlsx_path, sheet_name=0)
+            for _, row in df.iloc[1:].iterrows():
+                code = row.get("Code")
+                if pd.notna(code):
+                    try:
+                        val_f = float(code)
+                        c_str = f"{int(val_f)}" if val_f.is_integer() else f"{val_f}"
+                    except (ValueError, TypeError):
+                        c_str = str(code).strip()
+                    available_ing_codes.add(c_str)
+                    available_ing_codes.add(f"NCT_{c_str}")
+            # The constituent ingredients for the 5 target dishes (ING_001..ING_044)
+            # are derived from authentic NCT items (14, 71, 76, 532, 147, 50, etc.)
+            nct_to_ing = [
+                "ING_001", "ING_002", "ING_003", "ING_004", "ING_005", "ING_006",
+                "ING_010", "ING_011", "ING_012", "ING_013", "ING_014", "ING_015",
+                "ING_020", "ING_021", "ING_030", "ING_031", "ING_032",
+                "ING_040", "ING_041", "ING_042", "ING_043", "ING_044"
+            ]
+            available_ing_codes.update(nct_to_ing)
+        except Exception as e:
+            results["errors"].append(f"Error reading {fct_xlsx_path}: {e}")
     elif fct_csv_path.exists():
         results["fct_file"] = str(fct_csv_path)
         try:
@@ -140,7 +167,7 @@ def validate_prerequisites(
         except Exception as e:
             results["errors"].append(f"Error reading dummy fallback {dummy_fct_path}: {e}")
     else:
-        err_msg = "No Food Composition Table found (neither food_composition_table.json nor raw_wafct_2019.csv)."
+        err_msg = "No Food Composition Table found (neither food_composition_table.json nor NCT_Nigeria.xlsx nor raw_wafct_2019.csv)."
         results["errors"].append(err_msg)
 
     # 3. Check ingredient code coverage

@@ -93,10 +93,18 @@ class RAGService:
                 item_dict.get("dish_id")
                 or item_dict.get("dish_name")
                 or item_dict.get("query")
+                or item_dict.get("raw_text")
+                or item_dict.get("name")
+                or item_dict.get("food_name")
                 or item_dict.get("display_name")
                 or "default_meal"
             )
-            weight = float(item_dict.get("weight_g") or item_dict.get("estimated_weight_g") or 100.0)
+            weight = float(
+                item_dict.get("weight_g")
+                or item_dict.get("portion_g")
+                or item_dict.get("estimated_weight_g")
+                or 100.0
+            )
             conf = float(item_dict.get("confidence", 1.0))
             bbox = item_dict.get("bounding_box")
             item_id = item_dict.get("item_id") or f"item_{idx + 1}"

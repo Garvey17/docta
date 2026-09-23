@@ -1,51 +1,5679 @@
 {
+  "10": {
+    "code": "10",
+    "food_name": "Guinea corn/sorghum",
+    "nutrients": {
+      "calories_kcal": 346.8,
+      "protein_g": 11.52,
+      "fat_g": 3.5999999999999996,
+      "carbs_g": 61.199999999999996,
+      "fiber_g": 11.76,
+      "sodium_mg": 8.4,
+      "calcium_mg": 26.4,
+      "iron_mg": 6.72
+    }
+  },
+  "NCT_10": {
+    "code": "10",
+    "food_name": "Guinea corn/sorghum",
+    "nutrients": {
+      "calories_kcal": 346.8,
+      "protein_g": 11.52,
+      "fat_g": 3.5999999999999996,
+      "carbs_g": 61.199999999999996,
+      "fiber_g": 11.76,
+      "sodium_mg": 8.4,
+      "calcium_mg": 26.4,
+      "iron_mg": 6.72
+    }
+  },
+  "11": {
+    "code": "11",
+    "food_name": "Millet",
+    "nutrients": {
+      "calories_kcal": 368.7599853515625,
+      "protein_g": 8.88,
+      "fat_g": 5.3999999999999995,
+      "carbs_g": 67.55999999999999,
+      "fiber_g": 7.199999999999999,
+      "sodium_mg": 10.2,
+      "calcium_mg": 18.0,
+      "iron_mg": 10.26
+    }
+  },
+  "NCT_11": {
+    "code": "11",
+    "food_name": "Millet",
+    "nutrients": {
+      "calories_kcal": 368.7599853515625,
+      "protein_g": 8.88,
+      "fat_g": 5.3999999999999995,
+      "carbs_g": 67.55999999999999,
+      "fiber_g": 7.199999999999999,
+      "sodium_mg": 10.2,
+      "calcium_mg": 18.0,
+      "iron_mg": 10.26
+    }
+  },
+  "13": {
+    "code": "13",
+    "food_name": "Rice  - local",
+    "nutrients": {
+      "calories_kcal": 344.50000762939453,
+      "protein_g": 7.75,
+      "fat_g": 1.5,
+      "carbs_g": 72.75,
+      "fiber_g": 4.5,
+      "sodium_mg": 2.5,
+      "calcium_mg": 50.0,
+      "iron_mg": 2.0
+    }
+  },
+  "NCT_13": {
+    "code": "13",
+    "food_name": "Rice  - local",
+    "nutrients": {
+      "calories_kcal": 344.50000762939453,
+      "protein_g": 7.75,
+      "fat_g": 1.5,
+      "carbs_g": 72.75,
+      "fiber_g": 4.5,
+      "sodium_mg": 2.5,
+      "calcium_mg": 50.0,
+      "iron_mg": 2.0
+    }
+  },
+  "14": {
+    "code": "14",
+    "food_name": "Rice - imported",
+    "nutrients": {
+      "calories_kcal": 351.0440090942383,
+      "protein_g": 6.853999999999999,
+      "fat_g": 0.596,
+      "carbs_g": 78.672,
+      "fiber_g": 1.788,
+      "sodium_mg": 4.47,
+      "calcium_mg": 8.94,
+      "iron_mg": 1.043
+    }
+  },
+  "NCT_14": {
+    "code": "14",
+    "food_name": "Rice - imported",
+    "nutrients": {
+      "calories_kcal": 351.0440090942383,
+      "protein_g": 6.853999999999999,
+      "fat_g": 0.596,
+      "carbs_g": 78.672,
+      "fiber_g": 1.788,
+      "sodium_mg": 4.47,
+      "calcium_mg": 8.94,
+      "iron_mg": 1.043
+    }
+  },
+  "16": {
+    "code": "16",
+    "food_name": "Maize flour",
+    "nutrients": {
+      "calories_kcal": 348.4499969482422,
+      "protein_g": 9.55,
+      "fat_g": 3.75,
+      "carbs_g": 63.900000000000006,
+      "fiber_g": 10.45,
+      "sodium_mg": 19.0,
+      "calcium_mg": 19.8,
+      "iron_mg": 3.3499999999999996
+    }
+  },
+  "NCT_16": {
+    "code": "16",
+    "food_name": "Maize flour",
+    "nutrients": {
+      "calories_kcal": 348.4499969482422,
+      "protein_g": 9.55,
+      "fat_g": 3.75,
+      "carbs_g": 63.900000000000006,
+      "fiber_g": 10.45,
+      "sodium_mg": 19.0,
+      "calcium_mg": 19.8,
+      "iron_mg": 3.3499999999999996
+    }
+  },
+  "17": {
+    "code": "17",
+    "food_name": "Yam flour",
+    "nutrients": {
+      "calories_kcal": 326.6000061035156,
+      "protein_g": 6.8,
+      "fat_g": 0.6,
+      "carbs_g": 66.3,
+      "fiber_g": 14.4,
+      "sodium_mg": 19.0,
+      "calcium_mg": 66.0,
+      "iron_mg": 2.0
+    }
+  },
+  "NCT_17": {
+    "code": "17",
+    "food_name": "Yam flour",
+    "nutrients": {
+      "calories_kcal": 326.6000061035156,
+      "protein_g": 6.8,
+      "fat_g": 0.6,
+      "carbs_g": 66.3,
+      "fiber_g": 14.4,
+      "sodium_mg": 19.0,
+      "calcium_mg": 66.0,
+      "iron_mg": 2.0
+    }
+  },
+  "18": {
+    "code": "18",
+    "food_name": "Cassava  flour",
+    "nutrients": {
+      "calories_kcal": 340.8999938964844,
+      "protein_g": 1.6,
+      "fat_g": 0.7,
+      "carbs_g": 79.9,
+      "fiber_g": 4.3,
+      "sodium_mg": 3.0,
+      "calcium_mg": 66.0,
+      "iron_mg": 2.0
+    }
+  },
+  "NCT_18": {
+    "code": "18",
+    "food_name": "Cassava  flour",
+    "nutrients": {
+      "calories_kcal": 340.8999938964844,
+      "protein_g": 1.6,
+      "fat_g": 0.7,
+      "carbs_g": 79.9,
+      "fiber_g": 4.3,
+      "sodium_mg": 3.0,
+      "calcium_mg": 66.0,
+      "iron_mg": 2.0
+    }
+  },
+  "19": {
+    "code": "19",
+    "food_name": "Wheat flour",
+    "nutrients": {
+      "calories_kcal": 352.20001220703125,
+      "protein_g": 10.4,
+      "fat_g": 1.8,
+      "carbs_g": 72.2,
+      "fiber_g": 2.8,
+      "sodium_mg": 4.0,
+      "calcium_mg": 15.3,
+      "iron_mg": 2.0
+    }
+  },
+  "NCT_19": {
+    "code": "19",
+    "food_name": "Wheat flour",
+    "nutrients": {
+      "calories_kcal": 352.20001220703125,
+      "protein_g": 10.4,
+      "fat_g": 1.8,
+      "carbs_g": 72.2,
+      "fiber_g": 2.8,
+      "sodium_mg": 4.0,
+      "calcium_mg": 15.3,
+      "iron_mg": 2.0
+    }
+  },
+  "20": {
+    "code": "20",
+    "food_name": "Maize (Unshelled/On the cob)",
+    "nutrients": {
+      "calories_kcal": 345.3400047302246,
+      "protein_g": 9.610000000000001,
+      "fat_g": 3.7199999999999998,
+      "carbs_g": 62.62,
+      "fiber_g": 11.47,
+      "sodium_mg": 13.950000000000001,
+      "calcium_mg": 21.7,
+      "iron_mg": 3.4100000000000006
+    }
+  },
+  "NCT_20": {
+    "code": "20",
+    "food_name": "Maize (Unshelled/On the cob)",
+    "nutrients": {
+      "calories_kcal": 345.3400047302246,
+      "protein_g": 9.610000000000001,
+      "fat_g": 3.7199999999999998,
+      "carbs_g": 62.62,
+      "fiber_g": 11.47,
+      "sodium_mg": 13.950000000000001,
+      "calcium_mg": 21.7,
+      "iron_mg": 3.4100000000000006
+    }
+  },
+  "22": {
+    "code": "22",
+    "food_name": "Maize (Shelled/Off the cob)",
+    "nutrients": {
+      "calories_kcal": 339.7599952697754,
+      "protein_g": 8.06,
+      "fat_g": 0.6200000000000001,
+      "carbs_g": 72.85000000000001,
+      "fiber_g": 5.27,
+      "sodium_mg": 0.0,
+      "calcium_mg": 6.2,
+      "iron_mg": 0.31000000000000005
+    }
+  },
+  "NCT_22": {
+    "code": "22",
+    "food_name": "Maize (Shelled/Off the cob)",
+    "nutrients": {
+      "calories_kcal": 339.7599952697754,
+      "protein_g": 8.06,
+      "fat_g": 0.6200000000000001,
+      "carbs_g": 72.85000000000001,
+      "fiber_g": 5.27,
+      "sodium_mg": 0.0,
+      "calcium_mg": 6.2,
+      "iron_mg": 0.31000000000000005
+    }
+  },
+  "25": {
+    "code": "25",
+    "food_name": "Bread",
+    "nutrients": {
+      "calories_kcal": 249.89999771118164,
+      "protein_g": 9.225,
+      "fat_g": 2.25,
+      "carbs_g": 46.375,
+      "fiber_g": 3.6250000000000004,
+      "sodium_mg": 505.25,
+      "calcium_mg": 44.5,
+      "iron_mg": 1.8
+    }
+  },
+  "NCT_25": {
+    "code": "25",
+    "food_name": "Bread",
+    "nutrients": {
+      "calories_kcal": 249.89999771118164,
+      "protein_g": 9.225,
+      "fat_g": 2.25,
+      "carbs_g": 46.375,
+      "fiber_g": 3.6250000000000004,
+      "sodium_mg": 505.25,
+      "calcium_mg": 44.5,
+      "iron_mg": 1.8
+    }
+  },
+  "26": {
+    "code": "26",
+    "food_name": "Cake",
+    "nutrients": {
+      "calories_kcal": 363.29998779296875,
+      "protein_g": 6.1,
+      "fat_g": 14.5,
+      "carbs_g": 51.4,
+      "fiber_g": 1.4,
+      "sodium_mg": 383.0,
+      "calcium_mg": 49.0,
+      "iron_mg": 0.8
+    }
+  },
+  "NCT_26": {
+    "code": "26",
+    "food_name": "Cake",
+    "nutrients": {
+      "calories_kcal": 363.29998779296875,
+      "protein_g": 6.1,
+      "fat_g": 14.5,
+      "carbs_g": 51.4,
+      "fiber_g": 1.4,
+      "sodium_mg": 383.0,
+      "calcium_mg": 49.0,
+      "iron_mg": 0.8
+    }
+  },
+  "27": {
+    "code": "27",
+    "food_name": "Buns/Pofpof/Donuts",
+    "nutrients": {
+      "calories_kcal": 427.1000061035156,
+      "protein_g": 5.2,
+      "fat_g": 22.9,
+      "carbs_g": 49.29999923706055,
+      "fiber_g": 1.5,
+      "sodium_mg": 402.0,
+      "calcium_mg": 60.0,
+      "iron_mg": 1.06
+    }
+  },
+  "NCT_27": {
+    "code": "27",
+    "food_name": "Buns/Pofpof/Donuts",
+    "nutrients": {
+      "calories_kcal": 427.1000061035156,
+      "protein_g": 5.2,
+      "fat_g": 22.9,
+      "carbs_g": 49.29999923706055,
+      "fiber_g": 1.5,
+      "sodium_mg": 402.0,
+      "calcium_mg": 60.0,
+      "iron_mg": 1.06
+    }
+  },
+  "28": {
+    "code": "28",
+    "food_name": "Biscuits",
+    "nutrients": {
+      "calories_kcal": 479.20001220703125,
+      "protein_g": 6.2,
+      "fat_g": 21.2,
+      "carbs_g": 64.9,
+      "fiber_g": 2.0,
+      "sodium_mg": 390.0,
+      "calcium_mg": 67.0,
+      "iron_mg": 1.3
+    }
+  },
+  "NCT_28": {
+    "code": "28",
+    "food_name": "Biscuits",
+    "nutrients": {
+      "calories_kcal": 479.20001220703125,
+      "protein_g": 6.2,
+      "fat_g": 21.2,
+      "carbs_g": 64.9,
+      "fiber_g": 2.0,
+      "sodium_mg": 390.0,
+      "calcium_mg": 67.0,
+      "iron_mg": 1.3
+    }
+  },
+  "29": {
+    "code": "29",
+    "food_name": "Meat Pie/Sausage Roll",
+    "nutrients": {
+      "calories_kcal": 308.20001220703125,
+      "protein_g": 11.4,
+      "fat_g": 20.8,
+      "carbs_g": 18.5,
+      "fiber_g": 0.7,
+      "sodium_mg": 708.0,
+      "calcium_mg": 69.0,
+      "iron_mg": 2.0
+    }
+  },
+  "NCT_29": {
+    "code": "29",
+    "food_name": "Meat Pie/Sausage Roll",
+    "nutrients": {
+      "calories_kcal": 308.20001220703125,
+      "protein_g": 11.4,
+      "fat_g": 20.8,
+      "carbs_g": 18.5,
+      "fiber_g": 0.7,
+      "sodium_mg": 708.0,
+      "calcium_mg": 69.0,
+      "iron_mg": 2.0
+    }
+  },
+  "30": {
+    "code": "30",
+    "food_name": "Cassava - roots",
+    "nutrients": {
+      "calories_kcal": 122.25330203354359,
+      "protein_g": 1.1068200184106827,
+      "fat_g": 0.3018600050210953,
+      "carbs_g": 27.167400451898573,
+      "fiber_g": 3.2198400535583493,
+      "sodium_mg": 1.5093000251054762,
+      "calcium_mg": 31.19220051884651,
+      "iron_mg": 1.2577500209212302
+    }
+  },
+  "NCT_30": {
+    "code": "30",
+    "food_name": "Cassava - roots",
+    "nutrients": {
+      "calories_kcal": 122.25330203354359,
+      "protein_g": 1.1068200184106827,
+      "fat_g": 0.3018600050210953,
+      "carbs_g": 27.167400451898573,
+      "fiber_g": 3.2198400535583493,
+      "sodium_mg": 1.5093000251054762,
+      "calcium_mg": 31.19220051884651,
+      "iron_mg": 1.2577500209212302
+    }
+  },
+  "31": {
+    "code": "31",
+    "food_name": "Yam - roots",
+    "nutrients": {
+      "calories_kcal": 106.09979669721127,
+      "protein_g": 1.4800999870896339,
+      "fat_g": 0.1557999986410141,
+      "carbs_g": 22.35729980498552,
+      "fiber_g": 4.673999959230422,
+      "sodium_mg": 3.5054999694228166,
+      "calcium_mg": 7.40049993544817,
+      "iron_mg": 0.23369999796152113
+    }
+  },
+  "NCT_31": {
+    "code": "31",
+    "food_name": "Yam - roots",
+    "nutrients": {
+      "calories_kcal": 106.09979669721127,
+      "protein_g": 1.4800999870896339,
+      "fat_g": 0.1557999986410141,
+      "carbs_g": 22.35729980498552,
+      "fiber_g": 4.673999959230422,
+      "sodium_mg": 3.5054999694228166,
+      "calcium_mg": 7.40049993544817,
+      "iron_mg": 0.23369999796152113
+    }
+  },
+  "32": {
+    "code": "32",
+    "food_name": "Gari - white",
+    "nutrients": {
+      "calories_kcal": 350.8999938964844,
+      "protein_g": 1.2,
+      "fat_g": 0.5,
+      "carbs_g": 82.9,
+      "fiber_g": 5.0,
+      "sodium_mg": 2.0,
+      "calcium_mg": 42.0,
+      "iron_mg": 1.6
+    }
+  },
+  "NCT_32": {
+    "code": "32",
+    "food_name": "Gari - white",
+    "nutrients": {
+      "calories_kcal": 350.8999938964844,
+      "protein_g": 1.2,
+      "fat_g": 0.5,
+      "carbs_g": 82.9,
+      "fiber_g": 5.0,
+      "sodium_mg": 2.0,
+      "calcium_mg": 42.0,
+      "iron_mg": 1.6
+    }
+  },
+  "33": {
+    "code": "33",
+    "food_name": "Gari - yellow",
+    "nutrients": {
+      "calories_kcal": 367.31899444580074,
+      "protein_g": 1.164,
+      "fat_g": 3.4789999999999996,
+      "carbs_g": 80.413,
+      "fiber_g": 4.85,
+      "sodium_mg": 1.94,
+      "calcium_mg": 40.800000000000004,
+      "iron_mg": 1.558
+    }
+  },
+  "NCT_33": {
+    "code": "33",
+    "food_name": "Gari - yellow",
+    "nutrients": {
+      "calories_kcal": 367.31899444580074,
+      "protein_g": 1.164,
+      "fat_g": 3.4789999999999996,
+      "carbs_g": 80.413,
+      "fiber_g": 4.85,
+      "sodium_mg": 1.94,
+      "calcium_mg": 40.800000000000004,
+      "iron_mg": 1.558
+    }
+  },
+  "34": {
+    "code": "34",
+    "food_name": "Cocoyam",
+    "nutrients": {
+      "calories_kcal": 101.99679612867142,
+      "protein_g": 2.492253371980455,
+      "fat_g": 0.34467333867814803,
+      "carbs_g": 21.131126994344918,
+      "fiber_g": 2.2006067007912526,
+      "sodium_mg": 8.616833466953699,
+      "calcium_mg": 14.9800335656272,
+      "iron_mg": 0.8086566792064241
+    }
+  },
+  "NCT_34": {
+    "code": "34",
+    "food_name": "Cocoyam",
+    "nutrients": {
+      "calories_kcal": 101.99679612867142,
+      "protein_g": 2.492253371980455,
+      "fat_g": 0.34467333867814803,
+      "carbs_g": 21.131126994344918,
+      "fiber_g": 2.2006067007912526,
+      "sodium_mg": 8.616833466953699,
+      "calcium_mg": 14.9800335656272,
+      "iron_mg": 0.8086566792064241
+    }
+  },
+  "35": {
+    "code": "35",
+    "food_name": "Plantains",
+    "nutrients": {
+      "calories_kcal": 116.83545567789075,
+      "protein_g": 1.108408141344699,
+      "fat_g": 2.0043713889316637,
+      "carbs_g": 22.05732201275951,
+      "fiber_g": 3.066595857720333,
+      "sodium_mg": 41.380570610202085,
+      "calcium_mg": 5.172571326275261,
+      "iron_mg": 0.5264938671387318
+    }
+  },
+  "NCT_35": {
+    "code": "35",
+    "food_name": "Plantains",
+    "nutrients": {
+      "calories_kcal": 116.83545567789075,
+      "protein_g": 1.108408141344699,
+      "fat_g": 2.0043713889316637,
+      "carbs_g": 22.05732201275951,
+      "fiber_g": 3.066595857720333,
+      "sodium_mg": 41.380570610202085,
+      "calcium_mg": 5.172571326275261,
+      "iron_mg": 0.5264938671387318
+    }
+  },
+  "36": {
+    "code": "36",
+    "food_name": "Sweet potatoes",
+    "nutrients": {
+      "calories_kcal": 89.59866671927766,
+      "protein_g": 1.2573333223660783,
+      "fat_g": 0.16399999856948846,
+      "carbs_g": 19.54333316286404,
+      "fiber_g": 2.459999978542327,
+      "sodium_mg": 20.22666649023691,
+      "calcium_mg": 28.42666641871133,
+      "iron_mg": 1.3803333212931945
+    }
+  },
+  "NCT_36": {
+    "code": "36",
+    "food_name": "Sweet potatoes",
+    "nutrients": {
+      "calories_kcal": 89.59866671927766,
+      "protein_g": 1.2573333223660783,
+      "fat_g": 0.16399999856948846,
+      "carbs_g": 19.54333316286404,
+      "fiber_g": 2.459999978542327,
+      "sodium_mg": 20.22666649023691,
+      "calcium_mg": 28.42666641871133,
+      "iron_mg": 1.3803333212931945
+    }
+  },
+  "37": {
+    "code": "37",
+    "food_name": "Potatoes",
+    "nutrients": {
+      "calories_kcal": 124.66221914980146,
+      "protein_g": 1.7422221925523544,
+      "fat_g": 3.6399999380111687,
+      "carbs_g": 20.253332988421114,
+      "fiber_g": 1.9599999666213983,
+      "sodium_mg": 60.9777767393324,
+      "calcium_mg": 6.844444327884249,
+      "iron_mg": 1.1199999809265135
+    }
+  },
+  "NCT_37": {
+    "code": "37",
+    "food_name": "Potatoes",
+    "nutrients": {
+      "calories_kcal": 124.66221914980146,
+      "protein_g": 1.7422221925523544,
+      "fat_g": 3.6399999380111687,
+      "carbs_g": 20.253332988421114,
+      "fiber_g": 1.9599999666213983,
+      "sodium_mg": 60.9777767393324,
+      "calcium_mg": 6.844444327884249,
+      "iron_mg": 1.1199999809265135
+    }
+  },
+  "40": {
+    "code": "40",
+    "food_name": "Soya beans",
+    "nutrients": {
+      "calories_kcal": 381.51000000000005,
+      "protein_g": 31.347,
+      "fat_g": 17.01,
+      "carbs_g": 14.094000000000001,
+      "fiber_g": 23.328,
+      "sodium_mg": 4.86,
+      "calcium_mg": 196.83,
+      "iron_mg": 6.561000000000001
+    }
+  },
+  "NCT_40": {
+    "code": "40",
+    "food_name": "Soya beans",
+    "nutrients": {
+      "calories_kcal": 381.51000000000005,
+      "protein_g": 31.347,
+      "fat_g": 17.01,
+      "carbs_g": 14.094000000000001,
+      "fiber_g": 23.328,
+      "sodium_mg": 4.86,
+      "calcium_mg": 196.83,
+      "iron_mg": 6.561000000000001
+    }
+  },
+  "41": {
+    "code": "41",
+    "food_name": "Brown beans",
+    "nutrients": {
+      "calories_kcal": 346.1692554092407,
+      "protein_g": 25.169500000000003,
+      "fat_g": 1.94975,
+      "carbs_g": 50.161750000000005,
+      "fiber_g": 13.64825,
+      "sodium_mg": 21.27,
+      "calcium_mg": 76.2175,
+      "iron_mg": 6.55825
+    }
+  },
+  "NCT_41": {
+    "code": "41",
+    "food_name": "Brown beans",
+    "nutrients": {
+      "calories_kcal": 346.1692554092407,
+      "protein_g": 25.169500000000003,
+      "fat_g": 1.94975,
+      "carbs_g": 50.161750000000005,
+      "fiber_g": 13.64825,
+      "sodium_mg": 21.27,
+      "calcium_mg": 76.2175,
+      "iron_mg": 6.55825
+    }
+  },
+  "42": {
+    "code": "42",
+    "food_name": "White beans",
+    "nutrients": {
+      "calories_kcal": 340.6094973564148,
+      "protein_g": 22.695749999999997,
+      "fat_g": 2.4254999999999995,
+      "carbs_g": 47.124,
+      "fiber_g": 19.7505,
+      "sodium_mg": 29.4525,
+      "calcium_mg": 121.27499999999999,
+      "iron_mg": 8.48925
+    }
+  },
+  "NCT_42": {
+    "code": "42",
+    "food_name": "White beans",
+    "nutrients": {
+      "calories_kcal": 340.6094973564148,
+      "protein_g": 22.695749999999997,
+      "fat_g": 2.4254999999999995,
+      "carbs_g": 47.124,
+      "fiber_g": 19.7505,
+      "sodium_mg": 29.4525,
+      "calcium_mg": 121.27499999999999,
+      "iron_mg": 8.48925
+    }
+  },
+  "43": {
+    "code": "43",
+    "food_name": "Groundnuts (Unshelled)",
+    "nutrients": {
+      "calories_kcal": 407.2559826660156,
+      "protein_g": 15.903999999999998,
+      "fat_g": 31.382,
+      "carbs_g": 12.354,
+      "fiber_g": 5.893,
+      "sodium_mg": 4.26,
+      "calcium_mg": 31.95,
+      "iron_mg": 2.485
+    }
+  },
+  "NCT_43": {
+    "code": "43",
+    "food_name": "Groundnuts (Unshelled)",
+    "nutrients": {
+      "calories_kcal": 407.2559826660156,
+      "protein_g": 15.903999999999998,
+      "fat_g": 31.382,
+      "carbs_g": 12.354,
+      "fiber_g": 5.893,
+      "sodium_mg": 4.26,
+      "calcium_mg": 31.95,
+      "iron_mg": 2.485
+    }
+  },
+  "44": {
+    "code": "44",
+    "food_name": "Groundnuts (Shelled)",
+    "nutrients": {
+      "calories_kcal": 573.5999755859375,
+      "protein_g": 22.4,
+      "fat_g": 44.2,
+      "carbs_g": 17.4,
+      "fiber_g": 8.3,
+      "sodium_mg": 6.0,
+      "calcium_mg": 45.0,
+      "iron_mg": 3.5
+    }
+  },
+  "NCT_44": {
+    "code": "44",
+    "food_name": "Groundnuts (Shelled)",
+    "nutrients": {
+      "calories_kcal": 573.5999755859375,
+      "protein_g": 22.4,
+      "fat_g": 44.2,
+      "carbs_g": 17.4,
+      "fiber_g": 8.3,
+      "sodium_mg": 6.0,
+      "calcium_mg": 45.0,
+      "iron_mg": 3.5
+    }
+  },
+  "46": {
+    "code": "46",
+    "food_name": "Coconut",
+    "nutrients": {
+      "calories_kcal": 244.13400168037413,
+      "protein_g": 2.6620000256432426,
+      "fat_g": 22.066000212563406,
+      "carbs_g": 5.566000053617688,
+      "fiber_g": 6.314000060823228,
+      "sodium_mg": 13.860000133514404,
+      "calcium_mg": 16.500000158945717,
+      "iron_mg": 1.7380000167422822
+    }
+  },
+  "NCT_46": {
+    "code": "46",
+    "food_name": "Coconut",
+    "nutrients": {
+      "calories_kcal": 244.13400168037413,
+      "protein_g": 2.6620000256432426,
+      "fat_g": 22.066000212563406,
+      "carbs_g": 5.566000053617688,
+      "fiber_g": 6.314000060823228,
+      "sodium_mg": 13.860000133514404,
+      "calcium_mg": 16.500000158945717,
+      "iron_mg": 1.7380000167422822
+    }
+  },
+  "47": {
+    "code": "47",
+    "food_name": "Kola nut",
+    "nutrients": {
+      "calories_kcal": 135.0,
+      "protein_g": 2.8,
+      "fat_g": 1.0,
+      "carbs_g": 20.2,
+      "fiber_g": 17.0,
+      "sodium_mg": 3.0,
+      "calcium_mg": 43.0,
+      "iron_mg": 2.1
+    }
+  },
+  "NCT_47": {
+    "code": "47",
+    "food_name": "Kola nut",
+    "nutrients": {
+      "calories_kcal": 135.0,
+      "protein_g": 2.8,
+      "fat_g": 1.0,
+      "carbs_g": 20.2,
+      "fiber_g": 17.0,
+      "sodium_mg": 3.0,
+      "calcium_mg": 43.0,
+      "iron_mg": 2.1
+    }
+  },
+  "48": {
+    "code": "48",
+    "food_name": "Cashew nut",
+    "nutrients": {
+      "calories_kcal": 591.2000122070312,
+      "protein_g": 16.1,
+      "fat_g": 45.4,
+      "carbs_g": 27.8,
+      "fiber_g": 3.5,
+      "sodium_mg": 95.0,
+      "calcium_mg": 48.0,
+      "iron_mg": 7.4
+    }
+  },
+  "NCT_48": {
+    "code": "48",
+    "food_name": "Cashew nut",
+    "nutrients": {
+      "calories_kcal": 591.2000122070312,
+      "protein_g": 16.1,
+      "fat_g": 45.4,
+      "carbs_g": 27.8,
+      "fiber_g": 3.5,
+      "sodium_mg": 95.0,
+      "calcium_mg": 48.0,
+      "iron_mg": 7.4
+    }
+  },
+  "50": {
+    "code": "50",
+    "food_name": "Palm oil",
+    "nutrients": {
+      "calories_kcal": 899.4000040690104,
+      "protein_g": 0.0,
+      "fat_g": 99.93333333333332,
+      "carbs_g": 0.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 0.0,
+      "calcium_mg": 0.5666666666666667,
+      "iron_mg": 0.2
+    }
+  },
+  "NCT_50": {
+    "code": "50",
+    "food_name": "Palm oil",
+    "nutrients": {
+      "calories_kcal": 899.4000040690104,
+      "protein_g": 0.0,
+      "fat_g": 99.93333333333332,
+      "carbs_g": 0.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 0.0,
+      "calcium_mg": 0.5666666666666667,
+      "iron_mg": 0.2
+    }
+  },
+  "51": {
+    "code": "51",
+    "food_name": "Butter/ Margarine",
+    "nutrients": {
+      "calories_kcal": 736.3333333333333,
+      "protein_g": 0.7999999999999999,
+      "fat_g": 81.13333333333333,
+      "carbs_g": 0.7333333333333333,
+      "fiber_g": 0.0,
+      "sodium_mg": 559.6666666666666,
+      "calcium_mg": 8.783333333333331,
+      "iron_mg": 0.0
+    }
+  },
+  "NCT_51": {
+    "code": "51",
+    "food_name": "Butter/ Margarine",
+    "nutrients": {
+      "calories_kcal": 736.3333333333333,
+      "protein_g": 0.7999999999999999,
+      "fat_g": 81.13333333333333,
+      "carbs_g": 0.7333333333333333,
+      "fiber_g": 0.0,
+      "sodium_mg": 559.6666666666666,
+      "calcium_mg": 8.783333333333331,
+      "iron_mg": 0.0
+    }
+  },
+  "52": {
+    "code": "52",
+    "food_name": "Groundnuts Oil",
+    "nutrients": {
+      "calories_kcal": 900.0,
+      "protein_g": 0.0,
+      "fat_g": 100.0,
+      "carbs_g": 0.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 0.0,
+      "calcium_mg": 0.0,
+      "iron_mg": 0.1
+    }
+  },
+  "NCT_52": {
+    "code": "52",
+    "food_name": "Groundnuts Oil",
+    "nutrients": {
+      "calories_kcal": 900.0,
+      "protein_g": 0.0,
+      "fat_g": 100.0,
+      "carbs_g": 0.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 0.0,
+      "calcium_mg": 0.0,
+      "iron_mg": 0.1
+    }
+  },
+  "56": {
+    "code": "56",
+    "food_name": "Animal fat",
+    "nutrients": {
+      "calories_kcal": 838.719970703125,
+      "protein_g": 2.23,
+      "fat_g": 92.2,
+      "carbs_g": 0.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 604.0,
+      "calcium_mg": 5.0,
+      "iron_mg": 0.23
+    }
+  },
+  "NCT_56": {
+    "code": "56",
+    "food_name": "Animal fat",
+    "nutrients": {
+      "calories_kcal": 838.719970703125,
+      "protein_g": 2.23,
+      "fat_g": 92.2,
+      "carbs_g": 0.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 604.0,
+      "calcium_mg": 5.0,
+      "iron_mg": 0.23
+    }
+  },
+  "60": {
+    "code": "60",
+    "food_name": "Bananas",
+    "nutrients": {
+      "calories_kcal": 63.04600005054473,
+      "protein_g": 0.6960000038146972,
+      "fat_g": 0.1740000009536743,
+      "carbs_g": 13.881333409415348,
+      "fiber_g": 1.5853333420223659,
+      "sodium_mg": 0.7733333375718857,
+      "calcium_mg": 3.673333353466457,
+      "iron_mg": 0.3093333350287543
+    }
+  },
+  "NCT_60": {
+    "code": "60",
+    "food_name": "Bananas",
+    "nutrients": {
+      "calories_kcal": 63.04600005054473,
+      "protein_g": 0.6960000038146972,
+      "fat_g": 0.1740000009536743,
+      "carbs_g": 13.881333409415348,
+      "fiber_g": 1.5853333420223659,
+      "sodium_mg": 0.7733333375718857,
+      "calcium_mg": 3.673333353466457,
+      "iron_mg": 0.3093333350287543
+    }
+  },
+  "61": {
+    "code": "61",
+    "food_name": "Orange/tangerine",
+    "nutrients": {
+      "calories_kcal": 35.47499942779541,
+      "protein_g": 0.6000000000000001,
+      "fat_g": 0.22500000000000003,
+      "carbs_g": 7.125,
+      "fiber_g": 1.275,
+      "sodium_mg": 1.125,
+      "calcium_mg": 22.125,
+      "iron_mg": 0.11250000000000002
+    }
+  },
+  "NCT_61": {
+    "code": "61",
+    "food_name": "Orange/tangerine",
+    "nutrients": {
+      "calories_kcal": 35.47499942779541,
+      "protein_g": 0.6000000000000001,
+      "fat_g": 0.22500000000000003,
+      "carbs_g": 7.125,
+      "fiber_g": 1.275,
+      "sodium_mg": 1.125,
+      "calcium_mg": 22.125,
+      "iron_mg": 0.11250000000000002
+    }
+  },
+  "62": {
+    "code": "62",
+    "food_name": "Mangoes",
+    "nutrients": {
+      "calories_kcal": 47.04933263365425,
+      "protein_g": 0.44966665307680764,
+      "fat_g": 0.14199999570846558,
+      "carbs_g": 10.342333020766576,
+      "fiber_g": 1.301666627327601,
+      "sodium_mg": 1.1833332975705464,
+      "calcium_mg": 8.756666402022043,
+      "iron_mg": 0.21299999356269836
+    }
+  },
+  "NCT_62": {
+    "code": "62",
+    "food_name": "Mangoes",
+    "nutrients": {
+      "calories_kcal": 47.04933263365425,
+      "protein_g": 0.44966665307680764,
+      "fat_g": 0.14199999570846558,
+      "carbs_g": 10.342333020766576,
+      "fiber_g": 1.301666627327601,
+      "sodium_mg": 1.1833332975705464,
+      "calcium_mg": 8.756666402022043,
+      "iron_mg": 0.21299999356269836
+    }
+  },
+  "63": {
+    "code": "63",
+    "food_name": "Avocado pear",
+    "nutrients": {
+      "calories_kcal": 110.75999665260315,
+      "protein_g": 1.1359999656677247,
+      "fat_g": 10.507999682426453,
+      "carbs_g": 1.4909999549388886,
+      "fiber_g": 2.8399999141693115,
+      "sodium_mg": 2.8399999141693115,
+      "calcium_mg": 9.93999969959259,
+      "iron_mg": 0.9229999721050263
+    }
+  },
+  "NCT_63": {
+    "code": "63",
+    "food_name": "Avocado pear",
+    "nutrients": {
+      "calories_kcal": 110.75999665260315,
+      "protein_g": 1.1359999656677247,
+      "fat_g": 10.507999682426453,
+      "carbs_g": 1.4909999549388886,
+      "fiber_g": 2.8399999141693115,
+      "sodium_mg": 2.8399999141693115,
+      "calcium_mg": 9.93999969959259,
+      "iron_mg": 0.9229999721050263
+    }
+  },
+  "64": {
+    "code": "64",
+    "food_name": "Pineapples",
+    "nutrients": {
+      "calories_kcal": 35.76799933862685,
+      "protein_g": 0.27200000286102294,
+      "fat_g": 0.13600000143051147,
+      "carbs_g": 7.752000081539154,
+      "fiber_g": 1.2240000128746034,
+      "sodium_mg": 1.3600000143051147,
+      "calcium_mg": 14.960000157356262,
+      "iron_mg": 0.40800000429153443
+    }
+  },
+  "NCT_64": {
+    "code": "64",
+    "food_name": "Pineapples",
+    "nutrients": {
+      "calories_kcal": 35.76799933862685,
+      "protein_g": 0.27200000286102294,
+      "fat_g": 0.13600000143051147,
+      "carbs_g": 7.752000081539154,
+      "fiber_g": 1.2240000128746034,
+      "sodium_mg": 1.3600000143051147,
+      "calcium_mg": 14.960000157356262,
+      "iron_mg": 0.40800000429153443
+    }
+  },
+  "65": {
+    "code": "65",
+    "food_name": "Fruit canned",
+    "nutrients": {
+      "calories_kcal": 73.30000305175781,
+      "protein_g": 0.4,
+      "fat_g": 0.1,
+      "carbs_g": 17.2,
+      "fiber_g": 1.0,
+      "sodium_mg": 6.0,
+      "calcium_mg": 6.0,
+      "iron_mg": 0.3
+    }
+  },
+  "NCT_65": {
+    "code": "65",
+    "food_name": "Fruit canned",
+    "nutrients": {
+      "calories_kcal": 73.30000305175781,
+      "protein_g": 0.4,
+      "fat_g": 0.1,
+      "carbs_g": 17.2,
+      "fiber_g": 1.0,
+      "sodium_mg": 6.0,
+      "calcium_mg": 6.0,
+      "iron_mg": 0.3
+    }
+  },
+  "66": {
+    "code": "66",
+    "food_name": "Other fruits",
+    "nutrients": {
+      "calories_kcal": 81.04512013080598,
+      "protein_g": 0.8098400048017503,
+      "fat_g": 0.24448000144958504,
+      "carbs_g": 17.26640010237694,
+      "fiber_g": 3.2699200193881994,
+      "sodium_mg": 5.04240002989769,
+      "calcium_mg": 18.183200107812887,
+      "iron_mg": 1.0390400061607363
+    }
+  },
+  "NCT_66": {
+    "code": "66",
+    "food_name": "Other fruits",
+    "nutrients": {
+      "calories_kcal": 81.04512013080598,
+      "protein_g": 0.8098400048017503,
+      "fat_g": 0.24448000144958504,
+      "carbs_g": 17.26640010237694,
+      "fiber_g": 3.2699200193881994,
+      "sodium_mg": 5.04240002989769,
+      "calcium_mg": 18.183200107812887,
+      "iron_mg": 1.0390400061607363
+    }
+  },
+  "67": {
+    "code": "67",
+    "food_name": "Pawpaw",
+    "nutrients": {
+      "calories_kcal": 36.394000752925876,
+      "protein_g": 0.24800000190734864,
+      "fat_g": 0.06200000047683716,
+      "carbs_g": 8.06000006198883,
+      "fiber_g": 1.3020000100135805,
+      "sodium_mg": 2.4800000190734863,
+      "calcium_mg": 13.020000100135803,
+      "iron_mg": 0.4960000038146973
+    }
+  },
+  "NCT_67": {
+    "code": "67",
+    "food_name": "Pawpaw",
+    "nutrients": {
+      "calories_kcal": 36.394000752925876,
+      "protein_g": 0.24800000190734864,
+      "fat_g": 0.06200000047683716,
+      "carbs_g": 8.06000006198883,
+      "fiber_g": 1.3020000100135805,
+      "sodium_mg": 2.4800000190734863,
+      "calcium_mg": 13.020000100135803,
+      "iron_mg": 0.4960000038146973
+    }
+  },
+  "68": {
+    "code": "68",
+    "food_name": "Watermelon",
+    "nutrients": {
+      "calories_kcal": 13.585000714063654,
+      "protein_g": 0.2750000059604645,
+      "fat_g": 0.0550000011920929,
+      "carbs_g": 2.7500000596046448,
+      "fiber_g": 0.4950000107288361,
+      "sodium_mg": 2.200000047683716,
+      "calcium_mg": 3.8500000834465027,
+      "iron_mg": 0.16500000357627867
+    }
+  },
+  "NCT_68": {
+    "code": "68",
+    "food_name": "Watermelon",
+    "nutrients": {
+      "calories_kcal": 13.585000714063654,
+      "protein_g": 0.2750000059604645,
+      "fat_g": 0.0550000011920929,
+      "carbs_g": 2.7500000596046448,
+      "fiber_g": 0.4950000107288361,
+      "sodium_mg": 2.200000047683716,
+      "calcium_mg": 3.8500000834465027,
+      "iron_mg": 0.16500000357627867
+    }
+  },
+  "69": {
+    "code": "69",
+    "food_name": "Apples",
+    "nutrients": {
+      "calories_kcal": 53.60999880870182,
+      "protein_g": 0.2099999944368998,
+      "fat_g": 0.449999988079071,
+      "carbs_g": 11.099999705950417,
+      "fiber_g": 2.1599999427795407,
+      "sodium_mg": 2.99999992052714,
+      "calcium_mg": 4.49999988079071,
+      "iron_mg": 0.299999992052714
+    }
+  },
+  "NCT_69": {
+    "code": "69",
+    "food_name": "Apples",
+    "nutrients": {
+      "calories_kcal": 53.60999880870182,
+      "protein_g": 0.2099999944368998,
+      "fat_g": 0.449999988079071,
+      "carbs_g": 11.099999705950417,
+      "fiber_g": 2.1599999427795407,
+      "sodium_mg": 2.99999992052714,
+      "calcium_mg": 4.49999988079071,
+      "iron_mg": 0.299999992052714
+    }
+  },
+  "70": {
+    "code": "70",
+    "food_name": "Tomatoes",
+    "nutrients": {
+      "calories_kcal": 19.854119945697782,
+      "protein_g": 0.9718799843788146,
+      "fat_g": 0.1388399977684021,
+      "carbs_g": 3.0544799509048466,
+      "fiber_g": 1.249559979915619,
+      "sodium_mg": 9.718799843788148,
+      "calcium_mg": 11.801399810314178,
+      "iron_mg": 0.5206499916315078
+    }
+  },
+  "NCT_70": {
+    "code": "70",
+    "food_name": "Tomatoes",
+    "nutrients": {
+      "calories_kcal": 19.854119945697782,
+      "protein_g": 0.9718799843788146,
+      "fat_g": 0.1388399977684021,
+      "carbs_g": 3.0544799509048466,
+      "fiber_g": 1.249559979915619,
+      "sodium_mg": 9.718799843788148,
+      "calcium_mg": 11.801399810314178,
+      "iron_mg": 0.5206499916315078
+    }
+  },
+  "71": {
+    "code": "71",
+    "food_name": "Tomato puree (canned)",
+    "nutrients": {
+      "calories_kcal": 17.600000381469727,
+      "protein_g": 1.0,
+      "fat_g": 0.2,
+      "carbs_g": 2.0,
+      "fiber_g": 1.9,
+      "sodium_mg": 99.0,
+      "calcium_mg": 25.0,
+      "iron_mg": 0.6
+    }
+  },
+  "NCT_71": {
+    "code": "71",
+    "food_name": "Tomato puree (canned)",
+    "nutrients": {
+      "calories_kcal": 17.600000381469727,
+      "protein_g": 1.0,
+      "fat_g": 0.2,
+      "carbs_g": 2.0,
+      "fiber_g": 1.9,
+      "sodium_mg": 99.0,
+      "calcium_mg": 25.0,
+      "iron_mg": 0.6
+    }
+  },
+  "72": {
+    "code": "72",
+    "food_name": "Onions",
+    "nutrients": {
+      "calories_kcal": 32.60238072297096,
+      "protein_g": 0.9987600054740905,
+      "fat_g": 0.07134000039100648,
+      "carbs_g": 6.206580034017562,
+      "fiber_g": 1.5694800086021423,
+      "sodium_mg": 6.420600035190582,
+      "calcium_mg": 20.688600113391875,
+      "iron_mg": 0.5097243027937413
+    }
+  },
+  "NCT_72": {
+    "code": "72",
+    "food_name": "Onions",
+    "nutrients": {
+      "calories_kcal": 32.60238072297096,
+      "protein_g": 0.9987600054740905,
+      "fat_g": 0.07134000039100648,
+      "carbs_g": 6.206580034017562,
+      "fiber_g": 1.5694800086021423,
+      "sodium_mg": 6.420600035190582,
+      "calcium_mg": 20.688600113391875,
+      "iron_mg": 0.5097243027937413
+    }
+  },
+  "73": {
+    "code": "73",
+    "food_name": "Garden eggs/egg plant",
+    "nutrients": {
+      "calories_kcal": 24.478850620425046,
+      "protein_g": 0.8827324959784745,
+      "fat_g": 0.2376587489172816,
+      "carbs_g": 3.1235149857699867,
+      "fiber_g": 3.1574662356153134,
+      "sodium_mg": 2.716099987626076,
+      "calcium_mg": 10.864399950504303,
+      "iron_mg": 0.9506349956691263
+    }
+  },
+  "NCT_73": {
+    "code": "73",
+    "food_name": "Garden eggs/egg plant",
+    "nutrients": {
+      "calories_kcal": 24.478850620425046,
+      "protein_g": 0.8827324959784745,
+      "fat_g": 0.2376587489172816,
+      "carbs_g": 3.1235149857699867,
+      "fiber_g": 3.1574662356153134,
+      "sodium_mg": 2.716099987626076,
+      "calcium_mg": 10.864399950504303,
+      "iron_mg": 0.9506349956691263
+    }
+  },
+  "74": {
+    "code": "74",
+    "food_name": "Okra - fresh",
+    "nutrients": {
+      "calories_kcal": 29.063999454259868,
+      "protein_g": 1.4532000160217287,
+      "fat_g": 0.18165000200271608,
+      "carbs_g": 3.6330000400543216,
+      "fiber_g": 3.542175039052963,
+      "sodium_mg": 8.628375095129012,
+      "calcium_mg": 73.5682508111,
+      "iron_mg": 0.5903625065088273
+    }
+  },
+  "NCT_74": {
+    "code": "74",
+    "food_name": "Okra - fresh",
+    "nutrients": {
+      "calories_kcal": 29.063999454259868,
+      "protein_g": 1.4532000160217287,
+      "fat_g": 0.18165000200271608,
+      "carbs_g": 3.6330000400543216,
+      "fiber_g": 3.542175039052963,
+      "sodium_mg": 8.628375095129012,
+      "calcium_mg": 73.5682508111,
+      "iron_mg": 0.5903625065088273
+    }
+  },
+  "75": {
+    "code": "75",
+    "food_name": "Okra - dried",
+    "nutrients": {
+      "calories_kcal": 244.3000030517578,
+      "protein_g": 12.8,
+      "fat_g": 1.7,
+      "carbs_g": 21.8,
+      "fiber_g": 45.3,
+      "sodium_mg": 77.0,
+      "calcium_mg": 781.0,
+      "iron_mg": 6.4
+    }
+  },
+  "NCT_75": {
+    "code": "75",
+    "food_name": "Okra - dried",
+    "nutrients": {
+      "calories_kcal": 244.3000030517578,
+      "protein_g": 12.8,
+      "fat_g": 1.7,
+      "carbs_g": 21.8,
+      "fiber_g": 45.3,
+      "sodium_mg": 77.0,
+      "calcium_mg": 781.0,
+      "iron_mg": 6.4
+    }
+  },
+  "76": {
+    "code": "76",
+    "food_name": "Fresh Pepper",
+    "nutrients": {
+      "calories_kcal": 33.06000049263239,
+      "protein_g": 1.1484000171124935,
+      "fat_g": 0.48720000725984575,
+      "carbs_g": 5.04600007519126,
+      "fiber_g": 1.948800029039383,
+      "sodium_mg": 6.9600001037120816,
+      "calcium_mg": 19.314000287801026,
+      "iron_mg": 1.0788000160753728
+    }
+  },
+  "NCT_76": {
+    "code": "76",
+    "food_name": "Fresh Pepper",
+    "nutrients": {
+      "calories_kcal": 33.06000049263239,
+      "protein_g": 1.1484000171124935,
+      "fat_g": 0.48720000725984575,
+      "carbs_g": 5.04600007519126,
+      "fiber_g": 1.948800029039383,
+      "sodium_mg": 6.9600001037120816,
+      "calcium_mg": 19.314000287801026,
+      "iron_mg": 1.0788000160753728
+    }
+  },
+  "77": {
+    "code": "77",
+    "food_name": "Dry Pepper",
+    "nutrients": {
+      "calories_kcal": 346.5,
+      "protein_g": 15.0,
+      "fat_g": 15.5,
+      "carbs_g": 21.2,
+      "fiber_g": 31.1,
+      "sodium_mg": 20.0,
+      "calcium_mg": 150.0,
+      "iron_mg": 12.6
+    }
+  },
+  "NCT_77": {
+    "code": "77",
+    "food_name": "Dry Pepper",
+    "nutrients": {
+      "calories_kcal": 346.5,
+      "protein_g": 15.0,
+      "fat_g": 15.5,
+      "carbs_g": 21.2,
+      "fiber_g": 31.1,
+      "sodium_mg": 20.0,
+      "calcium_mg": 150.0,
+      "iron_mg": 12.6
+    }
+  },
+  "78": {
+    "code": "78",
+    "food_name": "Leaves (Cocoyam, Spinach, etc",
+    "nutrients": {
+      "calories_kcal": 55.831442597235224,
+      "protein_g": 5.107295016112355,
+      "fat_g": 0.6237723225062446,
+      "carbs_g": 4.23655977408323,
+      "fiber_g": 6.421035907594895,
+      "sodium_mg": 28.52243499825698,
+      "calcium_mg": 257.43822092581803,
+      "iron_mg": 4.8305437856779525
+    }
+  },
+  "NCT_78": {
+    "code": "78",
+    "food_name": "Leaves (Cocoyam, Spinach, etc",
+    "nutrients": {
+      "calories_kcal": 55.831442597235224,
+      "protein_g": 5.107295016112355,
+      "fat_g": 0.6237723225062446,
+      "carbs_g": 4.23655977408323,
+      "fiber_g": 6.421035907594895,
+      "sodium_mg": 28.52243499825698,
+      "calcium_mg": 257.43822092581803,
+      "iron_mg": 4.8305437856779525
+    }
+  },
+  "79": {
+    "code": "79",
+    "food_name": "Other vegetables (fresh or canned)",
+    "nutrients": {
+      "calories_kcal": 25.53370791110836,
+      "protein_g": 1.1146248115980923,
+      "fat_g": 0.14666115942080163,
+      "carbs_g": 3.6885281594331603,
+      "fiber_g": 2.5005727681246674,
+      "sodium_mg": 15.98606637686738,
+      "calcium_mg": 31.45881869576195,
+      "iron_mg": 6.915073666690799
+    }
+  },
+  "NCT_79": {
+    "code": "79",
+    "food_name": "Other vegetables (fresh or canned)",
+    "nutrients": {
+      "calories_kcal": 25.53370791110836,
+      "protein_g": 1.1146248115980923,
+      "fat_g": 0.14666115942080163,
+      "carbs_g": 3.6885281594331603,
+      "fiber_g": 2.5005727681246674,
+      "sodium_mg": 15.98606637686738,
+      "calcium_mg": 31.45881869576195,
+      "iron_mg": 6.915073666690799
+    }
+  },
+  "80": {
+    "code": "80",
+    "food_name": "Chicken",
+    "nutrients": {
+      "calories_kcal": 157.3117180926853,
+      "protein_g": 20.40012277777778,
+      "fat_g": 8.38620388888889,
+      "carbs_g": 0.058848333333333336,
+      "fiber_g": 0.0,
+      "sodium_mg": 32.062850000000005,
+      "calcium_mg": 11.257116666666667,
+      "iron_mg": 0.7909722222222222
+    }
+  },
+  "NCT_80": {
+    "code": "80",
+    "food_name": "Chicken",
+    "nutrients": {
+      "calories_kcal": 157.3117180926853,
+      "protein_g": 20.40012277777778,
+      "fat_g": 8.38620388888889,
+      "carbs_g": 0.058848333333333336,
+      "fiber_g": 0.0,
+      "sodium_mg": 32.062850000000005,
+      "calcium_mg": 11.257116666666667,
+      "iron_mg": 0.7909722222222222
+    }
+  },
+  "81": {
+    "code": "81",
+    "food_name": "Duck",
+    "nutrients": {
+      "calories_kcal": 138.28799591064453,
+      "protein_g": 11.658,
+      "fat_g": 10.184,
+      "carbs_g": 0.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 37.52,
+      "calcium_mg": 3.35,
+      "iron_mg": 2.7872000000000003
+    }
+  },
+  "NCT_81": {
+    "code": "81",
+    "food_name": "Duck",
+    "nutrients": {
+      "calories_kcal": 138.28799591064453,
+      "protein_g": 11.658,
+      "fat_g": 10.184,
+      "carbs_g": 0.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 37.52,
+      "calcium_mg": 3.35,
+      "iron_mg": 2.7872000000000003
+    }
+  },
+  "83": {
+    "code": "83",
+    "food_name": "Agricultural eggs",
+    "nutrients": {
+      "calories_kcal": 162.08224898660183,
+      "protein_g": 12.669250032305719,
+      "fat_g": 11.921250030398369,
+      "carbs_g": 1.0285000026226045,
+      "fiber_g": 0.0,
+      "sodium_mg": 149.13250038027763,
+      "calcium_mg": 49.087500125169754,
+      "iron_mg": 1.9635000050067903
+    }
+  },
+  "NCT_83": {
+    "code": "83",
+    "food_name": "Agricultural eggs",
+    "nutrients": {
+      "calories_kcal": 162.08224898660183,
+      "protein_g": 12.669250032305719,
+      "fat_g": 11.921250030398369,
+      "carbs_g": 1.0285000026226045,
+      "fiber_g": 0.0,
+      "sodium_mg": 149.13250038027763,
+      "calcium_mg": 49.087500125169754,
+      "iron_mg": 1.9635000050067903
+    }
+  },
+  "84": {
+    "code": "84",
+    "food_name": "Local eggs",
+    "nutrients": {
+      "calories_kcal": 128.41200601387027,
+      "protein_g": 11.049000060558319,
+      "fat_g": 9.048000049591066,
+      "carbs_g": 0.6960000038146973,
+      "fiber_g": 0.0,
+      "sodium_mg": 136.59000074863434,
+      "calcium_mg": 60.03000032901764,
+      "iron_mg": 1.7400000095367432
+    }
+  },
+  "NCT_84": {
+    "code": "84",
+    "food_name": "Local eggs",
+    "nutrients": {
+      "calories_kcal": 128.41200601387027,
+      "protein_g": 11.049000060558319,
+      "fat_g": 9.048000049591066,
+      "carbs_g": 0.6960000038146973,
+      "fiber_g": 0.0,
+      "sodium_mg": 136.59000074863434,
+      "calcium_mg": 60.03000032901764,
+      "iron_mg": 1.7400000095367432
+    }
+  },
+  "90": {
+    "code": "90",
+    "food_name": "Beef",
+    "nutrients": {
+      "calories_kcal": 211.06349552381297,
+      "protein_g": 19.017413712441844,
+      "fat_g": 14.96410820296218,
+      "carbs_g": 0.07921769725367427,
+      "fiber_g": 0.0,
+      "sodium_mg": 72.70806908804624,
+      "calcium_mg": 13.363681101924179,
+      "iron_mg": 1.5372825597488384
+    }
+  },
+  "NCT_90": {
+    "code": "90",
+    "food_name": "Beef",
+    "nutrients": {
+      "calories_kcal": 211.06349552381297,
+      "protein_g": 19.017413712441844,
+      "fat_g": 14.96410820296218,
+      "carbs_g": 0.07921769725367427,
+      "fiber_g": 0.0,
+      "sodium_mg": 72.70806908804624,
+      "calcium_mg": 13.363681101924179,
+      "iron_mg": 1.5372825597488384
+    }
+  },
+  "91": {
+    "code": "91",
+    "food_name": "Mutton",
+    "nutrients": {
+      "calories_kcal": 176.4080535090108,
+      "protein_g": 12.66045570042254,
+      "fat_g": 13.919893111210657,
+      "carbs_g": 0.12179744507621727,
+      "fiber_g": 0.0,
+      "sodium_mg": 40.365919208593134,
+      "calcium_mg": 7.355356346269431,
+      "iron_mg": 1.7651991419379427
+    }
+  },
+  "NCT_91": {
+    "code": "91",
+    "food_name": "Mutton",
+    "nutrients": {
+      "calories_kcal": 176.4080535090108,
+      "protein_g": 12.66045570042254,
+      "fat_g": 13.919893111210657,
+      "carbs_g": 0.12179744507621727,
+      "fiber_g": 0.0,
+      "sodium_mg": 40.365919208593134,
+      "calcium_mg": 7.355356346269431,
+      "iron_mg": 1.7651991419379427
+    }
+  },
+  "92": {
+    "code": "92",
+    "food_name": "Pork",
+    "nutrients": {
+      "calories_kcal": 251.86665852864581,
+      "protein_g": 16.266666666666662,
+      "fat_g": 20.755555555555553,
+      "carbs_g": 0.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 43.1111111111111,
+      "calcium_mg": 8.444444444444443,
+      "iron_mg": 1.8888888888888886
+    }
+  },
+  "NCT_92": {
+    "code": "92",
+    "food_name": "Pork",
+    "nutrients": {
+      "calories_kcal": 251.86665852864581,
+      "protein_g": 16.266666666666662,
+      "fat_g": 20.755555555555553,
+      "carbs_g": 0.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 43.1111111111111,
+      "calcium_mg": 8.444444444444443,
+      "iron_mg": 1.8888888888888886
+    }
+  },
+  "93": {
+    "code": "93",
+    "food_name": "Goat",
+    "nutrients": {
+      "calories_kcal": 96.15660706870894,
+      "protein_g": 11.496081079818582,
+      "fat_g": 5.574697942203944,
+      "carbs_g": 0.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 54.63758679672522,
+      "calcium_mg": 16.502215301548993,
+      "iron_mg": 1.4283430050920554
+    }
+  },
+  "NCT_93": {
+    "code": "93",
+    "food_name": "Goat",
+    "nutrients": {
+      "calories_kcal": 96.15660706870894,
+      "protein_g": 11.496081079818582,
+      "fat_g": 5.574697942203944,
+      "carbs_g": 0.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 54.63758679672522,
+      "calcium_mg": 16.502215301548993,
+      "iron_mg": 1.4283430050920554
+    }
+  },
+  "94": {
+    "code": "94",
+    "food_name": "Wild game/bush  meat",
+    "nutrients": {
+      "calories_kcal": 111.58233608669703,
+      "protein_g": 23.277333333333328,
+      "fat_g": 2.0525555555555552,
+      "carbs_g": 0.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 41.27666666666666,
+      "calcium_mg": 2.706666666666666,
+      "iron_mg": 3.1577777777777767
+    }
+  },
+  "NCT_94": {
+    "code": "94",
+    "food_name": "Wild game/bush  meat",
+    "nutrients": {
+      "calories_kcal": 111.58233608669703,
+      "protein_g": 23.277333333333328,
+      "fat_g": 2.0525555555555552,
+      "carbs_g": 0.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 41.27666666666666,
+      "calcium_mg": 2.706666666666666,
+      "iron_mg": 3.1577777777777767
+    }
+  },
+  "96": {
+    "code": "96",
+    "food_name": "Other meat (excluding poultry)",
+    "nutrients": {
+      "calories_kcal": 88.98309162978886,
+      "protein_g": 14.711489949166774,
+      "fat_g": 3.348569988429546,
+      "carbs_g": 0.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 26.185499909520146,
+      "calcium_mg": 20.31359992980957,
+      "iron_mg": 1.1108999961614607
+    }
+  },
+  "NCT_96": {
+    "code": "96",
+    "food_name": "Other meat (excluding poultry)",
+    "nutrients": {
+      "calories_kcal": 88.98309162978886,
+      "protein_g": 14.711489949166774,
+      "fat_g": 3.348569988429546,
+      "carbs_g": 0.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 26.185499909520146,
+      "calcium_mg": 20.31359992980957,
+      "iron_mg": 1.1108999961614607
+    }
+  },
+  "100": {
+    "code": "100",
+    "food_name": "Fish - fresh",
+    "nutrients": {
+      "calories_kcal": 54.533706665300095,
+      "protein_g": 9.594870602927783,
+      "fat_g": 1.7949138954582922,
+      "carbs_g": 0.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 33.76021871016405,
+      "calcium_mg": 31.27901420761876,
+      "iron_mg": 0.6968489241191018
+    }
+  },
+  "NCT_100": {
+    "code": "100",
+    "food_name": "Fish - fresh",
+    "nutrients": {
+      "calories_kcal": 54.533706665300095,
+      "protein_g": 9.594870602927783,
+      "fat_g": 1.7949138954582922,
+      "carbs_g": 0.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 33.76021871016405,
+      "calcium_mg": 31.27901420761876,
+      "iron_mg": 0.6968489241191018
+    }
+  },
+  "101": {
+    "code": "101",
+    "food_name": "Fish - frozen",
+    "nutrients": {
+      "calories_kcal": 55.04123089656224,
+      "protein_g": 9.723479297067263,
+      "fat_g": 1.794146063545007,
+      "carbs_g": 0.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 34.55287608183682,
+      "calcium_mg": 30.874027686555255,
+      "iron_mg": 0.6933214283415248
+    }
+  },
+  "NCT_101": {
+    "code": "101",
+    "food_name": "Fish - frozen",
+    "nutrients": {
+      "calories_kcal": 55.04123089656224,
+      "protein_g": 9.723479297067263,
+      "fat_g": 1.794146063545007,
+      "carbs_g": 0.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 34.55287608183682,
+      "calcium_mg": 30.874027686555255,
+      "iron_mg": 0.6933214283415248
+    }
+  },
+  "102": {
+    "code": "102",
+    "food_name": "Fish - smoked",
+    "nutrients": {
+      "calories_kcal": 56.90880126953125,
+      "protein_g": 13.104,
+      "fat_g": 0.4992,
+      "carbs_g": 0.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 396.76,
+      "calcium_mg": 25.48,
+      "iron_mg": 0.728
+    }
+  },
+  "NCT_102": {
+    "code": "102",
+    "food_name": "Fish - smoked",
+    "nutrients": {
+      "calories_kcal": 56.90880126953125,
+      "protein_g": 13.104,
+      "fat_g": 0.4992,
+      "carbs_g": 0.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 396.76,
+      "calcium_mg": 25.48,
+      "iron_mg": 0.728
+    }
+  },
+  "103": {
+    "code": "103",
+    "food_name": "Fish - dried",
+    "nutrients": {
+      "calories_kcal": 236.54999542236328,
+      "protein_g": 45.3,
+      "fat_g": 6.1499999999999995,
+      "carbs_g": 0.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 110.25,
+      "calcium_mg": 1454.25,
+      "iron_mg": 5.550000000000001
+    }
+  },
+  "NCT_103": {
+    "code": "103",
+    "food_name": "Fish - dried",
+    "nutrients": {
+      "calories_kcal": 236.54999542236328,
+      "protein_g": 45.3,
+      "fat_g": 6.1499999999999995,
+      "carbs_g": 0.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 110.25,
+      "calcium_mg": 1454.25,
+      "iron_mg": 5.550000000000001
+    }
+  },
+  "104": {
+    "code": "104",
+    "food_name": "Snails",
+    "nutrients": {
+      "calories_kcal": 38.806063418474054,
+      "protein_g": 7.1052501004189255,
+      "fat_g": 0.12731250179931522,
+      "carbs_g": 2.309812532644719,
+      "fiber_g": 0.0,
+      "sodium_mg": 46.56000065803528,
+      "calcium_mg": 19.763750279322267,
+      "iron_mg": 1.2125000171363354
+    }
+  },
+  "NCT_104": {
+    "code": "104",
+    "food_name": "Snails",
+    "nutrients": {
+      "calories_kcal": 38.806063418474054,
+      "protein_g": 7.1052501004189255,
+      "fat_g": 0.12731250179931522,
+      "carbs_g": 2.309812532644719,
+      "fiber_g": 0.0,
+      "sodium_mg": 46.56000065803528,
+      "calcium_mg": 19.763750279322267,
+      "iron_mg": 1.2125000171363354
+    }
+  },
+  "105": {
+    "code": "105",
+    "food_name": "Seafood (lobster, crab, prawns, etc)",
+    "nutrients": {
+      "calories_kcal": 33.76953092511743,
+      "protein_g": 6.780921750638636,
+      "fat_g": 0.4476874917894602,
+      "carbs_g": 0.6541640500426293,
+      "fiber_g": 0.0,
+      "sodium_mg": 88.22531088195743,
+      "calcium_mg": 20.416093375571077,
+      "iron_mg": 0.5526624898642303
+    }
+  },
+  "NCT_105": {
+    "code": "105",
+    "food_name": "Seafood (lobster, crab, prawns, etc)",
+    "nutrients": {
+      "calories_kcal": 33.76953092511743,
+      "protein_g": 6.780921750638636,
+      "fat_g": 0.4476874917894602,
+      "carbs_g": 0.6541640500426293,
+      "fiber_g": 0.0,
+      "sodium_mg": 88.22531088195743,
+      "calcium_mg": 20.416093375571077,
+      "iron_mg": 0.5526624898642303
+    }
+  },
+  "106": {
+    "code": "106",
+    "food_name": "Canned fish/seafood",
+    "nutrients": {
+      "calories_kcal": 94.32600376749042,
+      "protein_g": 19.671000534296034,
+      "fat_g": 1.7380000472068788,
+      "carbs_g": 0.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 238.58000648021698,
+      "calcium_mg": 8.690000236034393,
+      "iron_mg": 1.0270000278949738
+    }
+  },
+  "NCT_106": {
+    "code": "106",
+    "food_name": "Canned fish/seafood",
+    "nutrients": {
+      "calories_kcal": 94.32600376749042,
+      "protein_g": 19.671000534296034,
+      "fat_g": 1.7380000472068788,
+      "carbs_g": 0.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 238.58000648021698,
+      "calcium_mg": 8.690000236034393,
+      "iron_mg": 1.0270000278949738
+    }
+  },
+  "107": {
+    "code": "107",
+    "food_name": "Other fish or seafood",
+    "nutrients": {
+      "calories_kcal": 161.42262096405028,
+      "protein_g": 29.255999999999997,
+      "fat_g": 3.7461249999999997,
+      "carbs_g": 1.4029999999999998,
+      "fiber_g": 2.5357499999999997,
+      "sodium_mg": 156.91749999999996,
+      "calcium_mg": 633.244625,
+      "iron_mg": 9.789374999999998
+    }
+  },
+  "NCT_107": {
+    "code": "107",
+    "food_name": "Other fish or seafood",
+    "nutrients": {
+      "calories_kcal": 161.42262096405028,
+      "protein_g": 29.255999999999997,
+      "fat_g": 3.7461249999999997,
+      "carbs_g": 1.4029999999999998,
+      "fiber_g": 2.5357499999999997,
+      "sodium_mg": 156.91749999999996,
+      "calcium_mg": 633.244625,
+      "iron_mg": 9.789374999999998
+    }
+  },
+  "110": {
+    "code": "110",
+    "food_name": "Fresh milk",
+    "nutrients": {
+      "calories_kcal": 77.4000015258789,
+      "protein_g": 3.1,
+      "fat_g": 5.0,
+      "carbs_g": 5.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 45.0,
+      "calcium_mg": 191.0,
+      "iron_mg": 0.1
+    }
+  },
+  "NCT_110": {
+    "code": "110",
+    "food_name": "Fresh milk",
+    "nutrients": {
+      "calories_kcal": 77.4000015258789,
+      "protein_g": 3.1,
+      "fat_g": 5.0,
+      "carbs_g": 5.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 45.0,
+      "calcium_mg": 191.0,
+      "iron_mg": 0.1
+    }
+  },
+  "111": {
+    "code": "111",
+    "food_name": "Milk powder",
+    "nutrients": {
+      "calories_kcal": 424.90000915527344,
+      "protein_g": 31.1,
+      "fat_g": 13.9,
+      "carbs_g": 43.849999999999994,
+      "fiber_g": 0.0,
+      "sodium_mg": 424.0,
+      "calcium_mg": 1097.5,
+      "iron_mg": 0.8500000000000001
+    }
+  },
+  "NCT_111": {
+    "code": "111",
+    "food_name": "Milk powder",
+    "nutrients": {
+      "calories_kcal": 424.90000915527344,
+      "protein_g": 31.1,
+      "fat_g": 13.9,
+      "carbs_g": 43.849999999999994,
+      "fiber_g": 0.0,
+      "sodium_mg": 424.0,
+      "calcium_mg": 1097.5,
+      "iron_mg": 0.8500000000000001
+    }
+  },
+  "112": {
+    "code": "112",
+    "food_name": "Baby milk powder",
+    "nutrients": {
+      "calories_kcal": 497.5,
+      "protein_g": 15.05,
+      "fat_g": 23.7,
+      "carbs_g": 56.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 182.5,
+      "calcium_mg": 584.0,
+      "iron_mg": 8.9
+    }
+  },
+  "NCT_112": {
+    "code": "112",
+    "food_name": "Baby milk powder",
+    "nutrients": {
+      "calories_kcal": 497.5,
+      "protein_g": 15.05,
+      "fat_g": 23.7,
+      "carbs_g": 56.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 182.5,
+      "calcium_mg": 584.0,
+      "iron_mg": 8.9
+    }
+  },
+  "113": {
+    "code": "113",
+    "food_name": "Milk tinned (unsweetened)",
+    "nutrients": {
+      "calories_kcal": 157.39999389648438,
+      "protein_g": 7.4,
+      "fat_g": 8.6,
+      "carbs_g": 12.6,
+      "fiber_g": 0.0,
+      "sodium_mg": 106.0,
+      "calcium_mg": 258.0,
+      "iron_mg": 0.2
+    }
+  },
+  "NCT_113": {
+    "code": "113",
+    "food_name": "Milk tinned (unsweetened)",
+    "nutrients": {
+      "calories_kcal": 157.39999389648438,
+      "protein_g": 7.4,
+      "fat_g": 8.6,
+      "carbs_g": 12.6,
+      "fiber_g": 0.0,
+      "sodium_mg": 106.0,
+      "calcium_mg": 258.0,
+      "iron_mg": 0.2
+    }
+  },
+  "114": {
+    "code": "114",
+    "food_name": "Cheese (wara)",
+    "nutrients": {
+      "calories_kcal": 218.5,
+      "protein_g": 15.5,
+      "fat_g": 15.7,
+      "carbs_g": 3.8,
+      "fiber_g": 0.0,
+      "sodium_mg": 31.0,
+      "calcium_mg": 630.0,
+      "iron_mg": 1.1
+    }
+  },
+  "NCT_114": {
+    "code": "114",
+    "food_name": "Cheese (wara)",
+    "nutrients": {
+      "calories_kcal": 218.5,
+      "protein_g": 15.5,
+      "fat_g": 15.7,
+      "carbs_g": 3.8,
+      "fiber_g": 0.0,
+      "sodium_mg": 31.0,
+      "calcium_mg": 630.0,
+      "iron_mg": 1.1
+    }
+  },
+  "115": {
+    "code": "115",
+    "food_name": "Other milk products",
+    "nutrients": {
+      "calories_kcal": 71.75000095367432,
+      "protein_g": 3.7,
+      "fat_g": 3.5500000000000003,
+      "carbs_g": 6.25,
+      "fiber_g": 0.0,
+      "sodium_mg": 46.5,
+      "calcium_mg": 133.5,
+      "iron_mg": 0.1
+    }
+  },
+  "NCT_115": {
+    "code": "115",
+    "food_name": "Other milk products",
+    "nutrients": {
+      "calories_kcal": 71.75000095367432,
+      "protein_g": 3.7,
+      "fat_g": 3.5500000000000003,
+      "carbs_g": 6.25,
+      "fiber_g": 0.0,
+      "sodium_mg": 46.5,
+      "calcium_mg": 133.5,
+      "iron_mg": 0.1
+    }
+  },
+  "120": {
+    "code": "120",
+    "food_name": "Coffee",
+    "nutrients": {
+      "calories_kcal": 2.200000047683716,
+      "protein_g": 0.1,
+      "fat_g": 0.0,
+      "carbs_g": 0.4,
+      "fiber_g": 0.1,
+      "sodium_mg": 4.0,
+      "calcium_mg": 3.0,
+      "iron_mg": 0.1
+    }
+  },
+  "NCT_120": {
+    "code": "120",
+    "food_name": "Coffee",
+    "nutrients": {
+      "calories_kcal": 2.200000047683716,
+      "protein_g": 0.1,
+      "fat_g": 0.0,
+      "carbs_g": 0.4,
+      "fiber_g": 0.1,
+      "sodium_mg": 4.0,
+      "calcium_mg": 3.0,
+      "iron_mg": 0.1
+    }
+  },
+  "121": {
+    "code": "121",
+    "food_name": "Chocolate drinks (including Milo)",
+    "nutrients": {
+      "calories_kcal": 356.20001220703125,
+      "protein_g": 19.9,
+      "fat_g": 1.4,
+      "carbs_g": 65.80000305175781,
+      "fiber_g": 0.4,
+      "sodium_mg": 385.0,
+      "calcium_mg": 285.0,
+      "iron_mg": 12.8
+    }
+  },
+  "NCT_121": {
+    "code": "121",
+    "food_name": "Chocolate drinks (including Milo)",
+    "nutrients": {
+      "calories_kcal": 356.20001220703125,
+      "protein_g": 19.9,
+      "fat_g": 1.4,
+      "carbs_g": 65.80000305175781,
+      "fiber_g": 0.4,
+      "sodium_mg": 385.0,
+      "calcium_mg": 285.0,
+      "iron_mg": 12.8
+    }
+  },
+  "122": {
+    "code": "122",
+    "food_name": "Tea",
+    "nutrients": {
+      "calories_kcal": 0.4000000059604645,
+      "protein_g": 0.1,
+      "fat_g": 0.0,
+      "carbs_g": 0.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 1.0,
+      "calcium_mg": 2.0,
+      "iron_mg": 0.1
+    }
+  },
+  "NCT_122": {
+    "code": "122",
+    "food_name": "Tea",
+    "nutrients": {
+      "calories_kcal": 0.4000000059604645,
+      "protein_g": 0.1,
+      "fat_g": 0.0,
+      "carbs_g": 0.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 1.0,
+      "calcium_mg": 2.0,
+      "iron_mg": 0.1
+    }
+  },
+  "130": {
+    "code": "130",
+    "food_name": "Sugar",
+    "nutrients": {
+      "calories_kcal": 400.0,
+      "protein_g": 0.0,
+      "fat_g": 0.0,
+      "carbs_g": 100.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 1.0,
+      "calcium_mg": 1.0,
+      "iron_mg": 0.10000000000000002
+    }
+  },
+  "NCT_130": {
+    "code": "130",
+    "food_name": "Sugar",
+    "nutrients": {
+      "calories_kcal": 400.0,
+      "protein_g": 0.0,
+      "fat_g": 0.0,
+      "carbs_g": 100.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 1.0,
+      "calcium_mg": 1.0,
+      "iron_mg": 0.10000000000000002
+    }
+  },
+  "132": {
+    "code": "132",
+    "food_name": "Honey",
+    "nutrients": {
+      "calories_kcal": 326.0,
+      "protein_g": 0.4,
+      "fat_g": 0.0,
+      "carbs_g": 81.0,
+      "fiber_g": 0.2,
+      "sodium_mg": 4.0,
+      "calcium_mg": 11.0,
+      "iron_mg": 0.6
+    }
+  },
+  "NCT_132": {
+    "code": "132",
+    "food_name": "Honey",
+    "nutrients": {
+      "calories_kcal": 326.0,
+      "protein_g": 0.4,
+      "fat_g": 0.0,
+      "carbs_g": 81.0,
+      "fiber_g": 0.2,
+      "sodium_mg": 4.0,
+      "calcium_mg": 11.0,
+      "iron_mg": 0.6
+    }
+  },
+  "133": {
+    "code": "133",
+    "food_name": "Other sweets and confectionary",
+    "nutrients": {
+      "calories_kcal": 427.1000061035156,
+      "protein_g": 5.2,
+      "fat_g": 22.9,
+      "carbs_g": 49.29999923706055,
+      "fiber_g": 1.5,
+      "sodium_mg": 402.0,
+      "calcium_mg": 60.0,
+      "iron_mg": 1.06
+    }
+  },
+  "NCT_133": {
+    "code": "133",
+    "food_name": "Other sweets and confectionary",
+    "nutrients": {
+      "calories_kcal": 427.1000061035156,
+      "protein_g": 5.2,
+      "fat_g": 22.9,
+      "carbs_g": 49.29999923706055,
+      "fiber_g": 1.5,
+      "sodium_mg": 402.0,
+      "calcium_mg": 60.0,
+      "iron_mg": 1.06
+    }
+  },
+  "141": {
+    "code": "141",
+    "food_name": "Salt",
+    "nutrients": {
+      "calories_kcal": 0.0,
+      "protein_g": 0.0,
+      "fat_g": 0.0,
+      "carbs_g": 0.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 38800.0,
+      "calcium_mg": 52.8,
+      "iron_mg": 0.47550000000000003
+    }
+  },
+  "NCT_141": {
+    "code": "141",
+    "food_name": "Salt",
+    "nutrients": {
+      "calories_kcal": 0.0,
+      "protein_g": 0.0,
+      "fat_g": 0.0,
+      "carbs_g": 0.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 38800.0,
+      "calcium_mg": 52.8,
+      "iron_mg": 0.47550000000000003
+    }
+  },
+  "142": {
+    "code": "142",
+    "food_name": "Unground Ogbono",
+    "nutrients": {
+      "calories_kcal": 650.4000244140625,
+      "protein_g": 7.6,
+      "fat_g": 62.6,
+      "carbs_g": 5.5,
+      "fiber_g": 17.3,
+      "sodium_mg": 2.0,
+      "calcium_mg": 105.0,
+      "iron_mg": 3.4
+    }
+  },
+  "NCT_142": {
+    "code": "142",
+    "food_name": "Unground Ogbono",
+    "nutrients": {
+      "calories_kcal": 650.4000244140625,
+      "protein_g": 7.6,
+      "fat_g": 62.6,
+      "carbs_g": 5.5,
+      "fiber_g": 17.3,
+      "sodium_mg": 2.0,
+      "calcium_mg": 105.0,
+      "iron_mg": 3.4
+    }
+  },
+  "143": {
+    "code": "143",
+    "food_name": "Ground Ogbono",
+    "nutrients": {
+      "calories_kcal": 650.4000244140625,
+      "protein_g": 7.6,
+      "fat_g": 62.6,
+      "carbs_g": 5.5,
+      "fiber_g": 17.3,
+      "sodium_mg": 2.0,
+      "calcium_mg": 105.0,
+      "iron_mg": 3.4
+    }
+  },
+  "NCT_143": {
+    "code": "143",
+    "food_name": "Ground Ogbono",
+    "nutrients": {
+      "calories_kcal": 650.4000244140625,
+      "protein_g": 7.6,
+      "fat_g": 62.6,
+      "carbs_g": 5.5,
+      "fiber_g": 17.3,
+      "sodium_mg": 2.0,
+      "calcium_mg": 105.0,
+      "iron_mg": 3.4
+    }
+  },
+  "144": {
+    "code": "144",
+    "food_name": "Ground Pepper",
+    "nutrients": {
+      "calories_kcal": 275.8999938964844,
+      "protein_g": 10.1,
+      "fat_g": 2.7,
+      "carbs_g": 36.2,
+      "fiber_g": 33.2,
+      "sodium_mg": 24.0,
+      "calcium_mg": 405.0,
+      "iron_mg": 11.9
+    }
+  },
+  "NCT_144": {
+    "code": "144",
+    "food_name": "Ground Pepper",
+    "nutrients": {
+      "calories_kcal": 275.8999938964844,
+      "protein_g": 10.1,
+      "fat_g": 2.7,
+      "carbs_g": 36.2,
+      "fiber_g": 33.2,
+      "sodium_mg": 24.0,
+      "calcium_mg": 405.0,
+      "iron_mg": 11.9
+    }
+  },
+  "145": {
+    "code": "145",
+    "food_name": "Melon (shelled)",
+    "nutrients": {
+      "calories_kcal": 209.27199366378773,
+      "protein_g": 7.215000092983246,
+      "fat_g": 16.4280002117157,
+      "carbs_g": 7.03000009059906,
+      "fiber_g": 2.2200000286102295,
+      "sodium_mg": 86.21000111103058,
+      "calcium_mg": 13.690000176429749,
+      "iron_mg": 3.2190000414848323
+    }
+  },
+  "NCT_145": {
+    "code": "145",
+    "food_name": "Melon (shelled)",
+    "nutrients": {
+      "calories_kcal": 209.27199366378773,
+      "protein_g": 7.215000092983246,
+      "fat_g": 16.4280002117157,
+      "carbs_g": 7.03000009059906,
+      "fiber_g": 2.2200000286102295,
+      "sodium_mg": 86.21000111103058,
+      "calcium_mg": 13.690000176429749,
+      "iron_mg": 3.2190000414848323
+    }
+  },
+  "146": {
+    "code": "146",
+    "food_name": "Melon (unshelled)",
+    "nutrients": {
+      "calories_kcal": 209.27199366378773,
+      "protein_g": 7.215000092983246,
+      "fat_g": 16.4280002117157,
+      "carbs_g": 7.03000009059906,
+      "fiber_g": 2.2200000286102295,
+      "sodium_mg": 86.21000111103058,
+      "calcium_mg": 13.690000176429749,
+      "iron_mg": 3.2190000414848323
+    }
+  },
+  "NCT_146": {
+    "code": "146",
+    "food_name": "Melon (unshelled)",
+    "nutrients": {
+      "calories_kcal": 209.27199366378773,
+      "protein_g": 7.215000092983246,
+      "fat_g": 16.4280002117157,
+      "carbs_g": 7.03000009059906,
+      "fiber_g": 2.2200000286102295,
+      "sodium_mg": 86.21000111103058,
+      "calcium_mg": 13.690000176429749,
+      "iron_mg": 3.2190000414848323
+    }
+  },
+  "147": {
+    "code": "147",
+    "food_name": "Melon (ground)",
+    "nutrients": {
+      "calories_kcal": 209.27199366378773,
+      "protein_g": 7.215000092983246,
+      "fat_g": 16.4280002117157,
+      "carbs_g": 7.03000009059906,
+      "fiber_g": 2.2200000286102295,
+      "sodium_mg": 86.21000111103058,
+      "calcium_mg": 13.690000176429749,
+      "iron_mg": 3.2190000414848323
+    }
+  },
+  "NCT_147": {
+    "code": "147",
+    "food_name": "Melon (ground)",
+    "nutrients": {
+      "calories_kcal": 209.27199366378773,
+      "protein_g": 7.215000092983246,
+      "fat_g": 16.4280002117157,
+      "carbs_g": 7.03000009059906,
+      "fiber_g": 2.2200000286102295,
+      "sodium_mg": 86.21000111103058,
+      "calcium_mg": 13.690000176429749,
+      "iron_mg": 3.2190000414848323
+    }
+  },
+  "148": {
+    "code": "148",
+    "food_name": "Other Spices",
+    "nutrients": {
+      "calories_kcal": 77.6540012065172,
+      "protein_g": 3.5670000985264774,
+      "fat_g": 0.492000013589859,
+      "carbs_g": 12.546000346541405,
+      "fiber_g": 4.387000121176243,
+      "sodium_mg": 8.20000022649765,
+      "calcium_mg": 21.32000058889389,
+      "iron_mg": 1.4760000407695768
+    }
+  },
+  "NCT_148": {
+    "code": "148",
+    "food_name": "Other Spices",
+    "nutrients": {
+      "calories_kcal": 77.6540012065172,
+      "protein_g": 3.5670000985264774,
+      "fat_g": 0.492000013589859,
+      "carbs_g": 12.546000346541405,
+      "fiber_g": 4.387000121176243,
+      "sodium_mg": 8.20000022649765,
+      "calcium_mg": 21.32000058889389,
+      "iron_mg": 1.4760000407695768
+    }
+  },
+  "149": {
+    "code": "149",
+    "food_name": "Stock cube",
+    "nutrients": {
+      "calories_kcal": 190.60000610351562,
+      "protein_g": 15.5,
+      "fat_g": 7.4,
+      "carbs_g": 15.5,
+      "fiber_g": 0.0,
+      "sodium_mg": 19000.0,
+      "calcium_mg": 57.0,
+      "iron_mg": 2.0
+    }
+  },
+  "NCT_149": {
+    "code": "149",
+    "food_name": "Stock cube",
+    "nutrients": {
+      "calories_kcal": 190.60000610351562,
+      "protein_g": 15.5,
+      "fat_g": 7.4,
+      "carbs_g": 15.5,
+      "fiber_g": 0.0,
+      "sodium_mg": 19000.0,
+      "calcium_mg": 57.0,
+      "iron_mg": 2.0
+    }
+  },
+  "150": {
+    "code": "150",
+    "food_name": "Bottled water",
+    "nutrients": {
+      "calories_kcal": 0.0,
+      "protein_g": 0.0,
+      "fat_g": 0.0,
+      "carbs_g": 0.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 0.0,
+      "calcium_mg": 10.0,
+      "iron_mg": 0.0
+    }
+  },
+  "NCT_150": {
+    "code": "150",
+    "food_name": "Bottled water",
+    "nutrients": {
+      "calories_kcal": 0.0,
+      "protein_g": 0.0,
+      "fat_g": 0.0,
+      "carbs_g": 0.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 0.0,
+      "calcium_mg": 10.0,
+      "iron_mg": 0.0
+    }
+  },
+  "151": {
+    "code": "151",
+    "food_name": "Sachet water",
+    "nutrients": {
+      "calories_kcal": 0.0,
+      "protein_g": 0.0,
+      "fat_g": 0.0,
+      "carbs_g": 0.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 2.0,
+      "calcium_mg": 1.0,
+      "iron_mg": 0.0
+    }
+  },
+  "NCT_151": {
+    "code": "151",
+    "food_name": "Sachet water",
+    "nutrients": {
+      "calories_kcal": 0.0,
+      "protein_g": 0.0,
+      "fat_g": 0.0,
+      "carbs_g": 0.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 2.0,
+      "calcium_mg": 1.0,
+      "iron_mg": 0.0
+    }
+  },
+  "152": {
+    "code": "152",
+    "food_name": "Malt drinks",
+    "nutrients": {
+      "calories_kcal": 61.68000030517578,
+      "protein_g": 0.42,
+      "fat_g": 0.0,
+      "carbs_g": 15.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 33300.0,
+      "calcium_mg": 0.0,
+      "iron_mg": 0.0
+    }
+  },
+  "NCT_152": {
+    "code": "152",
+    "food_name": "Malt drinks",
+    "nutrients": {
+      "calories_kcal": 61.68000030517578,
+      "protein_g": 0.42,
+      "fat_g": 0.0,
+      "carbs_g": 15.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 33300.0,
+      "calcium_mg": 0.0,
+      "iron_mg": 0.0
+    }
+  },
+  "153": {
+    "code": "153",
+    "food_name": "Soft drinks (Coca Cola, spirit, etc)",
+    "nutrients": {
+      "calories_kcal": 40.5,
+      "protein_g": 0.0,
+      "fat_g": 0.1,
+      "carbs_g": 9.9,
+      "fiber_g": 0.0,
+      "sodium_mg": 9.0,
+      "calcium_mg": 2.0,
+      "iron_mg": 0.1
+    }
+  },
+  "NCT_153": {
+    "code": "153",
+    "food_name": "Soft drinks (Coca Cola, spirit, etc)",
+    "nutrients": {
+      "calories_kcal": 40.5,
+      "protein_g": 0.0,
+      "fat_g": 0.1,
+      "carbs_g": 9.9,
+      "fiber_g": 0.0,
+      "sodium_mg": 9.0,
+      "calcium_mg": 2.0,
+      "iron_mg": 0.1
+    }
+  },
+  "154": {
+    "code": "154",
+    "food_name": "Fruit juice canned/Pack",
+    "nutrients": {
+      "calories_kcal": 47.70000076293945,
+      "protein_g": 0.1,
+      "fat_g": 0.1,
+      "carbs_g": 11.5,
+      "fiber_g": 0.2,
+      "sodium_mg": 10.0,
+      "calcium_mg": 9.0,
+      "iron_mg": 0.3
+    }
+  },
+  "NCT_154": {
+    "code": "154",
+    "food_name": "Fruit juice canned/Pack",
+    "nutrients": {
+      "calories_kcal": 47.70000076293945,
+      "protein_g": 0.1,
+      "fat_g": 0.1,
+      "carbs_g": 11.5,
+      "fiber_g": 0.2,
+      "sodium_mg": 10.0,
+      "calcium_mg": 9.0,
+      "iron_mg": 0.3
+    }
+  },
+  "155": {
+    "code": "155",
+    "food_name": "Other non-alcoholic drinks",
+    "nutrients": {
+      "calories_kcal": 40.18000030517578,
+      "protein_g": 0.52,
+      "fat_g": 0.1,
+      "carbs_g": 9.266666603088378,
+      "fiber_g": 0.06666666666666667,
+      "sodium_mg": 13.666666666666666,
+      "calcium_mg": 10.0,
+      "iron_mg": 0.18666666666666665
+    }
+  },
+  "NCT_155": {
+    "code": "155",
+    "food_name": "Other non-alcoholic drinks",
+    "nutrients": {
+      "calories_kcal": 40.18000030517578,
+      "protein_g": 0.52,
+      "fat_g": 0.1,
+      "carbs_g": 9.266666603088378,
+      "fiber_g": 0.06666666666666667,
+      "sodium_mg": 13.666666666666666,
+      "calcium_mg": 10.0,
+      "iron_mg": 0.18666666666666665
+    }
+  },
+  "160": {
+    "code": "160",
+    "food_name": "Beer (local and imported)",
+    "nutrients": {
+      "calories_kcal": 43.34000015258789,
+      "protein_g": 0.46,
+      "fat_g": 0.0,
+      "carbs_g": 3.549999952316284,
+      "fiber_g": 0.0,
+      "sodium_mg": 4.0,
+      "calcium_mg": 4.0,
+      "iron_mg": 0.02
+    }
+  },
+  "NCT_160": {
+    "code": "160",
+    "food_name": "Beer (local and imported)",
+    "nutrients": {
+      "calories_kcal": 43.34000015258789,
+      "protein_g": 0.46,
+      "fat_g": 0.0,
+      "carbs_g": 3.549999952316284,
+      "fiber_g": 0.0,
+      "sodium_mg": 4.0,
+      "calcium_mg": 4.0,
+      "iron_mg": 0.02
+    }
+  },
+  "161": {
+    "code": "161",
+    "food_name": "Palm wine",
+    "nutrients": {
+      "calories_kcal": 34.900001525878906,
+      "protein_g": 0.4,
+      "fat_g": 0.1,
+      "carbs_g": 2.5,
+      "fiber_g": 0.0,
+      "sodium_mg": 2.0,
+      "calcium_mg": 2.0,
+      "iron_mg": 0.5
+    }
+  },
+  "NCT_161": {
+    "code": "161",
+    "food_name": "Palm wine",
+    "nutrients": {
+      "calories_kcal": 34.900001525878906,
+      "protein_g": 0.4,
+      "fat_g": 0.1,
+      "carbs_g": 2.5,
+      "fiber_g": 0.0,
+      "sodium_mg": 2.0,
+      "calcium_mg": 2.0,
+      "iron_mg": 0.5
+    }
+  },
+  "162": {
+    "code": "162",
+    "food_name": "Pito",
+    "nutrients": {
+      "calories_kcal": 30.09999942779541,
+      "protein_g": 0.5,
+      "fat_g": 0.0,
+      "carbs_g": 2.5999999999999996,
+      "fiber_g": 0.1,
+      "sodium_mg": 3.0,
+      "calcium_mg": 10.5,
+      "iron_mg": 0.2
+    }
+  },
+  "NCT_162": {
+    "code": "162",
+    "food_name": "Pito",
+    "nutrients": {
+      "calories_kcal": 30.09999942779541,
+      "protein_g": 0.5,
+      "fat_g": 0.0,
+      "carbs_g": 2.5999999999999996,
+      "fiber_g": 0.1,
+      "sodium_mg": 3.0,
+      "calcium_mg": 10.5,
+      "iron_mg": 0.2
+    }
+  },
+  "163": {
+    "code": "163",
+    "food_name": "Gin",
+    "nutrients": {
+      "calories_kcal": 233.8000030517578,
+      "protein_g": 0.0,
+      "fat_g": 0.0,
+      "carbs_g": 0.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 1.0,
+      "calcium_mg": 0.0,
+      "iron_mg": 0.04
+    }
+  },
+  "NCT_163": {
+    "code": "163",
+    "food_name": "Gin",
+    "nutrients": {
+      "calories_kcal": 233.8000030517578,
+      "protein_g": 0.0,
+      "fat_g": 0.0,
+      "carbs_g": 0.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 1.0,
+      "calcium_mg": 0.0,
+      "iron_mg": 0.04
+    }
+  },
+  "164": {
+    "code": "164",
+    "food_name": "Other alcoholic beverages",
+    "nutrients": {
+      "calories_kcal": 233.8000030517578,
+      "protein_g": 0.0,
+      "fat_g": 0.0,
+      "carbs_g": 0.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 0.5,
+      "calcium_mg": 0.0,
+      "iron_mg": 0.04
+    }
+  },
+  "NCT_164": {
+    "code": "164",
+    "food_name": "Other alcoholic beverages",
+    "nutrients": {
+      "calories_kcal": 233.8000030517578,
+      "protein_g": 0.0,
+      "fat_g": 0.0,
+      "carbs_g": 0.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 0.5,
+      "calcium_mg": 0.0,
+      "iron_mg": 0.04
+    }
+  },
+  "231": {
+    "code": "231",
+    "food_name": "Semovita/semolina",
+    "nutrients": {
+      "calories_kcal": 343.6499938964844,
+      "protein_g": 12.7,
+      "fat_g": 1.05,
+      "carbs_g": 68.9000015258789,
+      "fiber_g": 3.9,
+      "sodium_mg": 1.0,
+      "calcium_mg": 17.0,
+      "iron_mg": 1.23
+    }
+  },
+  "NCT_231": {
+    "code": "231",
+    "food_name": "Semovita/semolina",
+    "nutrients": {
+      "calories_kcal": 343.6499938964844,
+      "protein_g": 12.7,
+      "fat_g": 1.05,
+      "carbs_g": 68.9000015258789,
+      "fiber_g": 3.9,
+      "sodium_mg": 1.0,
+      "calcium_mg": 17.0,
+      "iron_mg": 1.23
+    }
+  },
+  "232": {
+    "code": "232",
+    "food_name": "Akanu/Pap/Obi",
+    "nutrients": {
+      "calories_kcal": 51.400001525878906,
+      "protein_g": 1.1,
+      "fat_g": 1.0,
+      "carbs_g": 8.8,
+      "fiber_g": 1.4,
+      "sodium_mg": 15.0,
+      "calcium_mg": 9.0,
+      "iron_mg": 4.2
+    }
+  },
+  "NCT_232": {
+    "code": "232",
+    "food_name": "Akanu/Pap/Obi",
+    "nutrients": {
+      "calories_kcal": 51.400001525878906,
+      "protein_g": 1.1,
+      "fat_g": 1.0,
+      "carbs_g": 8.8,
+      "fiber_g": 1.4,
+      "sodium_mg": 15.0,
+      "calcium_mg": 9.0,
+      "iron_mg": 4.2
+    }
+  },
+  "233": {
+    "code": "233",
+    "food_name": "Fufu",
+    "nutrients": {
+      "calories_kcal": 165.8000030517578,
+      "protein_g": 1.0,
+      "fat_g": 0.4,
+      "carbs_g": 38.7,
+      "fiber_g": 1.7,
+      "sodium_mg": 4.0,
+      "calcium_mg": 20.0,
+      "iron_mg": 0.9
+    }
+  },
+  "NCT_233": {
+    "code": "233",
+    "food_name": "Fufu",
+    "nutrients": {
+      "calories_kcal": 165.8000030517578,
+      "protein_g": 1.0,
+      "fat_g": 0.4,
+      "carbs_g": 38.7,
+      "fiber_g": 1.7,
+      "sodium_mg": 4.0,
+      "calcium_mg": 20.0,
+      "iron_mg": 0.9
+    }
+  },
+  "234": {
+    "code": "234",
+    "food_name": "Plantain flour",
+    "nutrients": {
+      "calories_kcal": 328.79998779296875,
+      "protein_g": 4.2,
+      "fat_g": 3.0,
+      "carbs_g": 64.7,
+      "fiber_g": 13.1,
+      "sodium_mg": 68.0,
+      "calcium_mg": 22.0,
+      "iron_mg": 1.6
+    }
+  },
+  "NCT_234": {
+    "code": "234",
+    "food_name": "Plantain flour",
+    "nutrients": {
+      "calories_kcal": 328.79998779296875,
+      "protein_g": 4.2,
+      "fat_g": 3.0,
+      "carbs_g": 64.7,
+      "fiber_g": 13.1,
+      "sodium_mg": 68.0,
+      "calcium_mg": 22.0,
+      "iron_mg": 1.6
+    }
+  },
+  "235": {
+    "code": "235",
+    "food_name": "Macoroni/pasta/noodles",
+    "nutrients": {
+      "calories_kcal": 358.15,
+      "protein_g": 12.469999999999999,
+      "fat_g": 1.45,
+      "carbs_g": 72.21,
+      "fiber_g": 3.19,
+      "sodium_mg": 2.9,
+      "calcium_mg": 20.3,
+      "iron_mg": 0.87
+    }
+  },
+  "NCT_235": {
+    "code": "235",
+    "food_name": "Macoroni/pasta/noodles",
+    "nutrients": {
+      "calories_kcal": 358.15,
+      "protein_g": 12.469999999999999,
+      "fat_g": 1.45,
+      "carbs_g": 72.21,
+      "fiber_g": 3.19,
+      "sodium_mg": 2.9,
+      "calcium_mg": 20.3,
+      "iron_mg": 0.87
+    }
+  },
+  "236": {
+    "code": "236",
+    "food_name": "Custard",
+    "nutrients": {
+      "calories_kcal": 97.08000183105469,
+      "protein_g": 5.08,
+      "fat_g": 3.64,
+      "carbs_g": 11.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 84.0,
+      "calcium_mg": 117.0,
+      "iron_mg": 0.3
+    }
+  },
+  "NCT_236": {
+    "code": "236",
+    "food_name": "Custard",
+    "nutrients": {
+      "calories_kcal": 97.08000183105469,
+      "protein_g": 5.08,
+      "fat_g": 3.64,
+      "carbs_g": 11.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 84.0,
+      "calcium_mg": 117.0,
+      "iron_mg": 0.3
+    }
+  },
+  "237": {
+    "code": "237",
+    "food_name": "Acha/fonio",
+    "nutrients": {
+      "calories_kcal": 334.2,
+      "protein_g": 7.68,
+      "fat_g": 3.4800000000000004,
+      "carbs_g": 59.75999999999999,
+      "fiber_g": 16.56,
+      "sodium_mg": 7.199999999999999,
+      "calcium_mg": 45.6,
+      "iron_mg": 19.8
+    }
+  },
+  "NCT_237": {
+    "code": "237",
+    "food_name": "Acha/fonio",
+    "nutrients": {
+      "calories_kcal": 334.2,
+      "protein_g": 7.68,
+      "fat_g": 3.4800000000000004,
+      "carbs_g": 59.75999999999999,
+      "fiber_g": 16.56,
+      "sodium_mg": 7.199999999999999,
+      "calcium_mg": 45.6,
+      "iron_mg": 19.8
+    }
+  },
+  "238": {
+    "code": "238",
+    "food_name": "Millet flour (tamba)",
+    "nutrients": {
+      "calories_kcal": 365.1000061035156,
+      "protein_g": 9.3,
+      "fat_g": 5.9,
+      "carbs_g": 64.2,
+      "fiber_g": 9.0,
+      "sodium_mg": 12.0,
+      "calcium_mg": 23.0,
+      "iron_mg": 15.2
+    }
+  },
+  "NCT_238": {
+    "code": "238",
+    "food_name": "Millet flour (tamba)",
+    "nutrients": {
+      "calories_kcal": 365.1000061035156,
+      "protein_g": 9.3,
+      "fat_g": 5.9,
+      "carbs_g": 64.2,
+      "fiber_g": 9.0,
+      "sodium_mg": 12.0,
+      "calcium_mg": 23.0,
+      "iron_mg": 15.2
+    }
+  },
+  "239": {
+    "code": "239",
+    "food_name": "Sorghum flour",
+    "nutrients": {
+      "calories_kcal": 351.1000061035156,
+      "protein_g": 10.4,
+      "fat_g": 1.7,
+      "carbs_g": 71.2,
+      "fiber_g": 4.7,
+      "sodium_mg": 1.0,
+      "calcium_mg": 11.0,
+      "iron_mg": 3.5
+    }
+  },
+  "NCT_239": {
+    "code": "239",
+    "food_name": "Sorghum flour",
+    "nutrients": {
+      "calories_kcal": 351.1000061035156,
+      "protein_g": 10.4,
+      "fat_g": 1.7,
+      "carbs_g": 71.2,
+      "fiber_g": 4.7,
+      "sodium_mg": 1.0,
+      "calcium_mg": 11.0,
+      "iron_mg": 3.5
+    }
+  },
+  "382": {
+    "code": "382",
+    "food_name": "Muruchi",
+    "nutrients": {
+      "calories_kcal": 42.900001525878906,
+      "protein_g": 0.5,
+      "fat_g": 0.1,
+      "carbs_g": 8.8,
+      "fiber_g": 2.4,
+      "sodium_mg": 1.0,
+      "calcium_mg": 16.0,
+      "iron_mg": 2.5
+    }
+  },
+  "NCT_382": {
+    "code": "382",
+    "food_name": "Muruchi",
+    "nutrients": {
+      "calories_kcal": 42.900001525878906,
+      "protein_g": 0.5,
+      "fat_g": 0.1,
+      "carbs_g": 8.8,
+      "fiber_g": 2.4,
+      "sodium_mg": 1.0,
+      "calcium_mg": 16.0,
+      "iron_mg": 2.5
+    }
+  },
+  "383": {
+    "code": "383",
+    "food_name": "Three leaved yam (esuru/ona)",
+    "nutrients": {
+      "calories_kcal": 92.80169909899234,
+      "protein_g": 1.4620500043034552,
+      "fat_g": 0.1539000004529953,
+      "carbs_g": 19.31445005685091,
+      "fiber_g": 4.155300012230873,
+      "sodium_mg": 3.462750010192394,
+      "calcium_mg": 11.157750032842157,
+      "iron_mg": 0.23085000067949293
+    }
+  },
+  "NCT_383": {
+    "code": "383",
+    "food_name": "Three leaved yam (esuru/ona)",
+    "nutrients": {
+      "calories_kcal": 92.80169909899234,
+      "protein_g": 1.4620500043034552,
+      "fat_g": 0.1539000004529953,
+      "carbs_g": 19.31445005685091,
+      "fiber_g": 4.155300012230873,
+      "sodium_mg": 3.462750010192394,
+      "calcium_mg": 11.157750032842157,
+      "iron_mg": 0.23085000067949293
+    }
+  },
+  "385": {
+    "code": "385",
+    "food_name": "Water yam",
+    "nutrients": {
+      "calories_kcal": 96.27584686096908,
+      "protein_g": 1.9712499603629112,
+      "fat_g": 0.07884999841451645,
+      "carbs_g": 17.898949640095232,
+      "fiber_g": 8.042699838280678,
+      "sodium_mg": 4.336749912798404,
+      "calcium_mg": 12.22174975425005,
+      "iron_mg": 0.6702249865233898
+    }
+  },
+  "NCT_385": {
+    "code": "385",
+    "food_name": "Water yam",
+    "nutrients": {
+      "calories_kcal": 96.27584686096908,
+      "protein_g": 1.9712499603629112,
+      "fat_g": 0.07884999841451645,
+      "carbs_g": 17.898949640095232,
+      "fiber_g": 8.042699838280678,
+      "sodium_mg": 4.336749912798404,
+      "calcium_mg": 12.22174975425005,
+      "iron_mg": 0.6702249865233898
+    }
+  },
+  "386": {
+    "code": "386",
+    "food_name": "fingerling potatoes (risga)",
+    "nutrients": {
+      "calories_kcal": 60.04800109863282,
+      "protein_g": 1.197,
+      "fat_g": 0.0,
+      "carbs_g": 13.229999828338624,
+      "fiber_g": 1.1700000000000002,
+      "sodium_mg": 4.5,
+      "calcium_mg": 11.700000000000001,
+      "iron_mg": 0.648
+    }
+  },
+  "NCT_386": {
+    "code": "386",
+    "food_name": "fingerling potatoes (risga)",
+    "nutrients": {
+      "calories_kcal": 60.04800109863282,
+      "protein_g": 1.197,
+      "fat_g": 0.0,
+      "carbs_g": 13.229999828338624,
+      "fiber_g": 1.1700000000000002,
+      "sodium_mg": 4.5,
+      "calcium_mg": 11.700000000000001,
+      "iron_mg": 0.648
+    }
+  },
+  "451": {
+    "code": "451",
+    "food_name": "Pigeon peas",
+    "nutrients": {
+      "calories_kcal": 318.0374937057495,
+      "protein_g": 21.3125,
+      "fat_g": 2.0625,
+      "carbs_g": 42.7625,
+      "fiber_g": 21.5875,
+      "sodium_mg": 2.75,
+      "calcium_mg": 114.125,
+      "iron_mg": 4.262499999999999
+    }
+  },
+  "NCT_451": {
+    "code": "451",
+    "food_name": "Pigeon peas",
+    "nutrients": {
+      "calories_kcal": 318.0374937057495,
+      "protein_g": 21.3125,
+      "fat_g": 2.0625,
+      "carbs_g": 42.7625,
+      "fiber_g": 21.5875,
+      "sodium_mg": 2.75,
+      "calcium_mg": 114.125,
+      "iron_mg": 4.262499999999999
+    }
+  },
+  "452": {
+    "code": "452",
+    "food_name": "Beniseed/Sesame",
+    "nutrients": {
+      "calories_kcal": 601.5,
+      "protein_g": 16.6,
+      "fat_g": 54.1,
+      "carbs_g": 4.9,
+      "fiber_g": 14.3,
+      "sodium_mg": 45.0,
+      "calcium_mg": 777.0,
+      "iron_mg": 11.2
+    }
+  },
+  "NCT_452": {
+    "code": "452",
+    "food_name": "Beniseed/Sesame",
+    "nutrients": {
+      "calories_kcal": 601.5,
+      "protein_g": 16.6,
+      "fat_g": 54.1,
+      "carbs_g": 4.9,
+      "fiber_g": 14.3,
+      "sodium_mg": 45.0,
+      "calcium_mg": 777.0,
+      "iron_mg": 11.2
+    }
+  },
+  "453": {
+    "code": "453",
+    "food_name": "Bambara nut",
+    "nutrients": {
+      "calories_kcal": 323.0,
+      "protein_g": 19.6,
+      "fat_g": 5.8,
+      "carbs_g": 33.6,
+      "fiber_g": 29.0,
+      "sodium_mg": 2.0,
+      "calcium_mg": 44.0,
+      "iron_mg": 2.8
+    }
+  },
+  "NCT_453": {
+    "code": "453",
+    "food_name": "Bambara nut",
+    "nutrients": {
+      "calories_kcal": 323.0,
+      "protein_g": 19.6,
+      "fat_g": 5.8,
+      "carbs_g": 33.6,
+      "fiber_g": 29.0,
+      "sodium_mg": 2.0,
+      "calcium_mg": 44.0,
+      "iron_mg": 2.8
+    }
+  },
+  "454": {
+    "code": "454",
+    "food_name": "Palm nut",
+    "nutrients": {
+      "calories_kcal": 557.4000244140625,
+      "protein_g": 6.2,
+      "fat_g": 45.8,
+      "carbs_g": 28.1,
+      "fiber_g": 4.0,
+      "sodium_mg": 68.0,
+      "calcium_mg": 81.0,
+      "iron_mg": 8.0
+    }
+  },
+  "NCT_454": {
+    "code": "454",
+    "food_name": "Palm nut",
+    "nutrients": {
+      "calories_kcal": 557.4000244140625,
+      "protein_g": 6.2,
+      "fat_g": 45.8,
+      "carbs_g": 28.1,
+      "fiber_g": 4.0,
+      "sodium_mg": 68.0,
+      "calcium_mg": 81.0,
+      "iron_mg": 8.0
+    }
+  },
+  "456": {
+    "code": "456",
+    "food_name": "Locust beans",
+    "nutrients": {
+      "calories_kcal": 239.46889662321664,
+      "protein_g": 17.126437046304346,
+      "fat_g": 8.13290603455156,
+      "carbs_g": 22.333218158371743,
+      "fiber_g": 4.217062388285995,
+      "sodium_mg": 24.527811850234865,
+      "calcium_mg": 177.28874530345198,
+      "iron_mg": 7.573499799370765
+    }
+  },
+  "NCT_456": {
+    "code": "456",
+    "food_name": "Locust beans",
+    "nutrients": {
+      "calories_kcal": 239.46889662321664,
+      "protein_g": 17.126437046304346,
+      "fat_g": 8.13290603455156,
+      "carbs_g": 22.333218158371743,
+      "fiber_g": 4.217062388285995,
+      "sodium_mg": 24.527811850234865,
+      "calcium_mg": 177.28874530345198,
+      "iron_mg": 7.573499799370765
+    }
+  },
+  "457": {
+    "code": "457",
+    "food_name": "Walnut",
+    "nutrients": {
+      "calories_kcal": 310.05,
+      "protein_g": 6.84,
+      "fat_g": 29.340000000000003,
+      "carbs_g": 3.15,
+      "fiber_g": 3.015,
+      "sodium_mg": 0.9,
+      "calcium_mg": 44.1,
+      "iron_mg": 1.3095
+    }
+  },
+  "NCT_457": {
+    "code": "457",
+    "food_name": "Walnut",
+    "nutrients": {
+      "calories_kcal": 310.05,
+      "protein_g": 6.84,
+      "fat_g": 29.340000000000003,
+      "carbs_g": 3.15,
+      "fiber_g": 3.015,
+      "sodium_mg": 0.9,
+      "calcium_mg": 44.1,
+      "iron_mg": 1.3095
+    }
+  },
+  "458": {
+    "code": "458",
+    "food_name": "Kuli-kuli (peanut-based snack)",
+    "nutrients": {
+      "calories_kcal": 605.2999877929688,
+      "protein_g": 23.9,
+      "fat_g": 49.9,
+      "carbs_g": 11.0,
+      "fiber_g": 8.3,
+      "sodium_mg": 6.0,
+      "calcium_mg": 64.0,
+      "iron_mg": 3.2
+    }
+  },
+  "NCT_458": {
+    "code": "458",
+    "food_name": "Kuli-kuli (peanut-based snack)",
+    "nutrients": {
+      "calories_kcal": 605.2999877929688,
+      "protein_g": 23.9,
+      "fat_g": 49.9,
+      "carbs_g": 11.0,
+      "fiber_g": 8.3,
+      "sodium_mg": 6.0,
+      "calcium_mg": 64.0,
+      "iron_mg": 3.2
+    }
+  },
+  "459": {
+    "code": "459",
+    "food_name": "Tiger nut/Hausa groundut (ofio)",
+    "nutrients": {
+      "calories_kcal": 303.1400146484375,
+      "protein_g": 6.13,
+      "fat_g": 23.74,
+      "carbs_g": 15.079999923706055,
+      "fiber_g": 2.32,
+      "sodium_mg": 37.63,
+      "calcium_mg": 69.54,
+      "iron_mg": 3.41
+    }
+  },
+  "NCT_459": {
+    "code": "459",
+    "food_name": "Tiger nut/Hausa groundut (ofio)",
+    "nutrients": {
+      "calories_kcal": 303.1400146484375,
+      "protein_g": 6.13,
+      "fat_g": 23.74,
+      "carbs_g": 15.079999923706055,
+      "fiber_g": 2.32,
+      "sodium_mg": 37.63,
+      "calcium_mg": 69.54,
+      "iron_mg": 3.41
+    }
+  },
+  "532": {
+    "code": "532",
+    "food_name": "Vegetable oil",
+    "nutrients": {
+      "calories_kcal": 900.0,
+      "protein_g": 0.0,
+      "fat_g": 100.0,
+      "carbs_g": 0.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 0.0,
+      "calcium_mg": 0.0,
+      "iron_mg": 0.0
+    }
+  },
+  "NCT_532": {
+    "code": "532",
+    "food_name": "Vegetable oil",
+    "nutrients": {
+      "calories_kcal": 900.0,
+      "protein_g": 0.0,
+      "fat_g": 100.0,
+      "carbs_g": 0.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 0.0,
+      "calcium_mg": 0.0,
+      "iron_mg": 0.0
+    }
+  },
+  "533": {
+    "code": "533",
+    "food_name": "Shea butter oil",
+    "nutrients": {
+      "calories_kcal": 900.0,
+      "protein_g": 0.0,
+      "fat_g": 100.0,
+      "carbs_g": 0.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 11.0,
+      "calcium_mg": 15.0,
+      "iron_mg": 0.1
+    }
+  },
+  "NCT_533": {
+    "code": "533",
+    "food_name": "Shea butter oil",
+    "nutrients": {
+      "calories_kcal": 900.0,
+      "protein_g": 0.0,
+      "fat_g": 100.0,
+      "carbs_g": 0.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 11.0,
+      "calcium_mg": 15.0,
+      "iron_mg": 0.1
+    }
+  },
+  "534": {
+    "code": "534",
+    "food_name": "Ghee (Mai shanu)",
+    "nutrients": {
+      "calories_kcal": 891.7999877929688,
+      "protein_g": 0.2,
+      "fat_g": 99.0,
+      "carbs_g": 0.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 2.0,
+      "calcium_mg": 3.0,
+      "iron_mg": 0.0
+    }
+  },
+  "NCT_534": {
+    "code": "534",
+    "food_name": "Ghee (Mai shanu)",
+    "nutrients": {
+      "calories_kcal": 891.7999877929688,
+      "protein_g": 0.2,
+      "fat_g": 99.0,
+      "carbs_g": 0.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 2.0,
+      "calcium_mg": 3.0,
+      "iron_mg": 0.0
+    }
+  },
+  "535": {
+    "code": "535",
+    "food_name": "Breadfruit oil",
+    "nutrients": {
+      "calories_kcal": 900.0,
+      "protein_g": 0.0,
+      "fat_g": 100.0,
+      "carbs_g": 0.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 0.0,
+      "calcium_mg": 0.0,
+      "iron_mg": 0.0
+    }
+  },
+  "NCT_535": {
+    "code": "535",
+    "food_name": "Breadfruit oil",
+    "nutrients": {
+      "calories_kcal": 900.0,
+      "protein_g": 0.0,
+      "fat_g": 100.0,
+      "carbs_g": 0.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 0.0,
+      "calcium_mg": 0.0,
+      "iron_mg": 0.0
+    }
+  },
+  "601": {
+    "code": "601",
+    "food_name": "Guava",
+    "nutrients": {
+      "calories_kcal": 66.83599831008905,
+      "protein_g": 0.9800000190734863,
+      "fat_g": 0.3920000076293946,
+      "carbs_g": 12.054000234603883,
+      "fiber_g": 5.586000108718872,
+      "sodium_mg": 2.940000057220459,
+      "calcium_mg": 23.520000457763672,
+      "iron_mg": 1.2740000247955323
+    }
+  },
+  "NCT_601": {
+    "code": "601",
+    "food_name": "Guava",
+    "nutrients": {
+      "calories_kcal": 66.83599831008905,
+      "protein_g": 0.9800000190734863,
+      "fat_g": 0.3920000076293946,
+      "carbs_g": 12.054000234603883,
+      "fiber_g": 5.586000108718872,
+      "sodium_mg": 2.940000057220459,
+      "calcium_mg": 23.520000457763672,
+      "iron_mg": 1.2740000247955323
+    }
+  },
+  "661": {
+    "code": "661",
+    "food_name": "Agbalumo/Udara/Star apple",
+    "nutrients": {
+      "calories_kcal": 132.1999969482422,
+      "protein_g": 3.4,
+      "fat_g": 5.2,
+      "carbs_g": 16.4,
+      "fiber_g": 3.1,
+      "sodium_mg": 3.0,
+      "calcium_mg": 24.0,
+      "iron_mg": 1.5
+    }
+  },
+  "NCT_661": {
+    "code": "661",
+    "food_name": "Agbalumo/Udara/Star apple",
+    "nutrients": {
+      "calories_kcal": 132.1999969482422,
+      "protein_g": 3.4,
+      "fat_g": 5.2,
+      "carbs_g": 16.4,
+      "fiber_g": 3.1,
+      "sodium_mg": 3.0,
+      "calcium_mg": 24.0,
+      "iron_mg": 1.5
+    }
+  },
+  "662": {
+    "code": "662",
+    "food_name": "Cashew fruit",
+    "nutrients": {
+      "calories_kcal": 54.599998474121094,
+      "protein_g": 1.0,
+      "fat_g": 0.4,
+      "carbs_g": 10.9,
+      "fiber_g": 1.7,
+      "sodium_mg": 3.0,
+      "calcium_mg": 12.0,
+      "iron_mg": 1.4
+    }
+  },
+  "NCT_662": {
+    "code": "662",
+    "food_name": "Cashew fruit",
+    "nutrients": {
+      "calories_kcal": 54.599998474121094,
+      "protein_g": 1.0,
+      "fat_g": 0.4,
+      "carbs_g": 10.9,
+      "fiber_g": 1.7,
+      "sodium_mg": 3.0,
+      "calcium_mg": 12.0,
+      "iron_mg": 1.4
+    }
+  },
+  "663": {
+    "code": "663",
+    "food_name": "Cherry",
+    "nutrients": {
+      "calories_kcal": 57.93919677734375,
+      "protein_g": 0.9328000000000001,
+      "fat_g": 0.17600000000000002,
+      "carbs_g": 12.23199966430664,
+      "fiber_g": 1.848,
+      "sodium_mg": 0.0,
+      "calcium_mg": 11.44,
+      "iron_mg": 0.31679999999999997
+    }
+  },
+  "NCT_663": {
+    "code": "663",
+    "food_name": "Cherry",
+    "nutrients": {
+      "calories_kcal": 57.93919677734375,
+      "protein_g": 0.9328000000000001,
+      "fat_g": 0.17600000000000002,
+      "carbs_g": 12.23199966430664,
+      "fiber_g": 1.848,
+      "sodium_mg": 0.0,
+      "calcium_mg": 11.44,
+      "iron_mg": 0.31679999999999997
+    }
+  },
+  "664": {
+    "code": "664",
+    "food_name": "Pear",
+    "nutrients": {
+      "calories_kcal": 51.6870002746582,
+      "protein_g": 0.333,
+      "fat_g": 0.135,
+      "carbs_g": 10.890000343322754,
+      "fiber_g": 2.79,
+      "sodium_mg": 2.7,
+      "calcium_mg": 8.1,
+      "iron_mg": 0.162
+    }
+  },
+  "NCT_664": {
+    "code": "664",
+    "food_name": "Pear",
+    "nutrients": {
+      "calories_kcal": 51.6870002746582,
+      "protein_g": 0.333,
+      "fat_g": 0.135,
+      "carbs_g": 10.890000343322754,
+      "fiber_g": 2.79,
+      "sodium_mg": 2.7,
+      "calcium_mg": 8.1,
+      "iron_mg": 0.162
+    }
+  },
+  "665": {
+    "code": "665",
+    "food_name": "Date",
+    "nutrients": {
+      "calories_kcal": 173.46200026082988,
+      "protein_g": 1.3760000228881837,
+      "fat_g": 0.08600000143051148,
+      "carbs_g": 39.38800065517425,
+      "fiber_g": 4.816000080108642,
+      "sodium_mg": 4.300000071525574,
+      "calcium_mg": 32.68000054359436,
+      "iron_mg": 2.150000035762787
+    }
+  },
+  "NCT_665": {
+    "code": "665",
+    "food_name": "Date",
+    "nutrients": {
+      "calories_kcal": 173.46200026082988,
+      "protein_g": 1.3760000228881837,
+      "fat_g": 0.08600000143051148,
+      "carbs_g": 39.38800065517425,
+      "fiber_g": 4.816000080108642,
+      "sodium_mg": 4.300000071525574,
+      "calcium_mg": 32.68000054359436,
+      "iron_mg": 2.150000035762787
+    }
+  },
+  "666": {
+    "code": "666",
+    "food_name": "Soursop",
+    "nutrients": {
+      "calories_kcal": 55.87200112152095,
+      "protein_g": 0.8640000343322753,
+      "fat_g": 0.5760000228881836,
+      "carbs_g": 10.00800039768219,
+      "fiber_g": 3.6000001430511475,
+      "sodium_mg": 5.0400002002716064,
+      "calcium_mg": 14.40000057220459,
+      "iron_mg": 0.2880000114440918
+    }
+  },
+  "NCT_666": {
+    "code": "666",
+    "food_name": "Soursop",
+    "nutrients": {
+      "calories_kcal": 55.87200112152095,
+      "protein_g": 0.8640000343322753,
+      "fat_g": 0.5760000228881836,
+      "carbs_g": 10.00800039768219,
+      "fiber_g": 3.6000001430511475,
+      "sodium_mg": 5.0400002002716064,
+      "calcium_mg": 14.40000057220459,
+      "iron_mg": 0.2880000114440918
+    }
+  },
+  "667": {
+    "code": "667",
+    "food_name": "Breadfruit",
+    "nutrients": {
+      "calories_kcal": 75.26999723911285,
+      "protein_g": 1.0919999599456787,
+      "fat_g": 0.23399999141693115,
+      "carbs_g": 13.961999487876891,
+      "fiber_g": 6.473999762535096,
+      "sodium_mg": 1.559999942779541,
+      "calcium_mg": 22.619999170303345,
+      "iron_mg": 1.9499999284744263
+    }
+  },
+  "NCT_667": {
+    "code": "667",
+    "food_name": "Breadfruit",
+    "nutrients": {
+      "calories_kcal": 75.26999723911285,
+      "protein_g": 1.0919999599456787,
+      "fat_g": 0.23399999141693115,
+      "carbs_g": 13.961999487876891,
+      "fiber_g": 6.473999762535096,
+      "sodium_mg": 1.559999942779541,
+      "calcium_mg": 22.619999170303345,
+      "iron_mg": 1.9499999284744263
+    }
+  },
+  "668": {
+    "code": "668",
+    "food_name": "(Wild/African) grapes",
+    "nutrients": {
+      "calories_kcal": 68.92640533447266,
+      "protein_g": 0.6624,
+      "fat_g": 0.1472,
+      "carbs_g": 15.824000701904298,
+      "fiber_g": 0.8280000000000001,
+      "sodium_mg": 1.84,
+      "calcium_mg": 9.200000000000001,
+      "iron_mg": 0.3312
+    }
+  },
+  "NCT_668": {
+    "code": "668",
+    "food_name": "(Wild/African) grapes",
+    "nutrients": {
+      "calories_kcal": 68.92640533447266,
+      "protein_g": 0.6624,
+      "fat_g": 0.1472,
+      "carbs_g": 15.824000701904298,
+      "fiber_g": 0.8280000000000001,
+      "sodium_mg": 1.84,
+      "calcium_mg": 9.200000000000001,
+      "iron_mg": 0.3312
+    }
+  },
+  "669": {
+    "code": "669",
+    "food_name": "Atile (African olive)",
+    "nutrients": {
+      "calories_kcal": 348.9840087890625,
+      "protein_g": 4.86,
+      "fat_g": 35.82,
+      "carbs_g": 1.7910000085830688,
+      "fiber_g": 0.0,
+      "sodium_mg": 1.35,
+      "calcium_mg": 65.25,
+      "iron_mg": 1.5885
+    }
+  },
+  "NCT_669": {
+    "code": "669",
+    "food_name": "Atile (African olive)",
+    "nutrients": {
+      "calories_kcal": 348.9840087890625,
+      "protein_g": 4.86,
+      "fat_g": 35.82,
+      "carbs_g": 1.7910000085830688,
+      "fiber_g": 0.0,
+      "sodium_mg": 1.35,
+      "calcium_mg": 65.25,
+      "iron_mg": 1.5885
+    }
+  },
+  "791": {
+    "code": "791",
+    "food_name": "Cucumber",
+    "nutrients": {
+      "calories_kcal": 11.15500032901764,
+      "protein_g": 0.6790000200271606,
+      "fat_g": 0.09700000286102295,
+      "carbs_g": 0.8730000257492065,
+      "fiber_g": 2.037000060081482,
+      "sodium_mg": 9.700000286102295,
+      "calcium_mg": 12.610000371932983,
+      "iron_mg": 0.5820000171661377
+    }
+  },
+  "NCT_791": {
+    "code": "791",
+    "food_name": "Cucumber",
+    "nutrients": {
+      "calories_kcal": 11.15500032901764,
+      "protein_g": 0.6790000200271606,
+      "fat_g": 0.09700000286102295,
+      "carbs_g": 0.8730000257492065,
+      "fiber_g": 2.037000060081482,
+      "sodium_mg": 9.700000286102295,
+      "calcium_mg": 12.610000371932983,
+      "iron_mg": 0.5820000171661377
+    }
+  },
+  "793": {
+    "code": "793",
+    "food_name": "Kuka/Baobab",
+    "nutrients": {
+      "calories_kcal": 68.64244507081122,
+      "protein_g": 4.092847458556293,
+      "fat_g": 0.5552312443777918,
+      "carbs_g": 5.774404941529037,
+      "fiber_g": 12.088177377596498,
+      "sodium_mg": 45.05304954379797,
+      "calcium_mg": 348.05067147567866,
+      "iron_mg": 3.7279812122508886
+    }
+  },
+  "NCT_793": {
+    "code": "793",
+    "food_name": "Kuka/Baobab",
+    "nutrients": {
+      "calories_kcal": 68.64244507081122,
+      "protein_g": 4.092847458556293,
+      "fat_g": 0.5552312443777918,
+      "carbs_g": 5.774404941529037,
+      "fiber_g": 12.088177377596498,
+      "sodium_mg": 45.05304954379797,
+      "calcium_mg": 348.05067147567866,
+      "iron_mg": 3.7279812122508886
+    }
+  },
+  "794": {
+    "code": "794",
+    "food_name": "Carrot",
+    "nutrients": {
+      "calories_kcal": 28.86380744310484,
+      "protein_g": 0.7911629696466301,
+      "fat_g": 0.16368889027171662,
+      "carbs_g": 4.692414854455875,
+      "fiber_g": 2.7281481711952766,
+      "sodium_mg": 24.826148357877017,
+      "calcium_mg": 30.282444700267575,
+      "iron_mg": 18.2513112652964
+    }
+  },
+  "NCT_794": {
+    "code": "794",
+    "food_name": "Carrot",
+    "nutrients": {
+      "calories_kcal": 28.86380744310484,
+      "protein_g": 0.7911629696466301,
+      "fat_g": 0.16368889027171662,
+      "carbs_g": 4.692414854455875,
+      "fiber_g": 2.7281481711952766,
+      "sodium_mg": 24.826148357877017,
+      "calcium_mg": 30.282444700267575,
+      "iron_mg": 18.2513112652964
+    }
+  },
+  "795": {
+    "code": "795",
+    "food_name": "Dried tomatoes",
+    "nutrients": {
+      "calories_kcal": 281.7300109863281,
+      "protein_g": 14.1,
+      "fat_g": 2.97,
+      "carbs_g": 43.5,
+      "fiber_g": 12.3,
+      "sodium_mg": 107.0,
+      "calcium_mg": 110.0,
+      "iron_mg": 9.09
+    }
+  },
+  "NCT_795": {
+    "code": "795",
+    "food_name": "Dried tomatoes",
+    "nutrients": {
+      "calories_kcal": 281.7300109863281,
+      "protein_g": 14.1,
+      "fat_g": 2.97,
+      "carbs_g": 43.5,
+      "fiber_g": 12.3,
+      "sodium_mg": 107.0,
+      "calcium_mg": 110.0,
+      "iron_mg": 9.09
+    }
+  },
+  "796": {
+    "code": "796",
+    "food_name": "Cabbage",
+    "nutrients": {
+      "calories_kcal": 22.629992370566523,
+      "protein_g": 1.4126433294018108,
+      "fat_g": 0.08309666643540063,
+      "carbs_g": 3.1022755469216237,
+      "fiber_g": 1.9112233280142144,
+      "sodium_mg": 10.248588860366075,
+      "calcium_mg": 36.008555455340264,
+      "iron_mg": 0.9417622196012071
+    }
+  },
+  "NCT_796": {
+    "code": "796",
+    "food_name": "Cabbage",
+    "nutrients": {
+      "calories_kcal": 22.629992370566523,
+      "protein_g": 1.4126433294018108,
+      "fat_g": 0.08309666643540063,
+      "carbs_g": 3.1022755469216237,
+      "fiber_g": 1.9112233280142144,
+      "sodium_mg": 10.248588860366075,
+      "calcium_mg": 36.008555455340264,
+      "iron_mg": 0.9417622196012071
+    }
+  },
+  "797": {
+    "code": "797",
+    "food_name": "Lettuce (salad)",
+    "nutrients": {
+      "calories_kcal": 11.970000063180919,
+      "protein_g": 0.699999988079071,
+      "fat_g": 0.2099999964237213,
+      "carbs_g": 1.1899999797344207,
+      "fiber_g": 1.259999978542328,
+      "sodium_mg": 8.399999856948853,
+      "calcium_mg": 20.29999965429306,
+      "iron_mg": 0.629999989271164
+    }
+  },
+  "NCT_797": {
+    "code": "797",
+    "food_name": "Lettuce (salad)",
+    "nutrients": {
+      "calories_kcal": 11.970000063180919,
+      "protein_g": 0.699999988079071,
+      "fat_g": 0.2099999964237213,
+      "carbs_g": 1.1899999797344207,
+      "fiber_g": 1.259999978542328,
+      "sodium_mg": 8.399999856948853,
+      "calcium_mg": 20.29999965429306,
+      "iron_mg": 0.629999989271164
+    }
+  },
+  "821": {
+    "code": "821",
+    "food_name": "Guinea fowl",
+    "nutrients": {
+      "calories_kcal": 106.37511338975693,
+      "protein_g": 21.553777777777775,
+      "fat_g": 2.2399999999999998,
+      "carbs_g": 0.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 13.937777777777775,
+      "calcium_mg": 22.4,
+      "iron_mg": 0.9955555555555554
+    }
+  },
+  "NCT_821": {
+    "code": "821",
+    "food_name": "Guinea fowl",
+    "nutrients": {
+      "calories_kcal": 106.37511338975693,
+      "protein_g": 21.553777777777775,
+      "fat_g": 2.2399999999999998,
+      "carbs_g": 0.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 13.937777777777775,
+      "calcium_mg": 22.4,
+      "iron_mg": 0.9955555555555554
+    }
+  },
+  "822": {
+    "code": "822",
+    "food_name": "Turkey",
+    "nutrients": {
+      "calories_kcal": 120.60704010202443,
+      "protein_g": 18.477968278499997,
+      "fat_g": 5.157740516999999,
+      "carbs_g": 0.06887578040758173,
+      "fiber_g": 0.0,
+      "sodium_mg": 327.2470041749999,
+      "calcium_mg": 9.270484199999999,
+      "iron_mg": 0.7724859457499998
+    }
+  },
+  "NCT_822": {
+    "code": "822",
+    "food_name": "Turkey",
+    "nutrients": {
+      "calories_kcal": 120.60704010202443,
+      "protein_g": 18.477968278499997,
+      "fat_g": 5.157740516999999,
+      "carbs_g": 0.06887578040758173,
+      "fiber_g": 0.0,
+      "sodium_mg": 327.2470041749999,
+      "calcium_mg": 9.270484199999999,
+      "iron_mg": 0.7724859457499998
+    }
+  },
+  "823": {
+    "code": "823",
+    "food_name": "Pigeon",
+    "nutrients": {
+      "calories_kcal": 193.09400817871094,
+      "protein_g": 12.395000000000001,
+      "fat_g": 15.946000000000002,
+      "carbs_g": 0.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 36.18,
+      "calcium_mg": 8.040000000000001,
+      "iron_mg": 2.3718000000000004
+    }
+  },
+  "NCT_823": {
+    "code": "823",
+    "food_name": "Pigeon",
+    "nutrients": {
+      "calories_kcal": 193.09400817871094,
+      "protein_g": 12.395000000000001,
+      "fat_g": 15.946000000000002,
+      "carbs_g": 0.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 36.18,
+      "calcium_mg": 8.040000000000001,
+      "iron_mg": 2.3718000000000004
+    }
+  },
+  "851": {
+    "code": "851",
+    "food_name": "Guinea fowl eggs",
+    "nutrients": {
+      "calories_kcal": 171.67800699663167,
+      "protein_g": 11.99700009226799,
+      "fat_g": 12.834000098705292,
+      "carbs_g": 2.0460000157356264,
+      "fiber_g": 0.0,
+      "sodium_mg": 221.34000170230865,
+      "calcium_mg": 91.14000070095062,
+      "iron_mg": 6.32400004863739
+    }
+  },
+  "NCT_851": {
+    "code": "851",
+    "food_name": "Guinea fowl eggs",
+    "nutrients": {
+      "calories_kcal": 171.67800699663167,
+      "protein_g": 11.99700009226799,
+      "fat_g": 12.834000098705292,
+      "carbs_g": 2.0460000157356264,
+      "fiber_g": 0.0,
+      "sodium_mg": 221.34000170230865,
+      "calcium_mg": 91.14000070095062,
+      "iron_mg": 6.32400004863739
+    }
+  },
+  "852": {
+    "code": "852",
+    "food_name": "Turkey eggs",
+    "nutrients": {
+      "calories_kcal": 161.39199375438693,
+      "protein_g": 10.119999945163727,
+      "fat_g": 11.43999993801117,
+      "carbs_g": 4.487999975681305,
+      "fiber_g": 0.0,
+      "sodium_mg": 169.83999907970428,
+      "calcium_mg": 82.71999955177307,
+      "iron_mg": 5.2799999713897705
+    }
+  },
+  "NCT_852": {
+    "code": "852",
+    "food_name": "Turkey eggs",
+    "nutrients": {
+      "calories_kcal": 161.39199375438693,
+      "protein_g": 10.119999945163727,
+      "fat_g": 11.43999993801117,
+      "carbs_g": 4.487999975681305,
+      "fiber_g": 0.0,
+      "sodium_mg": 169.83999907970428,
+      "calcium_mg": 82.71999955177307,
+      "iron_mg": 5.2799999713897705
+    }
+  },
+  "853": {
+    "code": "853",
+    "food_name": "Goose eggs",
+    "nutrients": {
+      "calories_kcal": 193.23040161132812,
+      "protein_g": 11.352,
+      "fat_g": 15.928,
+      "carbs_g": 1.117599983215332,
+      "fiber_g": 0.0,
+      "sodium_mg": 225.28,
+      "calcium_mg": 50.160000000000004,
+      "iron_mg": 2.992
+    }
+  },
+  "NCT_853": {
+    "code": "853",
+    "food_name": "Goose eggs",
+    "nutrients": {
+      "calories_kcal": 193.23040161132812,
+      "protein_g": 11.352,
+      "fat_g": 15.928,
+      "carbs_g": 1.117599983215332,
+      "fiber_g": 0.0,
+      "sodium_mg": 225.28,
+      "calcium_mg": 50.160000000000004,
+      "iron_mg": 2.992
+    }
+  },
+  "854": {
+    "code": "854",
+    "food_name": "Quail (ogazi/awo) eggs",
+    "nutrients": {
+      "calories_kcal": 165.87600581669813,
+      "protein_g": 14.352000260353089,
+      "fat_g": 10.948000198602676,
+      "carbs_g": 2.4840000450611117,
+      "fiber_g": 0.0,
+      "sodium_mg": 156.4000028371811,
+      "calcium_mg": 69.92000126838684,
+      "iron_mg": 4.600000083446503
+    }
+  },
+  "NCT_854": {
+    "code": "854",
+    "food_name": "Quail (ogazi/awo) eggs",
+    "nutrients": {
+      "calories_kcal": 165.87600581669813,
+      "protein_g": 14.352000260353089,
+      "fat_g": 10.948000198602676,
+      "carbs_g": 2.4840000450611117,
+      "fiber_g": 0.0,
+      "sodium_mg": 156.4000028371811,
+      "calcium_mg": 69.92000126838684,
+      "iron_mg": 4.600000083446503
+    }
+  },
+  "961": {
+    "code": "961",
+    "food_name": "Ponmo/cow skin",
+    "nutrients": {
+      "calories_kcal": 329.79998779296875,
+      "protein_g": 66.7,
+      "fat_g": 7.0,
+      "carbs_g": 0.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 2210.0,
+      "calcium_mg": 15.0,
+      "iron_mg": 9.9
+    }
+  },
+  "NCT_961": {
+    "code": "961",
+    "food_name": "Ponmo/cow skin",
+    "nutrients": {
+      "calories_kcal": 329.79998779296875,
+      "protein_g": 66.7,
+      "fat_g": 7.0,
+      "carbs_g": 0.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 2210.0,
+      "calcium_mg": 15.0,
+      "iron_mg": 9.9
+    }
+  },
+  "962": {
+    "code": "962",
+    "food_name": "Donkey",
+    "nutrients": {
+      "calories_kcal": 91.30032333984376,
+      "protein_g": 15.37632,
+      "fat_g": 3.3105599999999997,
+      "carbs_g": 0.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 30.096,
+      "calcium_mg": 4.3776,
+      "iron_mg": 2.752416
+    }
+  },
+  "NCT_962": {
+    "code": "962",
+    "food_name": "Donkey",
+    "nutrients": {
+      "calories_kcal": 91.30032333984376,
+      "protein_g": 15.37632,
+      "fat_g": 3.3105599999999997,
+      "carbs_g": 0.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 30.096,
+      "calcium_mg": 4.3776,
+      "iron_mg": 2.752416
+    }
+  },
+  "963": {
+    "code": "963",
+    "food_name": "Dog meat",
+    "nutrients": {
+      "calories_kcal": 210.21,
+      "protein_g": 11.31,
+      "fat_g": 18.330000000000002,
+      "carbs_g": 0.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 39.78,
+      "calcium_mg": 20.28,
+      "iron_mg": 2.8080000000000003
+    }
+  },
+  "NCT_963": {
+    "code": "963",
+    "food_name": "Dog meat",
+    "nutrients": {
+      "calories_kcal": 210.21,
+      "protein_g": 11.31,
+      "fat_g": 18.330000000000002,
+      "carbs_g": 0.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 39.78,
+      "calcium_mg": 20.28,
+      "iron_mg": 2.8080000000000003
+    }
+  },
+  "964": {
+    "code": "964",
+    "food_name": "Horse meat",
+    "nutrients": {
+      "calories_kcal": 91.30032333984376,
+      "protein_g": 15.37632,
+      "fat_g": 3.3105599999999997,
+      "carbs_g": 0.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 30.096,
+      "calcium_mg": 4.3776,
+      "iron_mg": 2.752416
+    }
+  },
+  "NCT_964": {
+    "code": "964",
+    "food_name": "Horse meat",
+    "nutrients": {
+      "calories_kcal": 91.30032333984376,
+      "protein_g": 15.37632,
+      "fat_g": 3.3105599999999997,
+      "carbs_g": 0.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 30.096,
+      "calcium_mg": 4.3776,
+      "iron_mg": 2.752416
+    }
+  },
+  "965": {
+    "code": "965",
+    "food_name": "Frog/toad meat",
+    "nutrients": {
+      "calories_kcal": 85.0999984741211,
+      "protein_g": 7.2,
+      "fat_g": 6.2,
+      "carbs_g": 0.0,
+      "fiber_g": 0.25,
+      "sodium_mg": 193.5,
+      "calcium_mg": 14.0,
+      "iron_mg": 1.02
+    }
+  },
+  "NCT_965": {
+    "code": "965",
+    "food_name": "Frog/toad meat",
+    "nutrients": {
+      "calories_kcal": 85.0999984741211,
+      "protein_g": 7.2,
+      "fat_g": 6.2,
+      "carbs_g": 0.0,
+      "fiber_g": 0.25,
+      "sodium_mg": 193.5,
+      "calcium_mg": 14.0,
+      "iron_mg": 1.02
+    }
+  },
+  "966": {
+    "code": "966",
+    "food_name": "Camel meat",
+    "nutrients": {
+      "calories_kcal": 134.83710835774735,
+      "protein_g": 20.006777777777774,
+      "fat_g": 6.089999999999999,
+      "carbs_g": 0.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 56.83999999999999,
+      "calcium_mg": 9.247777777777776,
+      "iron_mg": 3.1577777777777767
+    }
+  },
+  "NCT_966": {
+    "code": "966",
+    "food_name": "Camel meat",
+    "nutrients": {
+      "calories_kcal": 134.83710835774735,
+      "protein_g": 20.006777777777774,
+      "fat_g": 6.089999999999999,
+      "carbs_g": 0.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 56.83999999999999,
+      "calcium_mg": 9.247777777777776,
+      "iron_mg": 3.1577777777777767
+    }
+  },
+  "967": {
+    "code": "967",
+    "food_name": "Dry meat",
+    "nutrients": {
+      "calories_kcal": 329.79998779296875,
+      "protein_g": 66.7,
+      "fat_g": 7.0,
+      "carbs_g": 0.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 2210.0,
+      "calcium_mg": 15.0,
+      "iron_mg": 9.9
+    }
+  },
+  "NCT_967": {
+    "code": "967",
+    "food_name": "Dry meat",
+    "nutrients": {
+      "calories_kcal": 329.79998779296875,
+      "protein_g": 66.7,
+      "fat_g": 7.0,
+      "carbs_g": 0.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 2210.0,
+      "calcium_mg": 15.0,
+      "iron_mg": 9.9
+    }
+  },
+  "968": {
+    "code": "968",
+    "food_name": "Rat meat",
+    "nutrients": {
+      "calories_kcal": 126.75311828613282,
+      "protein_g": 16.90416,
+      "fat_g": 6.57072,
+      "carbs_g": 0.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 53.352,
+      "calcium_mg": 20.2176,
+      "iron_mg": 3.9873599999999993
+    }
+  },
+  "NCT_968": {
+    "code": "968",
+    "food_name": "Rat meat",
+    "nutrients": {
+      "calories_kcal": 126.75311828613282,
+      "protein_g": 16.90416,
+      "fat_g": 6.57072,
+      "carbs_g": 0.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 53.352,
+      "calcium_mg": 20.2176,
+      "iron_mg": 3.9873599999999993
+    }
+  },
+  "1031": {
+    "code": "1031",
+    "food_name": "Stockfish",
+    "nutrients": {
+      "calories_kcal": 236.54999542236328,
+      "protein_g": 45.3,
+      "fat_g": 6.1499999999999995,
+      "carbs_g": 0.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 110.25,
+      "calcium_mg": 1454.25,
+      "iron_mg": 5.550000000000001
+    }
+  },
+  "NCT_1031": {
+    "code": "1031",
+    "food_name": "Stockfish",
+    "nutrients": {
+      "calories_kcal": 236.54999542236328,
+      "protein_g": 45.3,
+      "fat_g": 6.1499999999999995,
+      "carbs_g": 0.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 110.25,
+      "calcium_mg": 1454.25,
+      "iron_mg": 5.550000000000001
+    }
+  },
+  "1071": {
+    "code": "1071",
+    "food_name": "Crayfish",
+    "nutrients": {
+      "calories_kcal": 53.54327906486505,
+      "protein_g": 11.60543950653076,
+      "fat_g": 0.7326666355133056,
+      "carbs_g": 0.13187999439239498,
+      "fiber_g": 0.0,
+      "sodium_mg": 74.5854634952545,
+      "calcium_mg": 23.00573235511779,
+      "iron_mg": 1.2601866130828852
+    }
+  },
+  "NCT_1071": {
+    "code": "1071",
+    "food_name": "Crayfish",
+    "nutrients": {
+      "calories_kcal": 53.54327906486505,
+      "protein_g": 11.60543950653076,
+      "fat_g": 0.7326666355133056,
+      "carbs_g": 0.13187999439239498,
+      "fiber_g": 0.0,
+      "sodium_mg": 74.5854634952545,
+      "calcium_mg": 23.00573235511779,
+      "iron_mg": 1.2601866130828852
+    }
+  },
+  "1072": {
+    "code": "1072",
+    "food_name": "Periwinkle",
+    "nutrients": {
+      "calories_kcal": 53.78699798583984,
+      "protein_g": 10.268999999999998,
+      "fat_g": 1.152,
+      "carbs_g": 0.5475,
+      "fiber_g": 0.0765,
+      "sodium_mg": 37.199999999999996,
+      "calcium_mg": 6.709499999999999,
+      "iron_mg": 0.9149999999999999
+    }
+  },
+  "NCT_1072": {
+    "code": "1072",
+    "food_name": "Periwinkle",
+    "nutrients": {
+      "calories_kcal": 53.78699798583984,
+      "protein_g": 10.268999999999998,
+      "fat_g": 1.152,
+      "carbs_g": 0.5475,
+      "fiber_g": 0.0765,
+      "sodium_mg": 37.199999999999996,
+      "calcium_mg": 6.709499999999999,
+      "iron_mg": 0.9149999999999999
+    }
+  },
+  "1073": {
+    "code": "1073",
+    "food_name": "Fried fish",
+    "nutrients": {
+      "calories_kcal": 151.77750000000003,
+      "protein_g": 10.148000000000001,
+      "fat_g": 9.351500000000001,
+      "carbs_g": 6.607999887466431,
+      "fiber_g": 0.29500000000000004,
+      "sodium_mg": 233.64000000000004,
+      "calcium_mg": 15.930000000000001,
+      "iron_mg": 0.9145000000000002
+    }
+  },
+  "NCT_1073": {
+    "code": "1073",
+    "food_name": "Fried fish",
+    "nutrients": {
+      "calories_kcal": 151.77750000000003,
+      "protein_g": 10.148000000000001,
+      "fat_g": 9.351500000000001,
+      "carbs_g": 6.607999887466431,
+      "fiber_g": 0.29500000000000004,
+      "sodium_mg": 233.64000000000004,
+      "calcium_mg": 15.930000000000001,
+      "iron_mg": 0.9145000000000002
+    }
+  },
+  "1074": {
+    "code": "1074",
+    "food_name": "Roasted fish",
+    "nutrients": {
+      "calories_kcal": 66.79399841308594,
+      "protein_g": 13.597999999999999,
+      "fat_g": 1.378,
+      "carbs_g": 0.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 29.12,
+      "calcium_mg": 7.28,
+      "iron_mg": 0.3588
+    }
+  },
+  "NCT_1074": {
+    "code": "1074",
+    "food_name": "Roasted fish",
+    "nutrients": {
+      "calories_kcal": 66.79399841308594,
+      "protein_g": 13.597999999999999,
+      "fat_g": 1.378,
+      "carbs_g": 0.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 29.12,
+      "calcium_mg": 7.28,
+      "iron_mg": 0.3588
+    }
+  },
+  "1151": {
+    "code": "1151",
+    "food_name": "Sour milk/nono",
+    "nutrients": {
+      "calories_kcal": 218.5,
+      "protein_g": 15.5,
+      "fat_g": 15.7,
+      "carbs_g": 3.8,
+      "fiber_g": 0.0,
+      "sodium_mg": 31.0,
+      "calcium_mg": 630.0,
+      "iron_mg": 1.1
+    }
+  },
+  "NCT_1151": {
+    "code": "1151",
+    "food_name": "Sour milk/nono",
+    "nutrients": {
+      "calories_kcal": 218.5,
+      "protein_g": 15.5,
+      "fat_g": 15.7,
+      "carbs_g": 3.8,
+      "fiber_g": 0.0,
+      "sodium_mg": 31.0,
+      "calcium_mg": 630.0,
+      "iron_mg": 1.1
+    }
+  },
+  "1152": {
+    "code": "1152",
+    "food_name": "Yoghurt",
+    "nutrients": {
+      "calories_kcal": 74.36666742960611,
+      "protein_g": 3.4,
+      "fat_g": 2.5,
+      "carbs_g": 9.533333333333331,
+      "fiber_g": 0.06666666666666667,
+      "sodium_mg": 53.0,
+      "calcium_mg": 139.66666666666666,
+      "iron_mg": 0.1
+    }
+  },
+  "NCT_1152": {
+    "code": "1152",
+    "food_name": "Yoghurt",
+    "nutrients": {
+      "calories_kcal": 74.36666742960611,
+      "protein_g": 3.4,
+      "fat_g": 2.5,
+      "carbs_g": 9.533333333333331,
+      "fiber_g": 0.06666666666666667,
+      "sodium_mg": 53.0,
+      "calcium_mg": 139.66666666666666,
+      "iron_mg": 0.1
+    }
+  },
+  "1153": {
+    "code": "1153",
+    "food_name": "Soya milk",
+    "nutrients": {
+      "calories_kcal": 45.0,
+      "protein_g": 3.0,
+      "fat_g": 1.8,
+      "carbs_g": 3.9,
+      "fiber_g": 0.6,
+      "sodium_mg": 24.0,
+      "calcium_mg": 12.0,
+      "iron_mg": 0.5
+    }
+  },
+  "NCT_1153": {
+    "code": "1153",
+    "food_name": "Soya milk",
+    "nutrients": {
+      "calories_kcal": 45.0,
+      "protein_g": 3.0,
+      "fat_g": 1.8,
+      "carbs_g": 3.9,
+      "fiber_g": 0.6,
+      "sodium_mg": 24.0,
+      "calcium_mg": 12.0,
+      "iron_mg": 0.5
+    }
+  },
+  "1154": {
+    "code": "1154",
+    "food_name": "Nutri-milk",
+    "nutrients": {
+      "calories_kcal": 51.72999954223633,
+      "protein_g": 5.87,
+      "fat_g": 2.17,
+      "carbs_g": 2.0799999237060547,
+      "fiber_g": 0.2,
+      "sodium_mg": 95.0,
+      "calcium_mg": 69.0,
+      "iron_mg": 1.3
+    }
+  },
+  "NCT_1154": {
+    "code": "1154",
+    "food_name": "Nutri-milk",
+    "nutrients": {
+      "calories_kcal": 51.72999954223633,
+      "protein_g": 5.87,
+      "fat_g": 2.17,
+      "carbs_g": 2.0799999237060547,
+      "fiber_g": 0.2,
+      "sodium_mg": 95.0,
+      "calcium_mg": 69.0,
+      "iron_mg": 1.3
+    }
+  },
+  "1331": {
+    "code": "1331",
+    "food_name": "Sugar cane",
+    "nutrients": {
+      "calories_kcal": 37.400001525878906,
+      "protein_g": 0.1,
+      "fat_g": 0.2,
+      "carbs_g": 8.5,
+      "fiber_g": 0.6,
+      "sodium_mg": 1.0,
+      "calcium_mg": 10.0,
+      "iron_mg": 1.1
+    }
+  },
+  "NCT_1331": {
+    "code": "1331",
+    "food_name": "Sugar cane",
+    "nutrients": {
+      "calories_kcal": 37.400001525878906,
+      "protein_g": 0.1,
+      "fat_g": 0.2,
+      "carbs_g": 8.5,
+      "fiber_g": 0.6,
+      "sodium_mg": 1.0,
+      "calcium_mg": 10.0,
+      "iron_mg": 1.1
+    }
+  },
+  "1332": {
+    "code": "1332",
+    "food_name": "Lollipops",
+    "nutrients": {
+      "calories_kcal": 393.79998779296875,
+      "protein_g": 0.0,
+      "fat_g": 0.2,
+      "carbs_g": 98.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 38.0,
+      "calcium_mg": 3.0,
+      "iron_mg": 0.3
+    }
+  },
+  "NCT_1332": {
+    "code": "1332",
+    "food_name": "Lollipops",
+    "nutrients": {
+      "calories_kcal": 393.79998779296875,
+      "protein_g": 0.0,
+      "fat_g": 0.2,
+      "carbs_g": 98.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 38.0,
+      "calcium_mg": 3.0,
+      "iron_mg": 0.3
+    }
+  },
+  "1482": {
+    "code": "1482",
+    "food_name": "Mayonaise",
+    "nutrients": {
+      "calories_kcal": 679.3200073242188,
+      "protein_g": 0.96,
+      "fat_g": 74.8,
+      "carbs_g": 0.5699999928474426,
+      "fiber_g": 0.0,
+      "sodium_mg": 635.0,
+      "calcium_mg": 8.0,
+      "iron_mg": 0.21
+    }
+  },
+  "NCT_1482": {
+    "code": "1482",
+    "food_name": "Mayonaise",
+    "nutrients": {
+      "calories_kcal": 679.3200073242188,
+      "protein_g": 0.96,
+      "fat_g": 74.8,
+      "carbs_g": 0.5699999928474426,
+      "fiber_g": 0.0,
+      "sodium_mg": 635.0,
+      "calcium_mg": 8.0,
+      "iron_mg": 0.21
+    }
+  },
+  "1551": {
+    "code": "1551",
+    "food_name": "Zobo",
+    "nutrients": {
+      "calories_kcal": 43.70000076293945,
+      "protein_g": 0.8,
+      "fat_g": 0.7,
+      "carbs_g": 8.55,
+      "fiber_g": 0.0,
+      "sodium_mg": 15.0,
+      "calcium_mg": 50.5,
+      "iron_mg": 0.11
+    }
+  },
+  "NCT_1551": {
+    "code": "1551",
+    "food_name": "Zobo",
+    "nutrients": {
+      "calories_kcal": 43.70000076293945,
+      "protein_g": 0.8,
+      "fat_g": 0.7,
+      "carbs_g": 8.55,
+      "fiber_g": 0.0,
+      "sodium_mg": 15.0,
+      "calcium_mg": 50.5,
+      "iron_mg": 0.11
+    }
+  },
+  "1552": {
+    "code": "1552",
+    "food_name": "Kunu/Obiolo (drink from ferm. millet/sorghum)",
+    "nutrients": {
+      "calories_kcal": 28.0,
+      "protein_g": 0.7,
+      "fat_g": 0.2,
+      "carbs_g": 5.1,
+      "fiber_g": 1.5,
+      "sodium_mg": 23.8,
+      "calcium_mg": 8.0,
+      "iron_mg": 2.7
+    }
+  },
+  "NCT_1552": {
+    "code": "1552",
+    "food_name": "Kunu/Obiolo (drink from ferm. millet/sorghum)",
+    "nutrients": {
+      "calories_kcal": 28.0,
+      "protein_g": 0.7,
+      "fat_g": 0.2,
+      "carbs_g": 5.1,
+      "fiber_g": 1.5,
+      "sodium_mg": 23.8,
+      "calcium_mg": 8.0,
+      "iron_mg": 2.7
+    }
+  },
+  "1553": {
+    "code": "1553",
+    "food_name": "Eva non-alc. sparkling wine",
+    "nutrients": {
+      "calories_kcal": 6.400000095367432,
+      "protein_g": 0.5,
+      "fat_g": 0.0,
+      "carbs_g": 1.100000023841858,
+      "fiber_g": 0.0,
+      "sodium_mg": 7.0,
+      "calcium_mg": 9.0,
+      "iron_mg": 0.4
+    }
+  },
+  "NCT_1553": {
+    "code": "1553",
+    "food_name": "Eva non-alc. sparkling wine",
+    "nutrients": {
+      "calories_kcal": 6.400000095367432,
+      "protein_g": 0.5,
+      "fat_g": 0.0,
+      "carbs_g": 1.100000023841858,
+      "fiber_g": 0.0,
+      "sodium_mg": 7.0,
+      "calcium_mg": 9.0,
+      "iron_mg": 0.4
+    }
+  },
+  "1641": {
+    "code": "1641",
+    "food_name": "Burkutu",
+    "nutrients": {
+      "calories_kcal": 32.4,
+      "protein_g": 0.5,
+      "fat_g": 1.6,
+      "carbs_g": 4.0,
+      "fiber_g": 0.1,
+      "sodium_mg": 3.0,
+      "calcium_mg": 1.0,
+      "iron_mg": 0.6
+    }
+  },
+  "NCT_1641": {
+    "code": "1641",
+    "food_name": "Burkutu",
+    "nutrients": {
+      "calories_kcal": 32.4,
+      "protein_g": 0.5,
+      "fat_g": 1.6,
+      "carbs_g": 4.0,
+      "fiber_g": 0.1,
+      "sodium_mg": 3.0,
+      "calcium_mg": 1.0,
+      "iron_mg": 0.6
+    }
+  },
+  "1642": {
+    "code": "1642",
+    "food_name": "Cream liqueur",
+    "nutrients": {
+      "calories_kcal": 332.70001220703125,
+      "protein_g": 2.8,
+      "fat_g": 15.7,
+      "carbs_g": 20.899999618530273,
+      "fiber_g": 0.0,
+      "sodium_mg": 92.0,
+      "calcium_mg": 16.0,
+      "iron_mg": 0.13
+    }
+  },
+  "NCT_1642": {
+    "code": "1642",
+    "food_name": "Cream liqueur",
+    "nutrients": {
+      "calories_kcal": 332.70001220703125,
+      "protein_g": 2.8,
+      "fat_g": 15.7,
+      "carbs_g": 20.899999618530273,
+      "fiber_g": 0.0,
+      "sodium_mg": 92.0,
+      "calcium_mg": 16.0,
+      "iron_mg": 0.13
+    }
+  },
+  "1643": {
+    "code": "1643",
+    "food_name": "Bitters",
+    "nutrients": {
+      "calories_kcal": 162.6999969482422,
+      "protein_g": 0.2,
+      "fat_g": 0.0,
+      "carbs_g": 13.699999809265137,
+      "fiber_g": 0.0,
+      "sodium_mg": 9.0,
+      "calcium_mg": 8.0,
+      "iron_mg": 0.24
+    }
+  },
+  "NCT_1643": {
+    "code": "1643",
+    "food_name": "Bitters",
+    "nutrients": {
+      "calories_kcal": 162.6999969482422,
+      "protein_g": 0.2,
+      "fat_g": 0.0,
+      "carbs_g": 13.699999809265137,
+      "fiber_g": 0.0,
+      "sodium_mg": 9.0,
+      "calcium_mg": 8.0,
+      "iron_mg": 0.24
+    }
+  },
+  "1644": {
+    "code": "1644",
+    "food_name": "Wine",
+    "nutrients": {
+      "calories_kcal": 83.8499984741211,
+      "protein_g": 0.07,
+      "fat_g": 0.0,
+      "carbs_g": 2.6049998998641968,
+      "fiber_g": 0.0,
+      "sodium_mg": 4.5,
+      "calcium_mg": 8.5,
+      "iron_mg": 0.365
+    }
+  },
+  "NCT_1644": {
+    "code": "1644",
+    "food_name": "Wine",
+    "nutrients": {
+      "calories_kcal": 83.8499984741211,
+      "protein_g": 0.07,
+      "fat_g": 0.0,
+      "carbs_g": 2.6049998998641968,
+      "fiber_g": 0.0,
+      "sodium_mg": 4.5,
+      "calcium_mg": 8.5,
+      "iron_mg": 0.365
+    }
+  },
+  "2310": {
+    "code": "2310",
+    "food_name": "Oatmeal or oat flour",
+    "nutrients": {
+      "calories_kcal": 368.19000244140625,
+      "protein_g": 13.2,
+      "fat_g": 6.31,
+      "carbs_g": 59.400001525878906,
+      "fiber_g": 10.5,
+      "sodium_mg": 4.0,
+      "calcium_mg": 43.0,
+      "iron_mg": 4.0
+    }
+  },
+  "NCT_2310": {
+    "code": "2310",
+    "food_name": "Oatmeal or oat flour",
+    "nutrients": {
+      "calories_kcal": 368.19000244140625,
+      "protein_g": 13.2,
+      "fat_g": 6.31,
+      "carbs_g": 59.400001525878906,
+      "fiber_g": 10.5,
+      "sodium_mg": 4.0,
+      "calcium_mg": 43.0,
+      "iron_mg": 4.0
+    }
+  },
+  "2351": {
+    "code": "2351",
+    "food_name": "Indomie noodles",
+    "nutrients": {
+      "calories_kcal": 458.05198608398433,
+      "protein_g": 12.767999999999999,
+      "fat_g": 18.924,
+      "carbs_g": 57.684,
+      "fiber_g": 2.964,
+      "sodium_mg": 246.23999999999998,
+      "calcium_mg": 27.36,
+      "iron_mg": 0.6839999999999999
+    }
+  },
+  "NCT_2351": {
+    "code": "2351",
+    "food_name": "Indomie noodles",
+    "nutrients": {
+      "calories_kcal": 458.05198608398433,
+      "protein_g": 12.767999999999999,
+      "fat_g": 18.924,
+      "carbs_g": 57.684,
+      "fiber_g": 2.964,
+      "sodium_mg": 246.23999999999998,
+      "calcium_mg": 27.36,
+      "iron_mg": 0.6839999999999999
+    }
+  },
+  "4510": {
+    "code": "4510",
+    "food_name": "Red beans",
+    "nutrients": {
+      "calories_kcal": 340.6094973564148,
+      "protein_g": 22.695749999999997,
+      "fat_g": 2.4254999999999995,
+      "carbs_g": 47.124,
+      "fiber_g": 19.7505,
+      "sodium_mg": 29.4525,
+      "calcium_mg": 121.27499999999999,
+      "iron_mg": 8.48925
+    }
+  },
+  "NCT_4510": {
+    "code": "4510",
+    "food_name": "Red beans",
+    "nutrients": {
+      "calories_kcal": 340.6094973564148,
+      "protein_g": 22.695749999999997,
+      "fat_g": 2.4254999999999995,
+      "carbs_g": 47.124,
+      "fiber_g": 19.7505,
+      "sodium_mg": 29.4525,
+      "calcium_mg": 121.27499999999999,
+      "iron_mg": 8.48925
+    }
+  },
+  "4511": {
+    "code": "4511",
+    "food_name": "Local beans",
+    "nutrients": {
+      "calories_kcal": 354.85449459075926,
+      "protein_g": 24.460499999999996,
+      "fat_g": 1.4180000000000001,
+      "carbs_g": 54.06125,
+      "fiber_g": 14.00275,
+      "sodium_mg": 8.8625,
+      "calcium_mg": 115.21249999999999,
+      "iron_mg": 3.8995
+    }
+  },
+  "NCT_4511": {
+    "code": "4511",
+    "food_name": "Local beans",
+    "nutrients": {
+      "calories_kcal": 354.85449459075926,
+      "protein_g": 24.460499999999996,
+      "fat_g": 1.4180000000000001,
+      "carbs_g": 54.06125,
+      "fiber_g": 14.00275,
+      "sodium_mg": 8.8625,
+      "calcium_mg": 115.21249999999999,
+      "iron_mg": 3.8995
+    }
+  },
+  "4512": {
+    "code": "4512",
+    "food_name": "Soy bean cheese",
+    "nutrients": {
+      "calories_kcal": 66.20999908447266,
+      "protein_g": 7.17,
+      "fat_g": 3.69,
+      "carbs_g": 0.9800000190734863,
+      "fiber_g": 0.2,
+      "sodium_mg": 8.0,
+      "calcium_mg": 111.0,
+      "iron_mg": 1.11
+    }
+  },
+  "NCT_4512": {
+    "code": "4512",
+    "food_name": "Soy bean cheese",
+    "nutrients": {
+      "calories_kcal": 66.20999908447266,
+      "protein_g": 7.17,
+      "fat_g": 3.69,
+      "carbs_g": 0.9800000190734863,
+      "fiber_g": 0.2,
+      "sodium_mg": 8.0,
+      "calcium_mg": 111.0,
+      "iron_mg": 1.11
+    }
+  },
+  "6610": {
+    "code": "6610",
+    "food_name": "Carambola (five finger fruit)",
+    "nutrients": {
+      "calories_kcal": 29.003000485420216,
+      "protein_g": 0.7760000228881836,
+      "fat_g": 0.29100000858306885,
+      "carbs_g": 4.462000131607056,
+      "fiber_g": 2.7160000801086426,
+      "sodium_mg": 1.940000057220459,
+      "calcium_mg": 4.8500001430511475,
+      "iron_mg": 0.48500001430511475
+    }
+  },
+  "NCT_6610": {
+    "code": "6610",
+    "food_name": "Carambola (five finger fruit)",
+    "nutrients": {
+      "calories_kcal": 29.003000485420216,
+      "protein_g": 0.7760000228881836,
+      "fat_g": 0.29100000858306885,
+      "carbs_g": 4.462000131607056,
+      "fiber_g": 2.7160000801086426,
+      "sodium_mg": 1.940000057220459,
+      "calcium_mg": 4.8500001430511475,
+      "iron_mg": 0.48500001430511475
+    }
+  },
+  "6611": {
+    "code": "6611",
+    "food_name": "Fig",
+    "nutrients": {
+      "calories_kcal": 165.74999154806142,
+      "protein_g": 1.9987499877810477,
+      "fat_g": 0.8774999946355819,
+      "carbs_g": 34.07624979168177,
+      "fiber_g": 6.776249958574772,
+      "sodium_mg": 7.312499955296516,
+      "calcium_mg": 95.54999941587448,
+      "iron_mg": 1.36499999165535
+    }
+  },
+  "NCT_6611": {
+    "code": "6611",
+    "food_name": "Fig",
+    "nutrients": {
+      "calories_kcal": 165.74999154806142,
+      "protein_g": 1.9987499877810477,
+      "fat_g": 0.8774999946355819,
+      "carbs_g": 34.07624979168177,
+      "fiber_g": 6.776249958574772,
+      "sodium_mg": 7.312499955296516,
+      "calcium_mg": 95.54999941587448,
+      "iron_mg": 1.36499999165535
+    }
+  },
+  "7801": {
+    "code": "7801",
+    "food_name": "Fluted pumpkin leaves (ugu)",
+    "nutrients": {
+      "calories_kcal": 61.03799819946289,
+      "protein_g": 3.57,
+      "fat_g": 2.19,
+      "carbs_g": 5.658,
+      "fiber_g": 2.208,
+      "sodium_mg": 103.43,
+      "calcium_mg": 213.57,
+      "iron_mg": 12.7
+    }
+  },
+  "NCT_7801": {
+    "code": "7801",
+    "food_name": "Fluted pumpkin leaves (ugu)",
+    "nutrients": {
+      "calories_kcal": 61.03799819946289,
+      "protein_g": 3.57,
+      "fat_g": 2.19,
+      "carbs_g": 5.658,
+      "fiber_g": 2.208,
+      "sodium_mg": 103.43,
+      "calcium_mg": 213.57,
+      "iron_mg": 12.7
+    }
+  },
+  "7802": {
+    "code": "7802",
+    "food_name": "Bitter leaf",
+    "nutrients": {
+      "calories_kcal": 51.7068010854721,
+      "protein_g": 3.968640083312988,
+      "fat_g": 0.725040015220642,
+      "carbs_g": 5.304240111351012,
+      "fiber_g": 4.044960084915161,
+      "sodium_mg": 8.01360016822815,
+      "calcium_mg": 132.033602771759,
+      "iron_mg": 1.4500800304412842
+    }
+  },
+  "NCT_7802": {
+    "code": "7802",
+    "food_name": "Bitter leaf",
+    "nutrients": {
+      "calories_kcal": 51.7068010854721,
+      "protein_g": 3.968640083312988,
+      "fat_g": 0.725040015220642,
+      "carbs_g": 5.304240111351012,
+      "fiber_g": 4.044960084915161,
+      "sodium_mg": 8.01360016822815,
+      "calcium_mg": 132.033602771759,
+      "iron_mg": 1.4500800304412842
+    }
+  },
+  "7803": {
+    "code": "7803",
+    "food_name": "Moringa leaves (zogale)",
+    "nutrients": {
+      "calories_kcal": 49.71167896911618,
+      "protein_g": 5.136480079650878,
+      "fat_g": 0.8856000137329101,
+      "carbs_g": 2.774880043029785,
+      "fiber_g": 5.047920078277588,
+      "sodium_mg": 5.018400077819824,
+      "calcium_mg": 357.1920055389404,
+      "iron_mg": 5.54976008605957
+    }
+  },
+  "NCT_7803": {
+    "code": "7803",
+    "food_name": "Moringa leaves (zogale)",
+    "nutrients": {
+      "calories_kcal": 49.71167896911618,
+      "protein_g": 5.136480079650878,
+      "fat_g": 0.8856000137329101,
+      "carbs_g": 2.774880043029785,
+      "fiber_g": 5.047920078277588,
+      "sodium_mg": 5.018400077819824,
+      "calcium_mg": 357.1920055389404,
+      "iron_mg": 5.54976008605957
+    }
+  },
+  "7804": {
+    "code": "7804",
+    "food_name": "Jute leaves (ewedu/rama)",
+    "nutrients": {
+      "calories_kcal": 76.76939886572166,
+      "protein_g": 6.553994098363097,
+      "fat_g": 0.6679229654382773,
+      "carbs_g": 5.698217798895304,
+      "fiber_g": 10.874620781041955,
+      "sodium_mg": 17.532977842754782,
+      "calcium_mg": 415.15586820522935,
+      "iron_mg": 11.646906709829961
+    }
+  },
+  "NCT_7804": {
+    "code": "7804",
+    "food_name": "Jute leaves (ewedu/rama)",
+    "nutrients": {
+      "calories_kcal": 76.76939886572166,
+      "protein_g": 6.553994098363097,
+      "fat_g": 0.6679229654382773,
+      "carbs_g": 5.698217798895304,
+      "fiber_g": 10.874620781041955,
+      "sodium_mg": 17.532977842754782,
+      "calcium_mg": 415.15586820522935,
+      "iron_mg": 11.646906709829961
+    }
+  },
+  "7806": {
+    "code": "7806",
+    "food_name": "Wild spinach (okasi/afang leaves)",
+    "nutrients": {
+      "calories_kcal": 46.91999816894531,
+      "protein_g": 4.82,
+      "fat_g": 0.2,
+      "carbs_g": 5.84,
+      "fiber_g": 1.24,
+      "sodium_mg": 101.3,
+      "calcium_mg": 203.63,
+      "iron_mg": 9.6
+    }
+  },
+  "NCT_7806": {
+    "code": "7806",
+    "food_name": "Wild spinach (okasi/afang leaves)",
+    "nutrients": {
+      "calories_kcal": 46.91999816894531,
+      "protein_g": 4.82,
+      "fat_g": 0.2,
+      "carbs_g": 5.84,
+      "fiber_g": 1.24,
+      "sodium_mg": 101.3,
+      "calcium_mg": 203.63,
+      "iron_mg": 9.6
+    }
+  },
+  "7808": {
+    "code": "7808",
+    "food_name": "Waterleaf",
+    "nutrients": {
+      "calories_kcal": 71.30000305175781,
+      "protein_g": 4.6,
+      "fat_g": 3.7,
+      "carbs_g": 4.4,
+      "fiber_g": 1.0,
+      "sodium_mg": 0.28,
+      "calcium_mg": 2.44,
+      "iron_mg": 0.43
+    }
+  },
+  "NCT_7808": {
+    "code": "7808",
+    "food_name": "Waterleaf",
+    "nutrients": {
+      "calories_kcal": 71.30000305175781,
+      "protein_g": 4.6,
+      "fat_g": 3.7,
+      "carbs_g": 4.4,
+      "fiber_g": 1.0,
+      "sodium_mg": 0.28,
+      "calcium_mg": 2.44,
+      "iron_mg": 0.43
+    }
+  },
+  "7810": {
+    "code": "7810",
+    "food_name": "Bush apple leaves (atama)",
+    "nutrients": {
+      "calories_kcal": 52.36000061035156,
+      "protein_g": 5.82,
+      "fat_g": 0.32,
+      "carbs_g": 5.87,
+      "fiber_g": 1.36,
+      "sodium_mg": 96.33,
+      "calcium_mg": 198.63,
+      "iron_mg": 6.43
+    }
+  },
+  "NCT_7810": {
+    "code": "7810",
+    "food_name": "Bush apple leaves (atama)",
+    "nutrients": {
+      "calories_kcal": 52.36000061035156,
+      "protein_g": 5.82,
+      "fat_g": 0.32,
+      "carbs_g": 5.87,
+      "fiber_g": 1.36,
+      "sodium_mg": 96.33,
+      "calcium_mg": 198.63,
+      "iron_mg": 6.43
+    }
+  },
+  "7811": {
+    "code": "7811",
+    "food_name": "Karkashi (sesame) leaves)",
+    "nutrients": {
+      "calories_kcal": 76.76939886572166,
+      "protein_g": 6.553994098363097,
+      "fat_g": 0.6679229654382773,
+      "carbs_g": 5.698217798895304,
+      "fiber_g": 10.874620781041955,
+      "sodium_mg": 17.532977842754782,
+      "calcium_mg": 415.15586820522935,
+      "iron_mg": 11.646906709829961
+    }
+  },
+  "NCT_7811": {
+    "code": "7811",
+    "food_name": "Karkashi (sesame) leaves)",
+    "nutrients": {
+      "calories_kcal": 76.76939886572166,
+      "protein_g": 6.553994098363097,
+      "fat_g": 0.6679229654382773,
+      "carbs_g": 5.698217798895304,
+      "fiber_g": 10.874620781041955,
+      "sodium_mg": 17.532977842754782,
+      "calcium_mg": 415.15586820522935,
+      "iron_mg": 11.646906709829961
+    }
+  },
+  "7812": {
+    "code": "7812",
+    "food_name": "Amaranth (efo/tete) leaves",
+    "nutrients": {
+      "calories_kcal": 30.332878702468875,
+      "protein_g": 3.116639980316162,
+      "fat_g": 0.32615999794006345,
+      "carbs_g": 2.2831199855804445,
+      "fiber_g": 2.899199981689453,
+      "sodium_mg": 4.34879997253418,
+      "calcium_mg": 271.0751982879638,
+      "iron_mg": 4.783679969787597
+    }
+  },
+  "NCT_7812": {
+    "code": "7812",
+    "food_name": "Amaranth (efo/tete) leaves",
+    "nutrients": {
+      "calories_kcal": 30.332878702468875,
+      "protein_g": 3.116639980316162,
+      "fat_g": 0.32615999794006345,
+      "carbs_g": 2.2831199855804445,
+      "fiber_g": 2.899199981689453,
+      "sodium_mg": 4.34879997253418,
+      "calcium_mg": 271.0751982879638,
+      "iron_mg": 4.783679969787597
+    }
+  },
+  "7813": {
+    "code": "7813",
+    "food_name": "Sorrel (yakuwa) leaves",
+    "nutrients": {
+      "calories_kcal": 30.22416036209106,
+      "protein_g": 2.065679986953735,
+      "fat_g": 0.21743999862670896,
+      "carbs_g": 3.4065599784851073,
+      "fiber_g": 3.1891199798583987,
+      "sodium_mg": 8.69759994506836,
+      "calcium_mg": 156.55679901123045,
+      "iron_mg": 3.2978399791717523
+    }
+  },
+  "NCT_7813": {
+    "code": "7813",
+    "food_name": "Sorrel (yakuwa) leaves",
+    "nutrients": {
+      "calories_kcal": 30.22416036209106,
+      "protein_g": 2.065679986953735,
+      "fat_g": 0.21743999862670896,
+      "carbs_g": 3.4065599784851073,
+      "fiber_g": 3.1891199798583987,
+      "sodium_mg": 8.69759994506836,
+      "calcium_mg": 156.55679901123045,
+      "iron_mg": 3.2978399791717523
+    }
+  },
+  "7814": {
+    "code": "7814",
+    "food_name": "False sesame (eku) leaves",
+    "nutrients": {
+      "calories_kcal": 48.31056043190001,
+      "protein_g": 4.197600088119506,
+      "fat_g": 0.6105600128173828,
+      "carbs_g": 4.312080090522766,
+      "fiber_g": 4.388400092124939,
+      "sodium_mg": 24.42240051269531,
+      "calcium_mg": 342.6768071937561,
+      "iron_mg": 2.2132800464630127
+    }
+  },
+  "NCT_7814": {
+    "code": "7814",
+    "food_name": "False sesame (eku) leaves",
+    "nutrients": {
+      "calories_kcal": 48.31056043190001,
+      "protein_g": 4.197600088119506,
+      "fat_g": 0.6105600128173828,
+      "carbs_g": 4.312080090522766,
+      "fiber_g": 4.388400092124939,
+      "sodium_mg": 24.42240051269531,
+      "calcium_mg": 342.6768071937561,
+      "iron_mg": 2.2132800464630127
+    }
+  },
+  "7815": {
+    "code": "7815",
+    "food_name": "African basil (efinrin/scent) leaves",
+    "nutrients": {
+      "calories_kcal": 171.20000076293945,
+      "protein_g": 7.2,
+      "fat_g": 2.3000000000000003,
+      "carbs_g": 26.0,
+      "fiber_g": 8.85,
+      "sodium_mg": 109.0,
+      "calcium_mg": 136.2,
+      "iron_mg": 1.3499999999999999
+    }
+  },
+  "NCT_7815": {
+    "code": "7815",
+    "food_name": "African basil (efinrin/scent) leaves",
+    "nutrients": {
+      "calories_kcal": 171.20000076293945,
+      "protein_g": 7.2,
+      "fat_g": 2.3000000000000003,
+      "carbs_g": 26.0,
+      "fiber_g": 8.85,
+      "sodium_mg": 109.0,
+      "calcium_mg": 136.2,
+      "iron_mg": 1.3499999999999999
+    }
+  },
+  "7817": {
+    "code": "7817",
+    "food_name": "Editan leaves",
+    "nutrients": {
+      "calories_kcal": 59.35100173950195,
+      "protein_g": 4.627,
+      "fat_g": 1.627,
+      "carbs_g": 5.0,
+      "fiber_g": 3.1,
+      "sodium_mg": 140.035,
+      "calcium_mg": 185.735,
+      "iron_mg": 7.3
+    }
+  },
+  "NCT_7817": {
+    "code": "7817",
+    "food_name": "Editan leaves",
+    "nutrients": {
+      "calories_kcal": 59.35100173950195,
+      "protein_g": 4.627,
+      "fat_g": 1.627,
+      "carbs_g": 5.0,
+      "fiber_g": 3.1,
+      "sodium_mg": 140.035,
+      "calcium_mg": 185.735,
+      "iron_mg": 7.3
+    }
+  },
+  "7819": {
+    "code": "7819",
+    "food_name": "Ngu (Burnt Palm Fruit Stalk)",
+    "nutrients": {
+      "calories_kcal": 0.0,
+      "protein_g": 0.0,
+      "fat_g": 0.0,
+      "carbs_g": 0.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 18400.0,
+      "calcium_mg": 1890.0,
+      "iron_mg": 229.0
+    }
+  },
+  "NCT_7819": {
+    "code": "7819",
+    "food_name": "Ngu (Burnt Palm Fruit Stalk)",
+    "nutrients": {
+      "calories_kcal": 0.0,
+      "protein_g": 0.0,
+      "fat_g": 0.0,
+      "carbs_g": 0.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 18400.0,
+      "calcium_mg": 1890.0,
+      "iron_mg": 229.0
+    }
+  },
   "ING_001": {
     "code": "ING_001",
     "food_name": "Long Grain White Rice",
     "nutrients": {
-      "calories_kcal": 360.0,
-      "protein_g": 7.0,
-      "fat_g": 0.6,
-      "carbs_g": 79.0,
-      "fiber_g": 1.3,
-      "sodium_mg": 1.0,
-      "calcium_mg": 10.0,
-      "iron_mg": 1.2
+      "calories_kcal": 351.0440090942383,
+      "protein_g": 6.853999999999999,
+      "fat_g": 0.596,
+      "carbs_g": 78.672,
+      "fiber_g": 1.788,
+      "sodium_mg": 4.47,
+      "calcium_mg": 8.94,
+      "iron_mg": 1.043
     }
   },
   "ING_002": {
     "code": "ING_002",
     "food_name": "Tomato Paste",
     "nutrients": {
-      "calories_kcal": 82.0,
-      "protein_g": 4.3,
-      "fat_g": 0.5,
-      "carbs_g": 18.0,
-      "fiber_g": 4.1,
-      "sodium_mg": 250.0,
-      "calcium_mg": 36.0,
-      "iron_mg": 2.9
+      "calories_kcal": 17.600000381469727,
+      "protein_g": 1.0,
+      "fat_g": 0.2,
+      "carbs_g": 2.0,
+      "fiber_g": 1.9,
+      "sodium_mg": 99.0,
+      "calcium_mg": 25.0,
+      "iron_mg": 0.6
     }
   },
   "ING_003": {
     "code": "ING_003",
     "food_name": "Red Bell Pepper & Scotch Bonnet Blend",
     "nutrients": {
-      "calories_kcal": 30.0,
-      "protein_g": 1.2,
-      "fat_g": 0.3,
-      "carbs_g": 6.0,
-      "fiber_g": 1.8,
-      "sodium_mg": 5.0,
-      "calcium_mg": 12.0,
-      "iron_mg": 0.8
+      "calories_kcal": 33.06000049263239,
+      "protein_g": 1.1484000171124935,
+      "fat_g": 0.48720000725984575,
+      "carbs_g": 5.04600007519126,
+      "fiber_g": 1.948800029039383,
+      "sodium_mg": 6.9600001037120816,
+      "calcium_mg": 19.314000287801026,
+      "iron_mg": 1.0788000160753728
     }
   },
   "ING_004": {
     "code": "ING_004",
     "food_name": "Vegetable Oil",
     "nutrients": {
-      "calories_kcal": 884.0,
+      "calories_kcal": 900.0,
       "protein_g": 0.0,
       "fat_g": 100.0,
       "carbs_g": 0.0,
@@ -59,126 +5687,112 @@
     "code": "ING_005",
     "food_name": "Onion",
     "nutrients": {
-      "calories_kcal": 40.0,
-      "protein_g": 1.1,
-      "fat_g": 0.1,
-      "carbs_g": 9.3,
-      "fiber_g": 1.7,
-      "sodium_mg": 4.0,
-      "calcium_mg": 23.0,
-      "iron_mg": 0.2
+      "calories_kcal": 32.60238072297096,
+      "protein_g": 0.9987600054740905,
+      "fat_g": 0.07134000039100648,
+      "carbs_g": 6.206580034017562,
+      "fiber_g": 1.5694800086021423,
+      "sodium_mg": 6.420600035190582,
+      "calcium_mg": 20.688600113391875,
+      "iron_mg": 0.5097243027937413
     }
   },
   "ING_006": {
     "code": "ING_006",
     "food_name": "Seasoning & Spices (Thyme Curry Stock)",
     "nutrients": {
-      "calories_kcal": 150.0,
-      "protein_g": 8.0,
-      "fat_g": 5.0,
-      "carbs_g": 18.0,
-      "fiber_g": 3.0,
-      "sodium_mg": 18000.0,
-      "calcium_mg": 200.0,
-      "iron_mg": 5.0
+      "calories_kcal": 190.60000610351562,
+      "protein_g": 15.5,
+      "fat_g": 7.4,
+      "carbs_g": 15.5,
+      "fiber_g": 0.0,
+      "sodium_mg": 19000.0,
+      "calcium_mg": 57.0,
+      "iron_mg": 2.0
     }
   },
   "ING_010": {
     "code": "ING_010",
     "food_name": "Ground Egusi (Melon Seeds)",
     "nutrients": {
-      "calories_kcal": 593.0,
-      "protein_g": 28.0,
-      "fat_g": 47.0,
-      "carbs_g": 10.0,
-      "fiber_g": 5.0,
-      "sodium_mg": 15.0,
-      "calcium_mg": 54.0,
-      "iron_mg": 7.3
+      "calories_kcal": 209.27199366378773,
+      "protein_g": 7.215000092983246,
+      "fat_g": 16.4280002117157,
+      "carbs_g": 7.03000009059906,
+      "fiber_g": 2.2200000286102295,
+      "sodium_mg": 86.21000111103058,
+      "calcium_mg": 13.690000176429749,
+      "iron_mg": 3.2190000414848323
     }
   },
   "ING_011": {
     "code": "ING_011",
     "food_name": "Red Palm Oil",
     "nutrients": {
-      "calories_kcal": 884.0,
+      "calories_kcal": 899.4000040690104,
       "protein_g": 0.0,
-      "fat_g": 100.0,
+      "fat_g": 99.93333333333332,
       "carbs_g": 0.0,
       "fiber_g": 0.0,
       "sodium_mg": 0.0,
-      "calcium_mg": 0.0,
-      "iron_mg": 0.0
+      "calcium_mg": 0.5666666666666667,
+      "iron_mg": 0.2
     }
   },
   "ING_012": {
     "code": "ING_012",
     "food_name": "Spinach / Ugwu Leaves",
     "nutrients": {
-      "calories_kcal": 35.0,
-      "protein_g": 3.5,
-      "fat_g": 0.5,
-      "carbs_g": 4.5,
-      "fiber_g": 2.8,
-      "sodium_mg": 20.0,
-      "calcium_mg": 140.0,
-      "iron_mg": 4.5
+      "calories_kcal": 61.03799819946289,
+      "protein_g": 3.57,
+      "fat_g": 2.19,
+      "carbs_g": 5.658,
+      "fiber_g": 2.208,
+      "sodium_mg": 103.43,
+      "calcium_mg": 213.57,
+      "iron_mg": 12.7
     }
   },
   "ING_013": {
     "code": "ING_013",
     "food_name": "Ground Dried Crayfish",
     "nutrients": {
-      "calories_kcal": 260.0,
-      "protein_g": 65.0,
-      "fat_g": 3.5,
-      "carbs_g": 0.5,
+      "calories_kcal": 53.54327906486505,
+      "protein_g": 11.60543950653076,
+      "fat_g": 0.7326666355133056,
+      "carbs_g": 0.13187999439239498,
       "fiber_g": 0.0,
-      "sodium_mg": 850.0,
-      "calcium_mg": 1200.0,
-      "iron_mg": 8.0
-    }
-  },
-  "ING_014": {
-    "code": "ING_014",
-    "food_name": "Onion & Pepper Puree",
-    "nutrients": {
-      "calories_kcal": 32.0,
-      "protein_g": 1.2,
-      "fat_g": 0.2,
-      "carbs_g": 7.0,
-      "fiber_g": 1.8,
-      "sodium_mg": 5.0,
-      "calcium_mg": 18.0,
-      "iron_mg": 0.6
+      "sodium_mg": 74.5854634952545,
+      "calcium_mg": 23.00573235511779,
+      "iron_mg": 1.2601866130828852
     }
   },
   "ING_015": {
     "code": "ING_015",
     "food_name": "Smoked Fish / Stockfish",
     "nutrients": {
-      "calories_kcal": 210.0,
-      "protein_g": 42.0,
-      "fat_g": 4.0,
+      "calories_kcal": 236.54999542236328,
+      "protein_g": 45.3,
+      "fat_g": 6.1499999999999995,
       "carbs_g": 0.0,
       "fiber_g": 0.0,
-      "sodium_mg": 450.0,
-      "calcium_mg": 160.0,
-      "iron_mg": 2.5
+      "sodium_mg": 110.25,
+      "calcium_mg": 1454.25,
+      "iron_mg": 5.550000000000001
     }
   },
   "ING_020": {
     "code": "ING_020",
     "food_name": "Yam Flour (Elubo)",
     "nutrients": {
-      "calories_kcal": 330.0,
-      "protein_g": 3.5,
-      "fat_g": 0.4,
-      "carbs_g": 76.0,
-      "fiber_g": 6.5,
-      "sodium_mg": 12.0,
-      "calcium_mg": 35.0,
-      "iron_mg": 2.1
+      "calories_kcal": 326.6000061035156,
+      "protein_g": 6.8,
+      "fat_g": 0.6,
+      "carbs_g": 66.3,
+      "fiber_g": 14.4,
+      "sodium_mg": 19.0,
+      "calcium_mg": 66.0,
+      "iron_mg": 2.0
     }
   },
   "ING_021": {
@@ -190,8 +5804,8 @@
       "fat_g": 0.0,
       "carbs_g": 0.0,
       "fiber_g": 0.0,
-      "sodium_mg": 2.0,
-      "calcium_mg": 3.0,
+      "sodium_mg": 0.0,
+      "calcium_mg": 10.0,
       "iron_mg": 0.0
     }
   },
@@ -199,21 +5813,21 @@
     "code": "ING_030",
     "food_name": "Ripe Plantain",
     "nutrients": {
-      "calories_kcal": 122.0,
-      "protein_g": 1.3,
-      "fat_g": 0.4,
-      "carbs_g": 31.9,
-      "fiber_g": 2.3,
-      "sodium_mg": 4.0,
-      "calcium_mg": 3.0,
-      "iron_mg": 0.6
+      "calories_kcal": 116.83545567789075,
+      "protein_g": 1.108408141344699,
+      "fat_g": 2.0043713889316637,
+      "carbs_g": 22.05732201275951,
+      "fiber_g": 3.066595857720333,
+      "sodium_mg": 41.380570610202085,
+      "calcium_mg": 5.172571326275261,
+      "iron_mg": 0.5264938671387318
     }
   },
   "ING_031": {
     "code": "ING_031",
     "food_name": "Vegetable Oil (Absorbed)",
     "nutrients": {
-      "calories_kcal": 884.0,
+      "calories_kcal": 900.0,
       "protein_g": 0.0,
       "fat_g": 100.0,
       "carbs_g": 0.0,
@@ -232,44 +5846,30 @@
       "fat_g": 0.0,
       "carbs_g": 0.0,
       "fiber_g": 0.0,
-      "sodium_mg": 38758.0,
-      "calcium_mg": 24.0,
-      "iron_mg": 0.3
+      "sodium_mg": 38800.0,
+      "calcium_mg": 52.8,
+      "iron_mg": 0.47550000000000003
     }
   },
   "ING_040": {
     "code": "ING_040",
     "food_name": "Black-Eyed Peas (Peeled Beans)",
     "nutrients": {
-      "calories_kcal": 336.0,
-      "protein_g": 23.5,
-      "fat_g": 1.3,
-      "carbs_g": 60.0,
-      "fiber_g": 10.6,
-      "sodium_mg": 16.0,
-      "calcium_mg": 110.0,
-      "iron_mg": 8.3
-    }
-  },
-  "ING_041": {
-    "code": "ING_041",
-    "food_name": "Red Bell Pepper & Onion Paste",
-    "nutrients": {
-      "calories_kcal": 34.0,
-      "protein_g": 1.2,
-      "fat_g": 0.2,
-      "carbs_g": 7.5,
-      "fiber_g": 1.8,
-      "sodium_mg": 6.0,
-      "calcium_mg": 20.0,
-      "iron_mg": 0.7
+      "calories_kcal": 346.1692554092407,
+      "protein_g": 25.169500000000003,
+      "fat_g": 1.94975,
+      "carbs_g": 50.161750000000005,
+      "fiber_g": 13.64825,
+      "sodium_mg": 21.27,
+      "calcium_mg": 76.2175,
+      "iron_mg": 6.55825
     }
   },
   "ING_042": {
     "code": "ING_042",
     "food_name": "Vegetable Oil",
     "nutrients": {
-      "calories_kcal": 884.0,
+      "calories_kcal": 900.0,
       "protein_g": 0.0,
       "fat_g": 100.0,
       "carbs_g": 0.0,
@@ -277,20 +5877,6 @@
       "sodium_mg": 0.0,
       "calcium_mg": 0.0,
       "iron_mg": 0.0
-    }
-  },
-  "ING_043": {
-    "code": "ING_043",
-    "food_name": "Ground Crayfish & Seasoning",
-    "nutrients": {
-      "calories_kcal": 230.0,
-      "protein_g": 48.0,
-      "fat_g": 3.8,
-      "carbs_g": 5.0,
-      "fiber_g": 1.0,
-      "sodium_mg": 6000.0,
-      "calcium_mg": 800.0,
-      "iron_mg": 6.5
     }
   },
   "ING_044": {
@@ -302,9 +5888,51 @@
       "fat_g": 0.0,
       "carbs_g": 0.0,
       "fiber_g": 0.0,
-      "sodium_mg": 2.0,
-      "calcium_mg": 3.0,
+      "sodium_mg": 0.0,
+      "calcium_mg": 10.0,
       "iron_mg": 0.0
+    }
+  },
+  "ING_014": {
+    "code": "ING_014",
+    "food_name": "Onion & Pepper Puree",
+    "nutrients": {
+      "calories_kcal": 32.83,
+      "protein_g": 1.07,
+      "fat_g": 0.28,
+      "carbs_g": 5.63,
+      "fiber_g": 1.76,
+      "sodium_mg": 6.69,
+      "calcium_mg": 20.0,
+      "iron_mg": 0.79
+    }
+  },
+  "ING_041": {
+    "code": "ING_041",
+    "food_name": "Red Bell Pepper & Onion Paste",
+    "nutrients": {
+      "calories_kcal": 32.83,
+      "protein_g": 1.07,
+      "fat_g": 0.28,
+      "carbs_g": 5.63,
+      "fiber_g": 1.76,
+      "sodium_mg": 6.69,
+      "calcium_mg": 20.0,
+      "iron_mg": 0.79
+    }
+  },
+  "ING_043": {
+    "code": "ING_043",
+    "food_name": "Ground Crayfish & Seasoning",
+    "nutrients": {
+      "calories_kcal": 94.66,
+      "protein_g": 12.77,
+      "fat_g": 2.73,
+      "carbs_g": 4.74,
+      "fiber_g": 0.0,
+      "sodium_mg": 5752.21,
+      "calcium_mg": 33.2,
+      "iron_mg": 1.48
     }
   }
 }
