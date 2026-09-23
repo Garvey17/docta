@@ -1,0 +1,316 @@
+{
+  "jollof_rice": {
+    "dish_id": "jollof_rice",
+    "dish_name": "Nigerian Jollof Rice",
+    "standard_serving_g": 250.0,
+    "cooking_yield_factor": 0.88,
+    "raw_batch_mass_g": 230.0,
+    "raw_ingredients": [
+      {
+        "ingredient_code": "ING_001",
+        "name": "Long Grain White Rice",
+        "quantity_g": 120.0
+      },
+      {
+        "ingredient_code": "ING_002",
+        "name": "Tomato Paste",
+        "quantity_g": 30.0
+      },
+      {
+        "ingredient_code": "ING_003",
+        "name": "Red Bell Pepper & Scotch Bonnet Blend",
+        "quantity_g": 40.0
+      },
+      {
+        "ingredient_code": "ING_004",
+        "name": "Vegetable Oil",
+        "quantity_g": 15.0
+      },
+      {
+        "ingredient_code": "ING_005",
+        "name": "Onion",
+        "quantity_g": 20.0
+      },
+      {
+        "ingredient_code": "ING_006",
+        "name": "Seasoning & Spices (Thyme, Curry, Stock)",
+        "quantity_g": 5.0
+      }
+    ],
+    "nutrients_raw_100g": {
+      "calories_kcal": 268.13,
+      "protein_g": 4.69,
+      "fat_g": 7.07,
+      "carbs_g": 45.81,
+      "fiber_g": 1.74,
+      "sodium_mg": 425.65,
+      "calcium_mg": 18.35,
+      "iron_mg": 1.27
+    },
+    "nutrients_cooked_100g": {
+      "calories_kcal": 304.69,
+      "protein_g": 5.33,
+      "fat_g": 8.03,
+      "carbs_g": 52.06,
+      "fiber_g": 1.98,
+      "sodium_mg": 483.7,
+      "calcium_mg": 20.85,
+      "iron_mg": 1.44
+    },
+    "wafct_code": "01_042",
+    "description": "Nigerian Jollof Rice. Standard portion: 250.0g. Constituent ingredients: Long Grain White Rice, Tomato Paste, Red Bell Pepper & Scotch Bonnet Blend, Vegetable Oil, Onion, Seasoning & Spices (Thyme, Curry, Stock). Cooked yield factor: 0.88.",
+    "aliases": [
+      "jollof",
+      "jollof rice",
+      "nigerian jollof",
+      "nigerian jollof rice",
+      "party jollof",
+      "party jollof rice",
+      "smoky jollof",
+      "rice and stew",
+      "benachin"
+    ]
+  },
+  "egusi_soup": {
+    "dish_id": "egusi_soup",
+    "dish_name": "Egusi Melon Seed Soup",
+    "standard_serving_g": 200.0,
+    "cooking_yield_factor": 0.85,
+    "raw_batch_mass_g": 185.0,
+    "raw_ingredients": [
+      {
+        "ingredient_code": "ING_010",
+        "name": "Ground Egusi (Melon Seeds)",
+        "quantity_g": 60.0
+      },
+      {
+        "ingredient_code": "ING_011",
+        "name": "Red Palm Oil",
+        "quantity_g": 20.0
+      },
+      {
+        "ingredient_code": "ING_012",
+        "name": "Spinach / Ugwu Leaves",
+        "quantity_g": 40.0
+      },
+      {
+        "ingredient_code": "ING_013",
+        "name": "Ground Dried Crayfish",
+        "quantity_g": 10.0
+      },
+      {
+        "ingredient_code": "ING_014",
+        "name": "Onion & Pepper Puree",
+        "quantity_g": 30.0
+      },
+      {
+        "ingredient_code": "ING_015",
+        "name": "Smoked Fish / Stockfish",
+        "quantity_g": 25.0
+      }
+    ],
+    "nutrients_raw_100g": {
+      "calories_kcal": 343.08,
+      "protein_g": 19.22,
+      "fat_g": 26.92,
+      "carbs_g": 5.38,
+      "fiber_g": 2.52,
+      "sodium_mg": 116.76,
+      "calcium_mg": 137.19,
+      "iron_mg": 4.21
+    },
+    "nutrients_cooked_100g": {
+      "calories_kcal": 403.62,
+      "protein_g": 22.61,
+      "fat_g": 31.68,
+      "carbs_g": 6.33,
+      "fiber_g": 2.96,
+      "sodium_mg": 137.36,
+      "calcium_mg": 161.4,
+      "iron_mg": 4.95
+    },
+    "wafct_code": "03_015",
+    "description": "Egusi Melon Seed Soup. Standard portion: 200.0g. Constituent ingredients: Ground Egusi (Melon Seeds), Red Palm Oil, Spinach / Ugwu Leaves, Ground Dried Crayfish, Onion & Pepper Puree, Smoked Fish / Stockfish. Cooked yield factor: 0.85.",
+    "aliases": [
+      "egusi",
+      "egusi soup",
+      "melon soup",
+      "melon seed soup",
+      "ofe egusi",
+      "egusi with ugwu",
+      "fried egusi",
+      "egusi and pounded yam"
+    ]
+  },
+  "amala": {
+    "dish_id": "amala",
+    "dish_name": "Amala (Yam Flour Swallow)",
+    "standard_serving_g": 300.0,
+    "cooking_yield_factor": 2.5,
+    "raw_batch_mass_g": 300.0,
+    "raw_ingredients": [
+      {
+        "ingredient_code": "ING_020",
+        "name": "Yam Flour (Elubo)",
+        "quantity_g": 100.0
+      },
+      {
+        "ingredient_code": "ING_021",
+        "name": "Water",
+        "quantity_g": 200.0
+      }
+    ],
+    "nutrients_raw_100g": {
+      "calories_kcal": 110.0,
+      "protein_g": 1.17,
+      "fat_g": 0.13,
+      "carbs_g": 25.33,
+      "fiber_g": 2.17,
+      "sodium_mg": 5.33,
+      "calcium_mg": 13.67,
+      "iron_mg": 0.7
+    },
+    "nutrients_cooked_100g": {
+      "calories_kcal": 44.0,
+      "protein_g": 0.47,
+      "fat_g": 0.05,
+      "carbs_g": 10.13,
+      "fiber_g": 0.87,
+      "sodium_mg": 2.13,
+      "calcium_mg": 5.47,
+      "iron_mg": 0.28
+    },
+    "wafct_code": "02_005",
+    "description": "Amala (Yam Flour Swallow). Standard portion: 300.0g. Constituent ingredients: Yam Flour (Elubo), Water. Cooked yield factor: 2.5.",
+    "aliases": [
+      "amala",
+      "amala dudu",
+      "elubo",
+      "yam flour",
+      "yam flour swallow",
+      "amala swallow",
+      "amala isu"
+    ]
+  },
+  "fried_plantain": {
+    "dish_id": "fried_plantain",
+    "dish_name": "Fried Ripe Plantain (Dodo)",
+    "standard_serving_g": 150.0,
+    "cooking_yield_factor": 0.78,
+    "raw_batch_mass_g": 183.0,
+    "raw_ingredients": [
+      {
+        "ingredient_code": "ING_030",
+        "name": "Ripe Plantain",
+        "quantity_g": 170.0
+      },
+      {
+        "ingredient_code": "ING_031",
+        "name": "Vegetable Oil (Absorbed)",
+        "quantity_g": 12.0
+      },
+      {
+        "ingredient_code": "ING_032",
+        "name": "Salt",
+        "quantity_g": 1.0
+      }
+    ],
+    "nutrients_raw_100g": {
+      "calories_kcal": 171.3,
+      "protein_g": 1.21,
+      "fat_g": 6.93,
+      "carbs_g": 29.63,
+      "fiber_g": 2.14,
+      "sodium_mg": 215.51,
+      "calcium_mg": 2.92,
+      "iron_mg": 0.56
+    },
+    "nutrients_cooked_100g": {
+      "calories_kcal": 219.62,
+      "protein_g": 1.55,
+      "fat_g": 8.88,
+      "carbs_g": 37.99,
+      "fiber_g": 2.74,
+      "sodium_mg": 276.29,
+      "calcium_mg": 3.74,
+      "iron_mg": 0.72
+    },
+    "wafct_code": "02_018",
+    "description": "Fried Ripe Plantain (Dodo). Standard portion: 150.0g. Constituent ingredients: Ripe Plantain, Vegetable Oil (Absorbed), Salt. Cooked yield factor: 0.78.",
+    "aliases": [
+      "dodo",
+      "fried plantain",
+      "fried ripe plantain",
+      "ripe plantain",
+      "plantain",
+      "alloco",
+      "kelewele"
+    ]
+  },
+  "moi_moi": {
+    "dish_id": "moi_moi",
+    "dish_name": "Steamed Bean Cake (Moi Moi)",
+    "standard_serving_g": 200.0,
+    "cooking_yield_factor": 1.1,
+    "raw_batch_mass_g": 208.0,
+    "raw_ingredients": [
+      {
+        "ingredient_code": "ING_040",
+        "name": "Black-Eyed Peas (Peeled Beans)",
+        "quantity_g": 80.0
+      },
+      {
+        "ingredient_code": "ING_041",
+        "name": "Red Bell Pepper & Onion Paste",
+        "quantity_g": 35.0
+      },
+      {
+        "ingredient_code": "ING_042",
+        "name": "Vegetable Oil",
+        "quantity_g": 15.0
+      },
+      {
+        "ingredient_code": "ING_043",
+        "name": "Ground Crayfish & Seasoning",
+        "quantity_g": 8.0
+      },
+      {
+        "ingredient_code": "ING_044",
+        "name": "Water",
+        "quantity_g": 70.0
+      }
+    ],
+    "nutrients_raw_100g": {
+      "calories_kcal": 207.55,
+      "protein_g": 11.09,
+      "fat_g": 7.89,
+      "carbs_g": 24.53,
+      "fiber_g": 4.42,
+      "sodium_mg": 238.61,
+      "calcium_mg": 77.45,
+      "iron_mg": 3.56
+    },
+    "nutrients_cooked_100g": {
+      "calories_kcal": 188.68,
+      "protein_g": 10.08,
+      "fat_g": 7.17,
+      "carbs_g": 22.3,
+      "fiber_g": 4.02,
+      "sodium_mg": 216.91,
+      "calcium_mg": 70.41,
+      "iron_mg": 3.24
+    },
+    "wafct_code": "04_021",
+    "description": "Steamed Bean Cake (Moi Moi). Standard portion: 200.0g. Constituent ingredients: Black-Eyed Peas (Peeled Beans), Red Bell Pepper & Onion Paste, Vegetable Oil, Ground Crayfish & Seasoning, Water. Cooked yield factor: 1.1.",
+    "aliases": [
+      "moi moi",
+      "moimoi",
+      "moyi moyi",
+      "steamed bean cake",
+      "bean cake",
+      "bean pudding",
+      "steamed beans",
+      "oleleh"
+    ]
+  }
+}

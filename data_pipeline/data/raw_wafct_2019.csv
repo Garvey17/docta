@@ -1,0 +1,23 @@
+code,food_name,energy_kcal,protein_g,fat_g,carbs_g,fiber_g,sodium_mg,calcium_mg,iron_mg
+ING_001,Long Grain White Rice,360.0,7.0,0.6,79.0,1.3,1.0,10.0,1.2
+ING_002,Tomato Paste,82.0,4.3,0.5,18.0,4.1,250.0,36.0,2.9
+ING_003,Red Bell Pepper & Scotch Bonnet Blend,30.0,1.2,0.3,6.0,1.8,5.0,12.0,0.8
+ING_004,Vegetable Oil,884.0,0.0,100.0,0.0,0.0,0.0,0.0,0.0
+ING_005,Onion,40.0,1.1,0.1,9.3,1.7,4.0,23.0,0.2
+ING_006,Seasoning & Spices (Thyme Curry Stock),150.0,8.0,5.0,18.0,3.0,18000.0,200.0,5.0
+ING_010,Ground Egusi (Melon Seeds),593.0,28.0,47.0,10.0,5.0,15.0,54.0,7.3
+ING_011,Red Palm Oil,884.0,0.0,100.0,0.0,0.0,0.0,0.0,0.0
+ING_012,Spinach / Ugwu Leaves,35.0,3.5,0.5,4.5,2.8,20.0,140.0,4.5
+ING_013,Ground Dried Crayfish,260.0,65.0,3.5,0.5,0.0,850.0,1200.0,8.0
+ING_014,Onion & Pepper Puree,32.0,1.2,0.2,7.0,1.8,5.0,18.0,0.6
+ING_015,Smoked Fish / Stockfish,210.0,42.0,4.0,0.0,0.0,450.0,160.0,2.5
+ING_020,Yam Flour (Elubo),330.0,3.5,0.4,76.0,6.5,12.0,35.0,2.1
+ING_021,Water,0.0,0.0,0.0,0.0,0.0,2.0,3.0,0.0
+ING_030,Ripe Plantain,122.0,1.3,0.4,31.9,2.3,4.0,3.0,0.6
+ING_031,Vegetable Oil (Absorbed),884.0,0.0,100.0,0.0,0.0,0.0,0.0,0.0
+ING_032,Salt,0.0,0.0,0.0,0.0,0.0,38758.0,24.0,0.3
+ING_040,Black-Eyed Peas (Peeled Beans),336.0,23.5,1.3,60.0,10.6,16.0,110.0,8.3
+ING_041,Red Bell Pepper & Onion Paste,34.0,1.2,0.2,7.5,1.8,6.0,20.0,0.7
+ING_042,Vegetable Oil,884.0,0.0,100.0,0.0,0.0,0.0,0.0,0.0
+ING_043,Ground Crayfish & Seasoning,230.0,48.0,3.8,5.0,1.0,6000.0,800.0,6.5
+ING_044,Water,0.0,0.0,0.0,0.0,0.0,2.0,3.0,0.0

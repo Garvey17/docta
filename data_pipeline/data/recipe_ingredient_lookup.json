@@ -1,0 +1,66 @@
+{
+  "recipes": [
+    {
+      "dish_id": "jollof_rice",
+      "dish_name": "Nigerian Jollof Rice",
+      "standard_serving_g": 250.0,
+      "cooking_yield_factor": 0.88,
+      "ingredients": [
+        { "ingredient_code": "ING_001", "name": "Long Grain White Rice", "quantity_g": 120.0 },
+        { "ingredient_code": "ING_002", "name": "Tomato Paste", "quantity_g": 30.0 },
+        { "ingredient_code": "ING_003", "name": "Red Bell Pepper & Scotch Bonnet Blend", "quantity_g": 40.0 },
+        { "ingredient_code": "ING_004", "name": "Vegetable Oil", "quantity_g": 15.0 },
+        { "ingredient_code": "ING_005", "name": "Onion", "quantity_g": 20.0 },
+        { "ingredient_code": "ING_006", "name": "Seasoning & Spices (Thyme, Curry, Stock)", "quantity_g": 5.0 }
+      ]
+    },
+    {
+      "dish_id": "egusi_soup",
+      "dish_name": "Egusi Melon Seed Soup",
+      "standard_serving_g": 200.0,
+      "cooking_yield_factor": 0.85,
+      "ingredients": [
+        { "ingredient_code": "ING_010", "name": "Ground Egusi (Melon Seeds)", "quantity_g": 60.0 },
+        { "ingredient_code": "ING_011", "name": "Red Palm Oil", "quantity_g": 20.0 },
+        { "ingredient_code": "ING_012", "name": "Spinach / Ugwu Leaves", "quantity_g": 40.0 },
+        { "ingredient_code": "ING_013", "name": "Ground Dried Crayfish", "quantity_g": 10.0 },
+        { "ingredient_code": "ING_014", "name": "Onion & Pepper Puree", "quantity_g": 30.0 },
+        { "ingredient_code": "ING_015", "name": "Smoked Fish / Stockfish", "quantity_g": 25.0 }
+      ]
+    },
+    {
+      "dish_id": "amala",
+      "dish_name": "Amala (Yam Flour Swallow)",
+      "standard_serving_g": 300.0,
+      "cooking_yield_factor": 2.50,
+      "ingredients": [
+        { "ingredient_code": "ING_020", "name": "Yam Flour (Elubo)", "quantity_g": 100.0 },
+        { "ingredient_code": "ING_021", "name": "Water", "quantity_g": 200.0 }
+      ]
+    },
+    {
+      "dish_id": "fried_plantain",
+      "dish_name": "Fried Ripe Plantain (Dodo)",
+      "standard_serving_g": 150.0,
+      "cooking_yield_factor": 0.78,
+      "ingredients": [
+        { "ingredient_code": "ING_030", "name": "Ripe Plantain", "quantity_g": 170.0 },
+        { "ingredient_code": "ING_031", "name": "Vegetable Oil (Absorbed)", "quantity_g": 12.0 },
+        { "ingredient_code": "ING_032", "name": "Salt", "quantity_g": 1.0 }
+      ]
+    },
+    {
+      "dish_id": "moi_moi",
+      "dish_name": "Steamed Bean Cake (Moi Moi)",
+      "standard_serving_g": 200.0,
+      "cooking_yield_factor": 1.10,
+      "ingredients": [
+        { "ingredient_code": "ING_040", "name": "Black-Eyed Peas (Peeled Beans)", "quantity_g": 80.0 },
+        { "ingredient_code": "ING_041", "name": "Red Bell Pepper & Onion Paste", "quantity_g": 35.0 },
+        { "ingredient_code": "ING_042", "name": "Vegetable Oil", "quantity_g": 15.0 },
+        { "ingredient_code": "ING_043", "name": "Ground Crayfish & Seasoning", "quantity_g": 8.0 },
+        { "ingredient_code": "ING_044", "name": "Water", "quantity_g": 70.0 }
+      ]
+    }
+  ]
+}

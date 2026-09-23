@@ -1,0 +1,310 @@
+{
+  "ING_001": {
+    "code": "ING_001",
+    "food_name": "Long Grain White Rice",
+    "nutrients": {
+      "calories_kcal": 360.0,
+      "protein_g": 7.0,
+      "fat_g": 0.6,
+      "carbs_g": 79.0,
+      "fiber_g": 1.3,
+      "sodium_mg": 1.0,
+      "calcium_mg": 10.0,
+      "iron_mg": 1.2
+    }
+  },
+  "ING_002": {
+    "code": "ING_002",
+    "food_name": "Tomato Paste",
+    "nutrients": {
+      "calories_kcal": 82.0,
+      "protein_g": 4.3,
+      "fat_g": 0.5,
+      "carbs_g": 18.0,
+      "fiber_g": 4.1,
+      "sodium_mg": 250.0,
+      "calcium_mg": 36.0,
+      "iron_mg": 2.9
+    }
+  },
+  "ING_003": {
+    "code": "ING_003",
+    "food_name": "Red Bell Pepper & Scotch Bonnet Blend",
+    "nutrients": {
+      "calories_kcal": 30.0,
+      "protein_g": 1.2,
+      "fat_g": 0.3,
+      "carbs_g": 6.0,
+      "fiber_g": 1.8,
+      "sodium_mg": 5.0,
+      "calcium_mg": 12.0,
+      "iron_mg": 0.8
+    }
+  },
+  "ING_004": {
+    "code": "ING_004",
+    "food_name": "Vegetable Oil",
+    "nutrients": {
+      "calories_kcal": 884.0,
+      "protein_g": 0.0,
+      "fat_g": 100.0,
+      "carbs_g": 0.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 0.0,
+      "calcium_mg": 0.0,
+      "iron_mg": 0.0
+    }
+  },
+  "ING_005": {
+    "code": "ING_005",
+    "food_name": "Onion",
+    "nutrients": {
+      "calories_kcal": 40.0,
+      "protein_g": 1.1,
+      "fat_g": 0.1,
+      "carbs_g": 9.3,
+      "fiber_g": 1.7,
+      "sodium_mg": 4.0,
+      "calcium_mg": 23.0,
+      "iron_mg": 0.2
+    }
+  },
+  "ING_006": {
+    "code": "ING_006",
+    "food_name": "Seasoning & Spices (Thyme Curry Stock)",
+    "nutrients": {
+      "calories_kcal": 150.0,
+      "protein_g": 8.0,
+      "fat_g": 5.0,
+      "carbs_g": 18.0,
+      "fiber_g": 3.0,
+      "sodium_mg": 18000.0,
+      "calcium_mg": 200.0,
+      "iron_mg": 5.0
+    }
+  },
+  "ING_010": {
+    "code": "ING_010",
+    "food_name": "Ground Egusi (Melon Seeds)",
+    "nutrients": {
+      "calories_kcal": 593.0,
+      "protein_g": 28.0,
+      "fat_g": 47.0,
+      "carbs_g": 10.0,
+      "fiber_g": 5.0,
+      "sodium_mg": 15.0,
+      "calcium_mg": 54.0,
+      "iron_mg": 7.3
+    }
+  },
+  "ING_011": {
+    "code": "ING_011",
+    "food_name": "Red Palm Oil",
+    "nutrients": {
+      "calories_kcal": 884.0,
+      "protein_g": 0.0,
+      "fat_g": 100.0,
+      "carbs_g": 0.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 0.0,
+      "calcium_mg": 0.0,
+      "iron_mg": 0.0
+    }
+  },
+  "ING_012": {
+    "code": "ING_012",
+    "food_name": "Spinach / Ugwu Leaves",
+    "nutrients": {
+      "calories_kcal": 35.0,
+      "protein_g": 3.5,
+      "fat_g": 0.5,
+      "carbs_g": 4.5,
+      "fiber_g": 2.8,
+      "sodium_mg": 20.0,
+      "calcium_mg": 140.0,
+      "iron_mg": 4.5
+    }
+  },
+  "ING_013": {
+    "code": "ING_013",
+    "food_name": "Ground Dried Crayfish",
+    "nutrients": {
+      "calories_kcal": 260.0,
+      "protein_g": 65.0,
+      "fat_g": 3.5,
+      "carbs_g": 0.5,
+      "fiber_g": 0.0,
+      "sodium_mg": 850.0,
+      "calcium_mg": 1200.0,
+      "iron_mg": 8.0
+    }
+  },
+  "ING_014": {
+    "code": "ING_014",
+    "food_name": "Onion & Pepper Puree",
+    "nutrients": {
+      "calories_kcal": 32.0,
+      "protein_g": 1.2,
+      "fat_g": 0.2,
+      "carbs_g": 7.0,
+      "fiber_g": 1.8,
+      "sodium_mg": 5.0,
+      "calcium_mg": 18.0,
+      "iron_mg": 0.6
+    }
+  },
+  "ING_015": {
+    "code": "ING_015",
+    "food_name": "Smoked Fish / Stockfish",
+    "nutrients": {
+      "calories_kcal": 210.0,
+      "protein_g": 42.0,
+      "fat_g": 4.0,
+      "carbs_g": 0.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 450.0,
+      "calcium_mg": 160.0,
+      "iron_mg": 2.5
+    }
+  },
+  "ING_020": {
+    "code": "ING_020",
+    "food_name": "Yam Flour (Elubo)",
+    "nutrients": {
+      "calories_kcal": 330.0,
+      "protein_g": 3.5,
+      "fat_g": 0.4,
+      "carbs_g": 76.0,
+      "fiber_g": 6.5,
+      "sodium_mg": 12.0,
+      "calcium_mg": 35.0,
+      "iron_mg": 2.1
+    }
+  },
+  "ING_021": {
+    "code": "ING_021",
+    "food_name": "Water",
+    "nutrients": {
+      "calories_kcal": 0.0,
+      "protein_g": 0.0,
+      "fat_g": 0.0,
+      "carbs_g": 0.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 2.0,
+      "calcium_mg": 3.0,
+      "iron_mg": 0.0
+    }
+  },
+  "ING_030": {
+    "code": "ING_030",
+    "food_name": "Ripe Plantain",
+    "nutrients": {
+      "calories_kcal": 122.0,
+      "protein_g": 1.3,
+      "fat_g": 0.4,
+      "carbs_g": 31.9,
+      "fiber_g": 2.3,
+      "sodium_mg": 4.0,
+      "calcium_mg": 3.0,
+      "iron_mg": 0.6
+    }
+  },
+  "ING_031": {
+    "code": "ING_031",
+    "food_name": "Vegetable Oil (Absorbed)",
+    "nutrients": {
+      "calories_kcal": 884.0,
+      "protein_g": 0.0,
+      "fat_g": 100.0,
+      "carbs_g": 0.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 0.0,
+      "calcium_mg": 0.0,
+      "iron_mg": 0.0
+    }
+  },
+  "ING_032": {
+    "code": "ING_032",
+    "food_name": "Salt",
+    "nutrients": {
+      "calories_kcal": 0.0,
+      "protein_g": 0.0,
+      "fat_g": 0.0,
+      "carbs_g": 0.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 38758.0,
+      "calcium_mg": 24.0,
+      "iron_mg": 0.3
+    }
+  },
+  "ING_040": {
+    "code": "ING_040",
+    "food_name": "Black-Eyed Peas (Peeled Beans)",
+    "nutrients": {
+      "calories_kcal": 336.0,
+      "protein_g": 23.5,
+      "fat_g": 1.3,
+      "carbs_g": 60.0,
+      "fiber_g": 10.6,
+      "sodium_mg": 16.0,
+      "calcium_mg": 110.0,
+      "iron_mg": 8.3
+    }
+  },
+  "ING_041": {
+    "code": "ING_041",
+    "food_name": "Red Bell Pepper & Onion Paste",
+    "nutrients": {
+      "calories_kcal": 34.0,
+      "protein_g": 1.2,
+      "fat_g": 0.2,
+      "carbs_g": 7.5,
+      "fiber_g": 1.8,
+      "sodium_mg": 6.0,
+      "calcium_mg": 20.0,
+      "iron_mg": 0.7
+    }
+  },
+  "ING_042": {
+    "code": "ING_042",
+    "food_name": "Vegetable Oil",
+    "nutrients": {
+      "calories_kcal": 884.0,
+      "protein_g": 0.0,
+      "fat_g": 100.0,
+      "carbs_g": 0.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 0.0,
+      "calcium_mg": 0.0,
+      "iron_mg": 0.0
+    }
+  },
+  "ING_043": {
+    "code": "ING_043",
+    "food_name": "Ground Crayfish & Seasoning",
+    "nutrients": {
+      "calories_kcal": 230.0,
+      "protein_g": 48.0,
+      "fat_g": 3.8,
+      "carbs_g": 5.0,
+      "fiber_g": 1.0,
+      "sodium_mg": 6000.0,
+      "calcium_mg": 800.0,
+      "iron_mg": 6.5
+    }
+  },
+  "ING_044": {
+    "code": "ING_044",
+    "food_name": "Water",
+    "nutrients": {
+      "calories_kcal": 0.0,
+      "protein_g": 0.0,
+      "fat_g": 0.0,
+      "carbs_g": 0.0,
+      "fiber_g": 0.0,
+      "sodium_mg": 2.0,
+      "calcium_mg": 3.0,
+      "iron_mg": 0.0
+    }
+  }
+}
