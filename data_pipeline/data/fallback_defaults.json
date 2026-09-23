@@ -1,0 +1,70 @@
+{
+  "default": {
+    "dish_id": "default_meal",
+    "dish_name": "Mixed West African Meal (Baseline Estimate)",
+    "wafct_code": "00_DEFAULT",
+    "standard_serving_g": 200.0,
+    "cooking_yield_factor": 1.0,
+    "nutrients_cooked_100g": {
+      "calories_kcal": 185.0,
+      "protein_g": 5.5,
+      "fat_g": 7.0,
+      "carbs_g": 25.0,
+      "fiber_g": 2.5,
+      "sodium_mg": 250.0,
+      "calcium_mg": 25.0,
+      "iron_mg": 1.5
+    }
+  },
+  "generic_rice": {
+    "dish_id": "generic_rice",
+    "dish_name": "Generic Seasoned Rice",
+    "wafct_code": "01_RICE",
+    "standard_serving_g": 250.0,
+    "cooking_yield_factor": 0.9,
+    "nutrients_cooked_100g": {
+      "calories_kcal": 155.0,
+      "protein_g": 3.2,
+      "fat_g": 4.5,
+      "carbs_g": 26.0,
+      "fiber_g": 1.2,
+      "sodium_mg": 200.0,
+      "calcium_mg": 10.0,
+      "iron_mg": 0.8
+    }
+  },
+  "generic_soup": {
+    "dish_id": "generic_soup",
+    "dish_name": "Generic Traditional Stew/Soup",
+    "wafct_code": "02_SOUP",
+    "standard_serving_g": 200.0,
+    "cooking_yield_factor": 0.85,
+    "nutrients_cooked_100g": {
+      "calories_kcal": 210.0,
+      "protein_g": 10.5,
+      "fat_g": 15.0,
+      "carbs_g": 7.0,
+      "fiber_g": 2.8,
+      "sodium_mg": 380.0,
+      "calcium_mg": 65.0,
+      "iron_mg": 2.4
+    }
+  },
+  "generic_swallow": {
+    "dish_id": "generic_swallow",
+    "dish_name": "Generic Cooked Swallow Paste",
+    "wafct_code": "03_SWALLOW",
+    "standard_serving_g": 300.0,
+    "cooking_yield_factor": 2.2,
+    "nutrients_cooked_100g": {
+      "calories_kcal": 125.0,
+      "protein_g": 1.5,
+      "fat_g": 0.3,
+      "carbs_g": 28.5,
+      "fiber_g": 2.4,
+      "sodium_mg": 8.0,
+      "calcium_mg": 15.0,
+      "iron_mg": 0.9
+    }
+  }
+}
