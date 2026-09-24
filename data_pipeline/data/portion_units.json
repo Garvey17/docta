@@ -1,0 +1,146 @@
+{
+  "portion_units": {
+    "jollof_rice": {
+      "dish_id": "jollof_rice",
+      "dish_name": "Nigerian Jollof Rice",
+      "default_unit_id": "serving_spoon",
+      "default_quantity": 2.0,
+      "units": [
+        {
+          "unit_id": "serving_spoon",
+          "unit_name": "Serving Spoon",
+          "gram_weight": 120.0,
+          "description": "Standard catering/cooking spoon (~120g)"
+        },
+        {
+          "unit_id": "mound_cup",
+          "unit_name": "Mound / Cup",
+          "gram_weight": 250.0,
+          "description": "Standard dining plate mound (~250g)"
+        },
+        {
+          "unit_id": "takeaway_pack",
+          "unit_name": "Takeaway Pack",
+          "gram_weight": 500.0,
+          "description": "Full standard plastic takeaway pack (~500g)"
+        }
+      ]
+    },
+    "egusi_soup": {
+      "dish_id": "egusi_soup",
+      "dish_name": "Egusi Melon Seed Soup",
+      "default_unit_id": "serving_spoon",
+      "default_quantity": 2.0,
+      "units": [
+        {
+          "unit_id": "serving_spoon",
+          "unit_name": "Serving Spoon",
+          "gram_weight": 100.0,
+          "description": "Standard cooking soup spoon (~100g)"
+        },
+        {
+          "unit_id": "small_bowl",
+          "unit_name": "Small Soup Bowl",
+          "gram_weight": 200.0,
+          "description": "Side soup bowl (~200g)"
+        },
+        {
+          "unit_id": "large_bowl",
+          "unit_name": "Large Soup Bowl",
+          "gram_weight": 350.0,
+          "description": "Main soup bowl (~350g)"
+        }
+      ]
+    },
+    "amala": {
+      "dish_id": "amala",
+      "dish_name": "Amala (Yam Flour Swallow)",
+      "default_unit_id": "medium_wrap",
+      "default_quantity": 1.0,
+      "units": [
+        {
+          "unit_id": "small_wrap",
+          "unit_name": "Small Wrap",
+          "gram_weight": 150.0,
+          "description": "Light portion wrap (~150g)"
+        },
+        {
+          "unit_id": "medium_wrap",
+          "unit_name": "Medium Wrap",
+          "gram_weight": 250.0,
+          "description": "Standard restaurant wrap (~250g)"
+        },
+        {
+          "unit_id": "large_wrap",
+          "unit_name": "Large Wrap",
+          "gram_weight": 400.0,
+          "description": "Heavy swallow portion (~400g)"
+        }
+      ]
+    },
+    "fried_plantain": {
+      "dish_id": "fried_plantain",
+      "dish_name": "Fried Ripe Plantain (Dodo)",
+      "default_unit_id": "portion_6_slices",
+      "default_quantity": 1.0,
+      "units": [
+        {
+          "unit_id": "single_slice",
+          "unit_name": "Single Slice / Piece",
+          "gram_weight": 25.0,
+          "description": "One slice (~25g)"
+        },
+        {
+          "unit_id": "portion_6_slices",
+          "unit_name": "Small Portion (6 slices)",
+          "gram_weight": 150.0,
+          "description": "Standard side portion (~150g)"
+        },
+        {
+          "unit_id": "large_portion",
+          "unit_name": "Large Portion (12 slices)",
+          "gram_weight": 300.0,
+          "description": "Double side portion (~300g)"
+        }
+      ]
+    },
+    "moi_moi": {
+      "dish_id": "moi_moi",
+      "dish_name": "Steamed Bean Cake (Moi Moi)",
+      "default_unit_id": "single_wrap",
+      "default_quantity": 1.0,
+      "units": [
+        {
+          "unit_id": "single_wrap",
+          "unit_name": "Single Wrap / Cup",
+          "gram_weight": 150.0,
+          "description": "Standard leaf or foil wrap (~150g)"
+        },
+        {
+          "unit_id": "large_wrap",
+          "unit_name": "Large Wrap",
+          "gram_weight": 250.0,
+          "description": "Large portion wrap (~250g)"
+        }
+      ]
+    }
+  },
+  "generic_default_units": {
+    "default_unit_id": "standard_serving",
+    "default_quantity": 1.0,
+    "units": [
+      {
+        "unit_id": "standard_serving",
+        "unit_name": "Standard Serving",
+        "gram_weight": 150.0,
+        "description": "Standard medium serving (~150g)"
+      },
+      {
+        "unit_id": "large_serving",
+        "unit_name": "Large Serving",
+        "gram_weight": 300.0,
+        "description": "Large double serving (~300g)"
+      }
+    ]
+  }
+}

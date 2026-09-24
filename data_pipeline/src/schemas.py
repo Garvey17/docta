@@ -1,24 +1,24 @@
-"""Pydantic v2 schemas for the data_pipeline sub-team."""
+"""Simplified Pydantic v2 data models for docta Data & RAG pipeline."""
 
-from typing import List, Optional
+from typing import Dict, List, Optional
 from pydantic import BaseModel, Field, ConfigDict
 
 
 class NutrientProfile(BaseModel):
-    """Standardized nutritional metrics for 100g or scaled portions."""
+    """Nutritional metrics for 100g or scaled meal portions."""
     model_config = ConfigDict(extra="ignore")
 
-    calories_kcal: float = Field(..., description="Energy in kilocalories (kcal)")
-    protein_g: float = Field(..., description="Protein in grams (g)")
-    fat_g: float = Field(..., description="Total lipids / fat in grams (g)")
-    carbs_g: float = Field(..., description="Available carbohydrates in grams (g)")
-    fiber_g: float = Field(0.0, description="Dietary fiber in grams (g)")
-    sodium_mg: float = Field(0.0, description="Sodium in milligrams (mg)")
-    calcium_mg: float = Field(0.0, description="Calcium in milligrams (mg)")
-    iron_mg: float = Field(0.0, description="Iron in milligrams (mg)")
+    calories_kcal: float = Field(0.0, description="Energy (kcal)")
+    protein_g: float = Field(0.0, description="Protein (g)")
+    fat_g: float = Field(0.0, description="Total Lipids/Fat (g)")
+    carbs_g: float = Field(0.0, description="Carbohydrates (g)")
+    fiber_g: float = Field(0.0, description="Dietary Fiber (g)")
+    sodium_mg: float = Field(0.0, description="Sodium (mg)")
+    calcium_mg: float = Field(0.0, description="Calcium (mg)")
+    iron_mg: float = Field(0.0, description="Iron (mg)")
 
     def round_values(self, decimals: int = 1) -> "NutrientProfile":
-        """Return a new NutrientProfile with all numeric fields rounded."""
+        """Return rounded NutrientProfile."""
         return NutrientProfile(
             calories_kcal=round(self.calories_kcal, decimals),
             protein_g=round(self.protein_g, decimals),
@@ -31,8 +31,46 @@ class NutrientProfile(BaseModel):
         )
 
 
+class PortionUnit(BaseModel):
+    """Conventional unit of measurement for food portions."""
+    model_config = ConfigDict(extra="ignore")
+
+    unit_id: str = Field(..., description="Unique unit key (e.g. 'serving_spoon', 'medium_wrap')")
+    unit_name: str = Field(..., description="Display name (e.g. 'Serving Spoon')")
+    gram_weight: float = Field(..., gt=0.0, description="Reference mass in grams for 1 unit")
+    description: str = Field("", description="Colloquial description or guidance")
+
+
+class DishPortionConfig(BaseModel):
+    """Portion configuration and available units for a dish."""
+    model_config = ConfigDict(extra="ignore")
+
+    dish_id: Optional[str] = None
+    dish_name: Optional[str] = None
+    default_unit_id: str = "standard_serving"
+    default_quantity: float = 1.0
+    units: List[PortionUnit] = Field(default_factory=list)
+
+
+class PortionUnitsRegistry(BaseModel):
+    """Registry of conventional portion units across dishes."""
+    model_config = ConfigDict(extra="ignore")
+
+    portion_units: Dict[str, DishPortionConfig] = Field(default_factory=dict)
+    generic_default_units: Optional[DishPortionConfig] = None
+
+
+class FoodItemFCT(BaseModel):
+    """Individual food item record from Food Composition Table (per 100g raw)."""
+    model_config = ConfigDict(extra="ignore")
+
+    code: str
+    food_name: str
+    nutrients: NutrientProfile
+
+
 class Ingredient(BaseModel):
-    """Constituent raw ingredient with code and mass in grams."""
+    """Ingredient in a dish recipe."""
     model_config = ConfigDict(extra="ignore")
 
     ingredient_code: str
@@ -41,7 +79,7 @@ class Ingredient(BaseModel):
 
 
 class Recipe(BaseModel):
-    """Recipe-Ingredient-Quantity (RIQ) definition for a dish."""
+    """Recipe definition for a composite dish."""
     model_config = ConfigDict(extra="ignore")
 
     dish_id: str
@@ -58,34 +96,25 @@ class RecipeIngredientLookup(BaseModel):
     recipes: List[Recipe]
 
 
-class FoodItemFCT(BaseModel):
-    """Individual food item record from Food Composition Table (per 100g raw)."""
-    model_config = ConfigDict(extra="ignore")
-
-    code: str
-    food_name: str
-    nutrients: NutrientProfile
-
-
 class CompositeDish(BaseModel):
-    """Compiled composite dish record with raw & cooked per-100g nutrient profiles."""
+    """Compiled composite dish record stored in lookup and vector store."""
     model_config = ConfigDict(extra="ignore")
 
     dish_id: str
     dish_name: str
-    standard_serving_g: float
-    cooking_yield_factor: float
-    raw_batch_mass_g: float
-    raw_ingredients: List[Ingredient]
-    nutrients_raw_100g: NutrientProfile
+    standard_serving_g: float = 250.0
+    cooking_yield_factor: float = 1.0
+    raw_ingredients: List[Ingredient] = Field(default_factory=list)
+    nutrients_raw_100g: Optional[NutrientProfile] = None
     nutrients_cooked_100g: NutrientProfile
+    raw_batch_mass_g: float = 0.0
     wafct_code: str = "WAFCT_COMPOSITE"
     description: Optional[str] = None
     aliases: List[str] = Field(default_factory=list)
 
 
 class ScaledItemNutrition(BaseModel):
-    """Itemized scaled nutrition output aligned with PROJECT_ORCHESTRATION.md."""
+    """Itemized scaled dish nutrition matching canonical API schema."""
     model_config = ConfigDict(extra="ignore")
 
     item_id: Optional[str] = None
@@ -94,27 +123,33 @@ class ScaledItemNutrition(BaseModel):
     confidence: float = 1.0
     bounding_box: Optional[List[float]] = None
     weight_g: float
-    wafct_code: str
-    similarity_score: float
+    wafct_code: str = "WAFCT_COMPOSITE"
+    similarity_score: float = 1.0
     is_fallback: bool = False
     nutrients: NutrientProfile
+    available_portion_units: List[PortionUnit] = Field(default_factory=list)
+    default_unit_id: Optional[str] = None
+    default_quantity: float = 1.0
+    selected_unit_id: Optional[str] = None
+    selected_quantity: Optional[float] = None
+    nutrients_per_100g: Optional[NutrientProfile] = None
 
 
 class TotalNutrition(BaseModel):
-    """Aggregated nutritional summary for a full meal."""
+    """Total aggregated nutrition for a full meal."""
     model_config = ConfigDict(extra="ignore")
 
-    total_calories_kcal: float
-    total_protein_g: float
-    total_fat_g: float
-    total_carbs_g: float
-    total_fiber_g: float
-    total_sodium_mg: float
-    total_calcium_mg: float
-    total_iron_mg: float
+    total_calories_kcal: float = 0.0
+    total_protein_g: float = 0.0
+    total_fat_g: float = 0.0
+    total_carbs_g: float = 0.0
+    total_fiber_g: float = 0.0
+    total_sodium_mg: float = 0.0
+    total_calcium_mg: float = 0.0
+    total_iron_mg: float = 0.0
 
     def round_values(self, decimals: int = 1) -> "TotalNutrition":
-        """Return a new TotalNutrition with all values rounded."""
+        """Return rounded TotalNutrition."""
         return TotalNutrition(
             total_calories_kcal=round(self.total_calories_kcal, decimals),
             total_protein_g=round(self.total_protein_g, decimals),
@@ -122,13 +157,30 @@ class TotalNutrition(BaseModel):
             total_carbs_g=round(self.total_carbs_g, decimals),
             total_fiber_g=round(self.total_fiber_g, decimals),
             total_sodium_mg=round(self.total_sodium_mg, decimals),
+            calcium_mg=round(self.total_calcium_mg, decimals),
             total_calcium_mg=round(self.total_calcium_mg, decimals),
             total_iron_mg=round(self.total_iron_mg, decimals),
         )
 
 
+class MealItemInput(BaseModel):
+    """Input query payload for a detected food item."""
+    model_config = ConfigDict(extra="ignore")
+
+    dish_id: Optional[str] = None
+    dish_name: Optional[str] = None
+    query: Optional[str] = None
+    weight_g: Optional[float] = None
+    unit_id: Optional[str] = None
+    quantity: Optional[float] = None
+    custom_weight_g: Optional[float] = None
+    item_id: Optional[str] = None
+    confidence: float = 1.0
+    bounding_box: Optional[List[float]] = None
+
+
 class MealAnalysisResponse(BaseModel):
-    """Full meal response contract matching PROJECT_ORCHESTRATION.md Section 6.2 B."""
+    """Full meal analysis response returned to backend/frontend."""
     model_config = ConfigDict(extra="ignore")
 
     analysis_id: str
@@ -137,16 +189,3 @@ class MealAnalysisResponse(BaseModel):
     image_url: Optional[str] = None
     detected_items: List[ScaledItemNutrition]
     total_nutrition: TotalNutrition
-
-
-class MealItemInput(BaseModel):
-    """Input payload for a detected meal item to be enriched by RAG service."""
-    model_config = ConfigDict(extra="ignore")
-
-    dish_id: Optional[str] = None
-    dish_name: Optional[str] = None
-    query: Optional[str] = None
-    weight_g: float
-    item_id: Optional[str] = None
-    confidence: float = 1.0
-    bounding_box: Optional[List[float]] = None

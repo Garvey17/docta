@@ -1,6 +1,7 @@
 """Tests for validate_prerequisites.py module."""
 
 import json
+import shutil
 from pathlib import Path
 import pytest
 
@@ -11,14 +12,17 @@ from data_pipeline.src.validate_prerequisites import (
     main as cli_main,
 )
 
+DATA_SRC = Path(__file__).resolve().parent.parent / "data"
+
 
 def test_validate_prerequisites_success():
-    """Verify that current data directory passes all 3 prerequisite checks."""
+    """Verify that current data directory passes all prerequisite checks."""
     result = validate_prerequisites(auto_recover=True)
     assert result["status"] == "passed"
     assert set(result["dishes_found"]) >= TARGET_5_DISHES
     assert result["fct_file"] is not None
     assert result["riq_file"] is not None
+    assert result["portion_units_file"] is not None
     assert len(result["errors"]) == 0
 
 
@@ -27,7 +31,7 @@ def test_validate_prerequisites_cli(capsys):
     exit_code = cli_main()
     captured = capsys.readouterr()
     assert exit_code == 0
-    assert "[SUCCESS] All 3 prerequisites verified" in captured.out
+    assert "[SUCCESS] All prerequisites verified" in captured.out
 
 
 def test_validate_prerequisites_missing_riq(tmp_path):
@@ -43,7 +47,8 @@ def test_validate_prerequisites_missing_dish(tmp_path):
     """Verify that missing one of the 5 target dishes fails validation."""
     custom_dir = tmp_path / "custom_data"
     custom_dir.mkdir()
-    # Write RIQ with only 2 dishes
+    shutil.copy(DATA_SRC / "portion_units.json", custom_dir / "portion_units.json")
+    # Write RIQ with only 1 dish
     riq_data = {
         "recipes": [
             {
@@ -67,6 +72,7 @@ def test_validate_prerequisites_invalid_recipe_fields(tmp_path):
     """Verify that negative serving sizes or missing ingredients are detected."""
     custom_dir = tmp_path / "custom_data"
     custom_dir.mkdir()
+    shutil.copy(DATA_SRC / "portion_units.json", custom_dir / "portion_units.json")
     riq_data = {
         "recipes": [
             {
@@ -87,6 +93,7 @@ def test_validate_prerequisites_missing_ingredients(tmp_path):
     """Verify that ingredients in RIQ missing from FCT are detected."""
     custom_dir = tmp_path / "custom_data"
     custom_dir.mkdir()
+    shutil.copy(DATA_SRC / "portion_units.json", custom_dir / "portion_units.json")
     riq_data = {
         "recipes": [
             {

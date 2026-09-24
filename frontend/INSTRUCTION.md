@@ -1,8 +1,8 @@
-# Frontend Directive: Mobile-First PWA & Dashboard UX
+# Frontend Directive: Mobile-First PWA, Multi-Food Portion Selector & Decision Telemetry UX
 
 ## 1. Directory Boundary & Autonomous Scope
 > [!IMPORTANT]
-> **Strict Directory Boundary**: As the Frontend Agent, you must operate strictly within `/frontend/`. All API integrations and client data types must align with the canonical contracts defined in `/PROJECT_ORCHESTRATION.md`.
+> **Strict Directory Boundary**: As the Frontend Autonomous Agent, you must operate strictly within `/frontend/`. All API integrations, client state models, and telemetry payloads must strictly adhere to the schemas in `/PROJECT_ORCHESTRATION.md`.
 
 ---
 
@@ -22,35 +22,38 @@ frontend/
 │   │   ├── capture/
 │   │   │   └── page.tsx               # Camera capture & prompt input view
 │   │   ├── review/
-│   │   │   └── page.tsx               # Bounding box review & portion editor
+│   │   │   └── page.tsx               # Multi-food review & conventional portion selector
 │   │   └── auth/
 │   │       ├── login/page.tsx
 │   │       └── signup/page.tsx
 │   ├── components/
 │   │   ├── CameraFeed.tsx             # HTML5 WebRTC live camera + fallback file picker
-│   │   ├── BoundingOverlay.tsx        # Responsive HTML5 Canvas bounding box renderer
-│   │   ├── PortionSlider.tsx          # Interactive gram weight slider (50g - 1000g)
+│   │   ├── BoundingOverlay.tsx        # Responsive Canvas bounding box renderer
+│   │   ├── FoodItemCard.tsx           # Card for each detected food (label edit + unit selector)
+│   │   ├── PortionUnitSelector.tsx    # Dropdown of conventional units + quantity steppers
 │   │   ├── MacroProgressRing.tsx      # Calorie circular ring (Recharts/Chart.js)
 │   │   ├── MacroBar.tsx               # Linear macro progress bars (Protein, Fat, Carbs)
-│   │   ├── MealHistoryCard.tsx        # Collapsible card for previously logged meals
+│   │   ├── MealHistoryCard.tsx        # Card for previously logged meals
 │   │   └── Navbar.tsx                 # Mobile bottom navigation bar
 │   ├── hooks/
-│   │   ├── useCamera.ts               # WebRTC stream controller & permission handler
+│   │   ├── useCamera.ts               # WebRTC stream controller
 │   │   ├── useAnalyzeMeal.ts          # Multipart POST hook with mock fallback
-│   │   └── useDashboard.ts            # Daily summary fetcher with mock fallback
+│   │   ├── useLogMeal.ts              # POST hook sending decisions + telemetry
+│   │   └── useDashboard.ts            # Daily summary fetcher
 │   ├── store/
-│   │   ├── authStore.ts               # Zustand store for JWT token & user profile
-│   │   └── mealDraftStore.ts          # Zustand store for active analysis & edits
+│   │   ├── authStore.ts               # Zustand store for JWT & user profile
+│   │   └── mealDraftStore.ts          # Zustand store for active multi-food analysis & user edits
 │   ├── types/
 │   │   └── api.ts                     # TypeScript definitions matching backend contracts
 │   └── lib/
 │       ├── apiClient.ts               # Axios / Fetch client with auth interceptor
-│       ├── mockData.ts                # Deterministic dummy responses for offline dev
-│       └── utils.ts                   # Formatting & calculation utilities
+│       ├── mockData.ts                # Deterministic dummy responses with portion units
+│       └── utils.ts                   # Macro calculation utilities
 ├── tests/
 │   ├── CameraFeed.test.tsx
 │   ├── BoundingOverlay.test.tsx
-│   └── PortionSlider.test.tsx
+│   ├── PortionUnitSelector.test.tsx
+│   └── FoodItemCard.test.tsx
 ├── tailwind.config.ts
 ├── tsconfig.json
 ├── package.json
@@ -59,128 +62,86 @@ frontend/
 
 ---
 
-## 3. Dummy / Mock Content Strategy for Independent Development
+## 3. Multi-Food Review & Conventional Portion Selector UX (`review/page.tsx`)
 
-To enable the Frontend team and autonomous agents to design, build, and test the entire mobile PWA without requiring a running backend, database, or ML models:
+When `/api/v1/analyze` returns the recognized food items, the user is presented with the **Interactive Multi-Food Review Screen**:
 
-### 3.1. Mock Configuration in `.env.local`
-```env
-NEXT_PUBLIC_API_URL=http://localhost:8000
-NEXT_PUBLIC_USE_MOCK=true  # Set to false to connect to live backend
-```
+### 3.1. Multi-Food Detection Support
+If an image contains multiple dishes (e.g. *Nigerian Jollof Rice* and *Fried Plantain*), render an independent `FoodItemCard.tsx` for each detected item.
 
-### 3.2. Static Mock Fixtures (`src/lib/mockData.ts`)
-When `NEXT_PUBLIC_USE_MOCK=true`, the API client and custom hooks intercept network requests and return instant simulated responses after an artificial delay ($\sim 600\text{ms}$):
+### 3.2. Conventional Portion Unit Selector (`PortionUnitSelector.tsx`)
+Each food item card provides:
+1. **Predicted Label with Editable Override**:
+   * Displays the recognized name (e.g., *"Nigerian Jollof Rice"* with confidence pill `94%`).
+   * Dropdown/Search allowing the user to correct the label if misidentified (automatically flags `label_modified: true`).
+2. **Conventional Unit Dropdown**:
+   * Displays culturally relevant units loaded from the API (e.g., `Serving Spoon (120g)`, `Mound / Cup (250g)`, `Takeaway Pack (500g)`).
+3. **Quantity Stepper**:
+   * Interactive increment/decrement buttons (`[-] 2.0 [+]` with step `0.5` or `1.0`).
+4. **Instant Client-Side Macro Recalculation**:
+   $$\text{Item Weight (g)} = \text{Unit Gram Weight} \times \text{Selected Quantity}$$
+   $$\text{Item Calories} = \left( \frac{\text{Nutrient}_{\text{per 100g}}}{100.0} \right) \times \text{Item Weight}$$
+   * Updates item subtotal and overall meal total in real-time as the user toggles units or changes quantity.
+
+---
+
+## 4. "Log Everything" Telemetry Payload
+
+When the user taps **"Confirm & Log Meal"**, `useLogMeal` dispatches the full decision audit trail to `POST /api/v1/meals/log`:
 
 ```typescript
-import { AnalyzeMealResponse, DailyDashboardSummary } from '@/types/api';
-
-export const MOCK_ANALYZE_RESPONSE: AnalyzeMealResponse = {
-  analysisId: 'anlz_mock_001',
-  status: 'success',
-  processingDurationMs: 820.0,
-  imageUrl: '/dummy_meal.jpg',
-  detectedItems: [
-    {
-      itemId: 'item_1',
-      dishId: 'jollof_rice',
-      displayName: 'Nigerian Jollof Rice',
-      confidence: 0.94,
-      boundingBox: [0.125, 0.240, 0.550, 0.780],
-      weightG: 272.0,
-      wafctCode: '01_042',
-      similarityScore: 0.942,
-      isFallback: false,
-      nutrients: {
-        caloriesKcal: 380.8,
-        proteinG: 7.3,
-        fatG: 10.9,
-        carbsG: 62.6,
-        fiberG: 2.7,
-        sodiumMg: 489.6,
-        calciumMg: 21.8,
-        ironMg: 1.9
-      }
-    },
-    {
-      itemId: 'item_2',
-      dishId: 'fried_plantain',
-      displayName: 'Fried Ripe Plantain (Dodo)',
-      confidence: 0.89,
-      boundingBox: [0.580, 0.310, 0.890, 0.650],
-      weightG: 150.0,
-      wafctCode: '02_018',
-      similarityScore: 0.961,
-      isFallback: false,
-      nutrients: {
-        caloriesKcal: 312.0,
-        proteinG: 1.8,
-        fatG: 14.1,
-        carbsG: 48.0,
-        fiberG: 3.6,
-        sodiumMg: 6.0,
-        calciumMg: 15.0,
-        ironMg: 0.9
-      }
-    }
-  ],
-  totalNutrition: {
-    totalCaloriesKcal: 692.8,
-    totalProteinG: 9.1,
-    totalFatG: 25.0,
-    totalCarbsG: 110.6,
-    totalFiberG: 6.3,
-    totalSodiumMg: 495.6
-  }
-};
+export interface LogMealItemPayload {
+  itemId: string;
+  foodName: string;
+  predictedDishId: string;
+  finalDishId: string;
+  labelModified: boolean;
+  confidence: number;
+  boundingBox: [number, number, number, number];
+  selectedUnitId: string;
+  selectedQuantity: number;
+  gramWeight: number;
+  caloriesKcal: number;
+  proteinG: number;
+  fatG: number;
+  carbsG: number;
+  fiberG: number;
+  sodiumMg: number;
+  calciumMg: number;
+  ironMg: number;
+}
 ```
 
 ---
 
-## 4. Detailed Component & UX Specifications
+## 5. Mock Mode for Independent Frontend Development
 
-### 4.1. Camera Capture Feed (`CameraFeed.tsx`)
-* Uses `navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })`.
-* Provides immediate fallback to native file input: `<input type="file" accept="image/*" capture="environment" />`.
-* Includes voice/text prompt override box (e.g. *"2 wraps of amala with extra meat"*).
+In `.env.local`:
+```env
+NEXT_PUBLIC_USE_MOCK=true
+```
 
-### 4.2. Canvas Bounding Box Overlay (`BoundingOverlay.tsx`)
-* Maps normalized ratios $[x_{\min}, y_{\min}, x_{\max}, y_{\max}] \in [0.0, 1.0]$ to rendered canvas pixels:
-  $$\text{Rendered } X = x_{\min} \times \text{canvas.width}$$
-  $$\text{Rendered } Y = y_{\min} \times \text{canvas.height}$$
-  $$\text{Rendered Width} = (x_{\max} - x_{\min}) \times \text{canvas.width}$$
-  $$\text{Rendered Height} = (y_{\max} - y_{\min}) \times \text{canvas.height}$$
-* Renders bounding borders with pill badge overlays (e.g., `"Jollof Rice - 272g"`).
-* Tapping a bounding box selects the corresponding item in the review list.
-
-### 4.3. Interactive Review & Portion Slider (`review/page.tsx`)
-* Provides interactive gram weight slider ($50\text{g} - 1000\text{g}$, step $5\text{g}$).
-* Instantly recalculates calories and macros on the client side:
-  $$\text{New Nutrient} = \left( \frac{\text{Baseline Nutrient}}{\text{Baseline Weight}} \right) \times \text{Adjusted Weight}$$
-* "Log Meal" button posts payload to `/api/v1/meals/log` (or saves to mock store if in mock mode).
-
-### 4.4. Dashboard Analytics (`app/page.tsx`)
-* Circular progress ring displaying consumed vs. daily target calories.
-* Linear progress bars for Protein, Fats, and Carbohydrates.
-* Historical logged meal cards with thumbnails and calorie badges.
+When mock mode is enabled:
+* `src/lib/mockData.ts` supplies mock multi-dish detections (Jollof Rice + Fried Plantain) with rich conventional units.
+* The review screen, bounding box canvas, unit pickers, instant macro calculations, and dashboard update seamlessly without any running backend.
 
 ---
 
-## 5. Testing & Validation Commands
+## 6. Testing & Validation Commands
 
 ```bash
 # 1. Install dependencies
 npm install
 
-# 2. Start Next.js development server in Mock Mode
+# 2. Start development server in Mock Mode
 npm run dev
 
-# 3. Run typecheck & linter
+# 3. Run component tests (verifying unit selector & macro calculations)
+npm test
+
+# 4. Run TypeScript typecheck & ESLint
 npm run type-check
 npm run lint
-
-# 4. Run component unit tests
-npm test
 
 # 5. Build production bundle
 npm run build
@@ -188,42 +149,10 @@ npm run build
 
 ---
 
-## 6. Definition of Done (DoD) Checklist
+## 7. Definition of Done (DoD) Checklist
 
-- [ ] App launches and operates completely standalone in Mock Mode (`NEXT_PUBLIC_USE_MOCK=true`).
-- [ ] `CameraFeed.tsx` streams live WebRTC video and captures snapshot blobs.
-- [ ] `BoundingOverlay.tsx` accurately draws bounding boxes on meal images across responsive viewports.
-- [ ] `PortionSlider.tsx` updates item and meal total macros in real time without lag.
-- [ ] Dashboard displays calorie progress ring, macro bars, and meal history cards.
+- [ ] `FoodItemCard.tsx` renders conventional portion unit dropdowns and quantity steppers for every detected dish.
+- [ ] Changing portion unit or quantity instantly updates the item and meal total macros in real-time.
+- [ ] Users can edit/correct predicted dish labels with automatic `label_modified` flagging.
+- [ ] Submitting a meal logs all decision telemetry fields (`predictedDishId`, `finalDishId`, `labelModified`, `selectedUnitId`, `selectedQuantity`, `gramWeight`).
 - [ ] Zero TypeScript errors and unit test coverage $\ge 80\%$.
-
-
----
-
-## Automated Task Completion & Submission Protocol
-
-When all functional requirements are implemented and local unit tests pass, execute the following submission sequence in the terminal:
-
-### Step 1: Pre-Submission Health Check
-Run the local test suite for your module. Do NOT push if any test fails.
-* `pytest` (or `npm run build` for Frontend)
-
-### Step 2: Automated Commit, Push & PR Creation
-Execute these exact bash commands:
-
-```bash
-# 1. Switch to (or create) the dedicated sub-team branch
-git checkout -B docta-frontend
-
-# 2. Stage and commit changes
-git add .
-git commit -m "feat(docta-frontend): completed subteam task deliverables"
-
-# 3. Push branch to GitHub
-git push origin docta-frontend
-
-# 4. Open Pull Request via GitHub CLI
-gh pr create \
-  --title "feat(docta-frontend): Completed Frontend Deliverables" \
-  --body "Automated PR generated by Coding Agent upon completing INSTRUCTION.md tasks. All local tests passed." \
-  --base main

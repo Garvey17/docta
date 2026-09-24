@@ -1,8 +1,8 @@
-# Backend Directive: Core API, Database & MLOps Engine
+# Backend Directive: Core API, Database & "Log Everything" Telemetry Engine
 
 ## 1. Directory Boundary & Autonomous Scope
 > [!IMPORTANT]
-> **Strict Directory Boundary**: As the Backend Agent, you must operate strictly within `/backend/`. All database schemas, API routes, and service clients must strictly conform to the canonical contracts defined in `/PROJECT_ORCHESTRATION.md`.
+> **Strict Directory Boundary**: As the Backend Agent, you must operate strictly within `/backend/`. All database schemas, API routes, and telemetry loggers must strictly conform to `/PROJECT_ORCHESTRATION.md`.
 
 ---
 
@@ -22,39 +22,43 @@ backend/
 │   │   ├── __init__.py
 │   │   ├── user.py
 │   │   ├── meal.py
-│   │   └── meal_item.py
-│   ├── schemas/                       # Pydantic v2 request/response validation schemas
+│   │   ├── meal_item.py
+│   │   └── meal_item_feedback_log.py  # [NEW] "Log Everything" active learning telemetry
+│   ├── schemas/                       # Pydantic v2 validation schemas
 │   │   ├── __init__.py
 │   │   ├── auth.py
-│   │   ├── analyze.py
-│   │   ├── meal.py
+│   │   ├── analyze.py                 # Schemas including available_portion_units
+│   │   ├── meal.py                    # Schemas with portion units & decision flags
+│   │   ├── telemetry.py               # Schemas for ML dataset export
 │   │   └── dashboard.py
-│   ├── services/                      # Business logic & external microservice clients
+│   ├── services/
 │   │   ├── __init__.py
-│   │   ├── auth_service.py            # Password hashing (bcrypt) & JWT issuance
-│   │   ├── storage_service.py         # Local / S3 / Supabase image uploader
-│   │   ├── mock_ai_service.py         # Dummy AI service for independent development
-│   │   ├── mock_rag_service.py        # Dummy RAG service for independent development
+│   │   ├── auth_service.py
+│   │   ├── storage_service.py
+│   │   ├── mock_ai_service.py         # Injects mock detections + portion units
+│   │   ├── mock_rag_service.py        # Injects mock RIQ nutrition
 │   │   ├── cv_client.py               # Live bridge to ai_services/
 │   │   ├── rag_client.py              # Live bridge to data_pipeline/
-│   │   └── orchestrator_service.py    # Pipeline coordinator with fallback switches (<2.0s SLA)
-│   └── routers/                       # FastAPI endpoint route controllers
+│   │   ├── telemetry_service.py       # Decision logger service for ML dataset
+│   │   └── orchestrator_service.py    # Pipeline coordinator (<2.0s SLA)
+│   └── routers/
 │       ├── __init__.py
-│       ├── auth_router.py             # /api/v1/auth
-│       ├── analyze_router.py          # /api/v1/analyze
-│       ├── meal_router.py             # /api/v1/meals
-│       ├── dashboard_router.py        # /api/v1/dashboard
-│       └── health_router.py           # /healthz & /ready
+│       ├── auth_router.py
+│       ├── analyze_router.py          # /api/v1/analyze (returns foods + portion units)
+│       ├── meal_router.py             # /api/v1/meals (saves meal + logs decisions)
+│       ├── telemetry_router.py        # /api/v1/telemetry/export (ML dataset export)
+│       ├── dashboard_router.py
+│       └── health_router.py
 ├── tests/
 │   ├── __init__.py
 │   ├── test_auth.py
 │   ├── test_analyze_flow.py
-│   ├── test_meals.py
+│   ├── test_meals_and_telemetry.py    # Verifies decision logging on meal creation
 │   └── test_dashboard.py
 ├── docker/
 │   ├── Dockerfile
 │   └── entrypoint.sh
-├── docker-compose.yml                 # Orchestration for FastAPI, Postgres & Qdrant
+├── docker-compose.yml
 ├── alembic.ini
 ├── requirements.txt
 └── INSTRUCTION.md
@@ -62,68 +66,55 @@ backend/
 
 ---
 
-## 3. Dummy / Mock Content Strategy for Independent Development
+## 3. "Log Everything" Telemetry Architecture
 
-To allow Backend engineers and autonomous coding agents to develop, test, and deploy database models, authentication, and endpoint orchestration without waiting for the ML Team to complete training or Qdrant to be indexed:
+Every time a user saves a meal via `POST /api/v1/meals/log`, the backend must write to `meal_item_feedback_logs` to build the ground-truth training dataset for future portion-size models and track real-world food frequency.
 
-### 3.1. Mock Configuration in `.env`
+### 3.1. Database Schema (`models/meal_item_feedback_log.py`)
+* `id` (UUID, Primary Key, default=uuid4)
+* `user_id` (UUID, ForeignKey("users.id", ondelete="SET NULL"), Index)
+* `meal_id` (UUID, ForeignKey("meals.id", ondelete="CASCADE"), Index)
+* `meal_item_id` (UUID, ForeignKey("meal_items.id", ondelete="CASCADE"))
+* `image_url` (String, Not Null)
+* `predicted_dish_id` (String, Not Null) - e.g., `"jollof_rice"`
+* `predicted_confidence` (Float, Not Null) - e.g., `0.94`
+* `bounding_box` (JSONB) - `[x_min, y_min, x_max, y_max]`
+* `final_dish_id` (String, Not Null) - e.g., `"jollof_rice"` or corrected to `"fried_rice"`
+* `label_modified` (Boolean, Not Null) - `true` if user corrected the prediction
+* `selected_unit_id` (String, Not Null) - e.g., `"serving_spoon"`, `"medium_wrap"`
+* `selected_quantity` (Float, Not Null) - e.g., `2.0`
+* `calculated_gram_weight` (Float, Not Null) - e.g., `240.0`
+* `custom_weight_entered_g` (Float, Nullable)
+* `logged_at` (DateTime with timezone, default=utcnow, Index)
+
+---
+
+## 4. Core Endpoint Flow & Schemas
+
+### 4.1. `POST /api/v1/analyze`
+1. Calls CV service (`ai_services/` or `mock_ai_service.py`) $\rightarrow$ retrieves detected dishes and bounding boxes.
+2. Calls Data/RAG service (`data_pipeline/` or `mock_rag_service.py`) $\rightarrow$ attaches `available_portion_units` and base per-100g nutrition for each detected dish.
+3. Returns composite payload with available units for user selection.
+
+### 4.2. `POST /api/v1/meals/log`
+1. Within a single atomic database transaction:
+   * Inserts row into `meals`.
+   * Inserts child rows into `meal_items`.
+   * Inserts telemetry rows into `meal_item_feedback_logs` for every item.
+2. Returns success response and meal summary.
+
+### 4.3. `GET /api/v1/telemetry/export` (Admin / ML Team)
+* Supports exporting logged user decisions as JSON/CSV for the ML team to train future portion-size models.
+
+---
+
+## 5. Independent Development & Mock Mode
+
 ```env
-# Backend Environment Flags
+USE_MOCK_AI=true     # Injects mock food items (Jollof Rice, Plantain)
+USE_MOCK_RAG=true    # Injects mock portion units and WAFCT macros
 DATABASE_URL=postgresql+asyncpg://postgres:postgres@localhost:5432/docta_db
-JWT_SECRET=supersecretjwtkeydocta2026
-JWT_ALGORITHM=HS256
-ACCESS_TOKEN_EXPIRE_MINUTES=1440
-
-# Independent Development Fallback Switches
-USE_MOCK_AI=true     # Set to false once ML team finishes training in ai_services/
-USE_MOCK_RAG=true    # Set to false once data_pipeline/ Qdrant index is live
 ```
-
-### 3.2. Mock Service Behavior
-* **`src/services/mock_ai_service.py`**: Injects simulated detection payloads containing Nigerian Jollof Rice ($272\text{g}$) and Fried Plantain ($150\text{g}$) with normalized bounding box coordinates and simulated latency ($\sim 50\text{ms}$).
-* **`src/services/mock_rag_service.py`**: Computes accurate nutrition breakdowns from bundled static WAFCT profiles without network calls.
-* **Seamless Live Switch**: When `USE_MOCK_AI=false`, `orchestrator_service.py` dynamically delegates calls to `src/services/cv_client.py` (`ai_services/src/pipeline.py`), requiring zero code refactoring.
-
----
-
-## 4. Database Schema Specifications (SQLAlchemy 2.0 Async)
-
-### 4.1. `users` Table
-* `id`: UUID, Primary Key.
-* `email`: String, Unique, Index, Not Null.
-* `hashed_password`: String, Not Null.
-* `daily_calorie_target`: Integer, default=2000.
-* `target_protein_g`: Float, default=100.0.
-* `target_fat_g`: Float, default=60.0.
-* `target_carbs_g`: Float, default=250.0.
-* `created_at`, `updated_at`: DateTime(timezone=True).
-
-### 4.2. `meals` Table
-* `id`: UUID, Primary Key.
-* `user_id`: UUID, ForeignKey("users.id", ondelete="CASCADE"), Index, Not Null.
-* `image_url`: String, Nullable.
-* `raw_text_prompt`: Text, Nullable.
-* `meal_type`: Enum (`"breakfast"`, `"lunch"`, `"dinner"`, `"snack"`), default=`"lunch"`.
-* `total_calories_kcal`, `total_protein_g`, `total_fat_g`, `total_carbs_g`, `total_fiber_g`, `total_sodium_mg`: Float.
-* `logged_at`: DateTime(timezone=True), Index, Not Null.
-
-### 4.3. `meal_items` Table
-* `id`: UUID, Primary Key.
-* `meal_id`: UUID, ForeignKey("meals.id", ondelete="CASCADE"), Index, Not Null.
-* `food_name`: String, Not Null.
-* `wafct_code`: String, Nullable.
-* `gram_weight`: Float, Not Null.
-* `calories_kcal`, `protein_g`, `fat_g`, `carbs_g`, `fiber_g`, `sodium_mg`, `calcium_mg`, `iron_mg`: Float.
-* `bounding_box`: JSONB / Array of 4 floats `[x_min, y_min, x_max, y_max]`.
-
----
-
-## 5. API Endpoints & SLA Targets
-
-1. **`POST /api/v1/auth/signup` & `POST /api/v1/auth/login`**: User registration and JWT token creation.
-2. **`POST /api/v1/analyze`**: Accepts multipart `image` and optional `text_prompt`. Orchestrates CV/Vision detection and RAG nutrition scaling. Strict SLA: **$< 2.0\text{ seconds}$**.
-3. **`POST /api/v1/meals/log`**: Saves approved meal items and totals atomically.
-4. **`GET /api/v1/dashboard/summary?date=YYYY-MM-DD`**: Aggregates target vs consumed calories and macros for current user.
 
 ---
 
@@ -133,16 +124,14 @@ USE_MOCK_RAG=true    # Set to false once data_pipeline/ Qdrant index is live
 # 1. Install dependencies
 pip install -r requirements.txt
 
-# 2. Run test suite in Mock Mode (zero external dependencies required)
+# 2. Run unit & integration test suite (verifying decision logging)
 pytest tests/ -v --cov=src --cov-report=term-missing
 
-# 3. Start PostgreSQL container
+# 3. Start DB and run migrations
 docker-compose up -d postgres
-
-# 4. Run database migrations
 alembic upgrade head
 
-# 5. Start FastAPI development server
+# 4. Start FastAPI server
 uvicorn src.main:app --host 0.0.0.0 --port 8000 --reload
 ```
 
@@ -150,40 +139,8 @@ uvicorn src.main:app --host 0.0.0.0 --port 8000 --reload
 
 ## 7. Definition of Done (DoD) Checklist
 
-- [ ] Mock services allow full execution of `/api/v1/analyze` without external ML weights or vector databases.
-- [ ] SQLAlchemy models and Alembic migrations execute cleanly against PostgreSQL.
-- [ ] JWT authentication and route guard dependencies validated.
-- [ ] `/api/v1/meals/log` commits atomic records with verified rollback on error.
-- [ ] `/api/v1/dashboard/summary` correctly computes consumed sums and target deltas.
-- [ ] Test coverage exceeds $85\%$ in `tests/`.
-
-
----
-
-## Automated Task Completion & Submission Protocol
-
-When all functional requirements are implemented and local unit tests pass, execute the following submission sequence in the terminal:
-
-### Step 1: Pre-Submission Health Check
-Run the local test suite for your module. Do NOT push if any test fails.
-* `pytest` (or `npm run build` for Frontend)
-
-### Step 2: Automated Commit, Push & PR Creation
-Execute these exact bash commands:
-
-```bash
-# 1. Switch to (or create) the dedicated sub-team branch
-git checkout -B docta-backend
-
-# 2. Stage and commit changes
-git add .
-git commit -m "feat(docta-backend): completed subteam task deliverables"
-
-# 3. Push branch to GitHub
-git push origin docta-backend
-
-# 4. Open Pull Request via GitHub CLI
-gh pr create \
-  --title "feat(docta-backend): Completed Backend Deliverables" \
-  --body "Automated PR generated by Coding Agent upon completing INSTRUCTION.md tasks. All local tests passed." \
-  --base main
+- [ ] `/api/v1/analyze` attaches `available_portion_units` to each detected food item.
+- [ ] `/api/v1/meals/log` saves meal records AND writes decision records to `meal_item_feedback_logs`.
+- [ ] Telemetry captures `predicted_dish_id`, `final_dish_id`, `label_modified`, `selected_unit_id`, `selected_quantity`, and `calculated_gram_weight`.
+- [ ] `/api/v1/telemetry/export` returns formatted dataset for the ML team.
+- [ ] Test coverage $\ge 85\%$ in `tests/`.

@@ -11,6 +11,7 @@ from typing import Dict, Any, List, Union, Optional
 try:
     from .schemas import (
         NutrientProfile,
+        PortionUnit,
         ScaledItemNutrition,
         TotalNutrition,
         MealAnalysisResponse,
@@ -18,6 +19,7 @@ try:
 except ImportError:
     from schemas import (
         NutrientProfile,
+        PortionUnit,
         ScaledItemNutrition,
         TotalNutrition,
         MealAnalysisResponse,
@@ -92,9 +94,42 @@ def build_scaled_item(
     confidence: float = 1.0,
     item_id: Optional[str] = None,
     bounding_box: Optional[List[float]] = None,
+    available_portion_units: Optional[List[PortionUnit]] = None,
+    default_unit_id: Optional[str] = None,
+    default_quantity: float = 1.0,
+    selected_unit_id: Optional[str] = None,
+    selected_quantity: Optional[float] = None,
+    nutrients_per_100g: Optional[NutrientProfile] = None,
 ) -> ScaledItemNutrition:
     """Build a validated ScaledItemNutrition model matching PROJECT_ORCHESTRATION.md."""
     scaled_nutrients = scale_nutrients(cooked_100g, weight_g, decimals=1)
+
+    if nutrients_per_100g is None:
+        if isinstance(cooked_100g, NutrientProfile):
+            nutrients_per_100g = cooked_100g
+        elif isinstance(cooked_100g, dict) and cooked_100g:
+            raw_data = cooked_100g.get("nutrients", cooked_100g)
+            nutrients_per_100g = NutrientProfile(
+                calories_kcal=float(raw_data.get("calories_kcal", 0.0) or 0.0),
+                protein_g=float(raw_data.get("protein_g", 0.0) or 0.0),
+                fat_g=float(raw_data.get("fat_g", 0.0) or 0.0),
+                carbs_g=float(raw_data.get("carbs_g", 0.0) or 0.0),
+                fiber_g=float(raw_data.get("fiber_g", 0.0) or 0.0),
+                sodium_mg=float(raw_data.get("sodium_mg", 0.0) or 0.0),
+                calcium_mg=float(raw_data.get("calcium_mg", 0.0) or 0.0),
+                iron_mg=float(raw_data.get("iron_mg", 0.0) or 0.0),
+            )
+        else:
+            nutrients_per_100g = NutrientProfile(
+                calories_kcal=0.0,
+                protein_g=0.0,
+                fat_g=0.0,
+                carbs_g=0.0,
+                fiber_g=0.0,
+                sodium_mg=0.0,
+                calcium_mg=0.0,
+                iron_mg=0.0,
+            )
 
     return ScaledItemNutrition(
         item_id=item_id,
@@ -107,6 +142,12 @@ def build_scaled_item(
         similarity_score=round(similarity_score, 3),
         is_fallback=is_fallback,
         nutrients=scaled_nutrients,
+        available_portion_units=available_portion_units or [],
+        default_unit_id=default_unit_id,
+        default_quantity=default_quantity,
+        selected_unit_id=selected_unit_id or default_unit_id,
+        selected_quantity=selected_quantity if selected_quantity is not None else default_quantity,
+        nutrients_per_100g=nutrients_per_100g,
     )
 
 

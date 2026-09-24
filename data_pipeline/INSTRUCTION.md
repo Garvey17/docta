@@ -1,8 +1,8 @@
-# Data & RAG Directive: Recipe-Ingredient-Quantity (RIQ) Lookup, WAFCT Ingestion & Nutrition Scaling
+# Data & RAG Directive: RIQ Lookup, Conventional Portion Units & Nutrition Scaling
 
 ## 1. Directory Boundary & Autonomous Scope
 > [!IMPORTANT]
-> **Strict Directory Boundary**: As the Data & RAG Autonomous Agent, you must operate exclusively within `/data_pipeline/`. Do not modify files in other directories. All data outputs and service interfaces must strictly adhere to the schemas in `/PROJECT_ORCHESTRATION.md`.
+> **Strict Directory Boundary**: As the Data & RAG Autonomous Agent, you must operate exclusively within `/data_pipeline/`. Do not modify files in other directories. All data models, lookup tables, and scaling services must conform strictly to `/PROJECT_ORCHESTRATION.md`.
 
 ---
 
@@ -10,16 +10,16 @@
 
 > [!CAUTION]
 > **Agent Pre-Execution Prerequisite Check**:
-> The nutritional composition data obtained from raw food composition databases (e.g. FAO WAFCT 2019) represents **individual raw/prepared food ingredients** (e.g., raw parboiled rice, tomato paste, red palm oil, ground melon seeds, crayfish, yam flour) rather than composite finished dishes as consumed.
+> The nutritional composition data obtained from raw food composition tables (e.g. FAO WAFCT 2019) represents **individual raw/prepared ingredients** (e.g. raw parboiled rice, tomato puree, palm oil, melon seeds, crayfish, yam flour) rather than finished composite dishes.
 > 
-> The agreed architectural approach is to **focus on 5 core Nigerian dishes first**, compile a **Recipe-Ingredient-Quantity (RIQ) Lookup Table**, and compute weighted composite nutritional profiles prior to vector retrieval.
+> Furthermore, portion sizing relies on **Conventional Units of Measurement** (e.g. *Serving Spoons*, *Wraps*, *Pieces*, *Slices*) rather than CV-based automated volumetric estimation.
 >
 > **The agent MUST verify the presence of all 3 required artifacts before proceeding with execution:**
 > 1. **Target 5 Dishes Scope**: The 5 specific Nigerian dishes to be considered (`jollof_rice`, `egusi_soup`, `amala`, `fried_plantain`, `moi_moi`).
-> 2. **Food Composition Table (FCT)**: Ingredient-level nutritional composition dataset (`data/raw_wafct_2019.csv` or `data/food_composition_table.json`).
-> 3. **Recipe-Ingredient-Quantity (RIQ) Lookup Table**: Standardized recipe breakdown (`data/recipe_ingredient_lookup.json`) specifying constituent ingredients and gram quantities for each dish.
+> 2. **Food Composition Table (FCT)**: Raw ingredient-level nutrient dataset (`data/raw_wafct_2019.csv` or `data/food_composition_table.json`).
+> 3. **Recipe-Ingredient-Quantity (RIQ) & Portion Units Lookup Table**: Standardized recipe table (`data/recipe_ingredient_lookup.json`) AND conventional portion units table (`data/portion_units.json`).
 >
-> If any of these 3 artifacts are missing or invalid, the agent must halt execution, load the bundled fallback fixtures, or prompt the user for the missing files before running the vector indexing pipeline.
+> If any of these are missing or invalid, the agent must halt execution, load the bundled fallback fixtures, or prompt the user before indexing.
 
 ---
 
@@ -30,8 +30,9 @@ data_pipeline/
 ├── data/
 │   ├── raw_wafct_2019.csv             # Raw FAO/INFOODS ingredient composition table
 │   ├── food_composition_table.json    # Normalized per-100g raw ingredient database
-│   ├── recipe_ingredient_lookup.json  # [PREREQUISITE] 5-Dish Recipe-Ingredient-Quantity (RIQ) table
-│   ├── composite_dishes_db.json       # Compiled finished dish profiles computed from RIQ + FCT
+│   ├── recipe_ingredient_lookup.json  # [PREREQUISITE] 5-Dish Recipe-Ingredient-Quantity table
+│   ├── portion_units.json             # [PREREQUISITE] Conventional portion units registry & gram mappings
+│   ├── composite_dishes_db.json       # Compiled finished dish profiles (RIQ + FCT)
 │   ├── dummy_wafct.json               # Seed dummy database for standalone offline testing
 │   ├── aliases_map.json               # Dialect & colloquial name mapping dictionary
 │   └── fallback_defaults.json        # Baseline profiles for unmapped items
@@ -39,217 +40,136 @@ data_pipeline/
 │   ├── __init__.py
 │   ├── validate_prerequisites.py      # Pre-execution validator checking the 3 required inputs
 │   ├── ingest_wafct.py                # Raw ingredient FCT parser & unit normalizer
-│   ├── composite_dish_builder.py      # RIQ lookup compiler: computes weighted dish nutrition
+│   ├── composite_dish_builder.py      # RIQ compiler: computes weighted dish nutrition
+│   ├── portion_service.py             # Portion unit resolver & conventional gram calculator
 │   ├── vector_indexer.py              # Qdrant collection creator & sentence-transformer embedder
-│   ├── semantic_search.py             # Hybrid vector lookup with RIQ lookup & dummy fallback
-│   ├── macro_scaler.py                # Linear nutrition calculator & portion scaler
-│   ├── rag_service.py                 # Unified RAG engine service interface
+│   ├── semantic_search.py             # Hybrid vector lookup with portion unit attachment
+│   ├── macro_scaler.py                # Linear nutrition calculator (Unit Grams * Quantity)
+│   ├── rag_service.py                 # Unified RAG & portion service interface
 │   └── schemas.py                     # Pydantic v2 data models
 ├── tests/
 │   ├── __init__.py
 │   ├── test_prerequisites.py
 │   ├── test_composite_builder.py
-│   ├── test_vector_indexer.py
+│   ├── test_portion_service.py
 │   ├── test_semantic_search.py
 │   ├── test_macro_scaler.py
 │   └── test_rag_service.py
 ├── scripts/
-│   ├── init_qdrant.py                 # CLI to bootstrap Qdrant collection with composite dishes
-│   └── benchmark_retrieval.py         # Latency and recall benchmark suite (<200ms SLA)
+│   ├── init_qdrant.py                 # CLI to bootstrap Qdrant collection
+│   └── benchmark_retrieval.py         # Latency benchmark suite (<200ms SLA)
 ├── requirements.txt
 └── INSTRUCTION.md
 ```
 
 ---
 
-## 4. Recipe-Ingredient-Quantity (RIQ) Architecture
+## 4. Conventional Portion Units Registry (`data/portion_units.json`)
 
-### 4.1. The 5 Focus Nigerian Dishes
-The initial implementation strictly focuses on 5 canonical Nigerian dishes:
-1. `jollof_rice` (Nigerian Jollof Rice)
-2. `egusi_soup` (Egusi Melon Seed Soup)
-3. `amala` (Yam Flour Swallow / Elubo)
-4. `fried_plantain` (Dodo)
-5. `moi_moi` (Steamed Seasoned Bean Cake)
-
-### 4.2. Recipe-Ingredient-Quantity (RIQ) Lookup Schema (`data/recipe_ingredient_lookup.json`)
-Each dish is mapped to its standard constituent ingredients and raw batch proportions:
+Each of the 5 focus dishes is mapped to culturally standard portion units:
 
 ```json
 {
-  "recipes": [
-    {
-      "dish_id": "jollof_rice",
+  "portion_units": {
+    "jollof_rice": {
       "dish_name": "Nigerian Jollof Rice",
-      "standard_serving_g": 250.0,
-      "cooking_yield_factor": 0.88,
-      "ingredients": [
-        { "ingredient_code": "ING_001", "name": "Long Grain White Rice", "quantity_g": 120.0 },
-        { "ingredient_code": "ING_002", "name": "Tomato Paste", "quantity_g": 30.0 },
-        { "ingredient_code": "ING_003", "name": "Red Bell Pepper & Scotch Bonnet Blend", "quantity_g": 40.0 },
-        { "ingredient_code": "ING_004", "name": "Vegetable Oil", "quantity_g": 15.0 },
-        { "ingredient_code": "ING_005", "name": "Onion", "quantity_g": 20.0 },
-        { "ingredient_code": "ING_006", "name": "Seasoning & Spices (Thyme, Curry, Stock)", "quantity_g": 5.0 }
+      "default_unit_id": "serving_spoon",
+      "default_quantity": 2.0,
+      "units": [
+        { "unit_id": "serving_spoon", "unit_name": "Serving Spoon", "gram_weight": 120.0, "description": "Standard catering/cooking spoon (~120g)" },
+        { "unit_id": "mound_cup", "unit_name": "Mound / Cup", "gram_weight": 250.0, "description": "Standard dining plate mound (~250g)" },
+        { "unit_id": "takeaway_pack", "unit_name": "Takeaway Pack", "gram_weight": 500.0, "description": "Full standard plastic pack (~500g)" }
       ]
     },
-    {
-      "dish_id": "egusi_soup",
+    "egusi_soup": {
       "dish_name": "Egusi Melon Seed Soup",
-      "standard_serving_g": 200.0,
-      "cooking_yield_factor": 0.85,
-      "ingredients": [
-        { "ingredient_code": "ING_010", "name": "Ground Egusi (Melon Seeds)", "quantity_g": 60.0 },
-        { "ingredient_code": "ING_011", "name": "Red Palm Oil", "quantity_g": 20.0 },
-        { "ingredient_code": "ING_012", "name": "Spinach / Ugwu Leaves", "quantity_g": 40.0 },
-        { "ingredient_code": "ING_013", "name": "Ground Dried Crayfish", "quantity_g": 10.0 },
-        { "ingredient_code": "ING_014", "name": "Onion & Pepper Puree", "quantity_g": 30.0 },
-        { "ingredient_code": "ING_015", "name": "Smoked Fish / Stockfish", "quantity_g": 25.0 }
+      "default_unit_id": "serving_spoon",
+      "default_quantity": 2.0,
+      "units": [
+        { "unit_id": "serving_spoon", "unit_name": "Serving Spoon", "gram_weight": 100.0, "description": "Standard cooking soup spoon (~100g)" },
+        { "unit_id": "small_bowl", "unit_name": "Small Soup Bowl", "gram_weight": 200.0, "description": "Side soup bowl (~200g)" },
+        { "unit_id": "large_bowl", "unit_name": "Large Soup Bowl", "gram_weight": 350.0, "description": "Main soup bowl (~350g)" }
       ]
     },
-    {
-      "dish_id": "amala",
+    "amala": {
       "dish_name": "Amala (Yam Flour Swallow)",
-      "standard_serving_g": 300.0,
-      "cooking_yield_factor": 2.50,
-      "ingredients": [
-        { "ingredient_code": "ING_020", "name": "Yam Flour (Elubo)", "quantity_g": 100.0 },
-        { "ingredient_code": "ING_021", "name": "Water", "quantity_g": 200.0 }
+      "default_unit_id": "medium_wrap",
+      "default_quantity": 1.0,
+      "units": [
+        { "unit_id": "small_wrap", "unit_name": "Small Wrap", "gram_weight": 150.0, "description": "Light portion wrap (~150g)" },
+        { "unit_id": "medium_wrap", "unit_name": "Medium Wrap", "gram_weight": 250.0, "description": "Standard restaurant wrap (~250g)" },
+        { "unit_id": "large_wrap", "unit_name": "Large Wrap", "gram_weight": 400.0, "description": "Heavy swallow portion (~400g)" }
       ]
     },
-    {
-      "dish_id": "fried_plantain",
+    "fried_plantain": {
       "dish_name": "Fried Ripe Plantain (Dodo)",
-      "standard_serving_g": 150.0,
-      "cooking_yield_factor": 0.78,
-      "ingredients": [
-        { "ingredient_code": "ING_030", "name": "Ripe Plantain", "quantity_g": 170.0 },
-        { "ingredient_code": "ING_031", "name": "Vegetable Oil (Absorbed)", "quantity_g": 12.0 },
-        { "ingredient_code": "ING_032", "name": "Salt", "quantity_g": 1.0 }
+      "default_unit_id": "portion_6_slices",
+      "default_quantity": 1.0,
+      "units": [
+        { "unit_id": "single_slice", "unit_name": "Single Slice / Piece", "gram_weight": 25.0, "description": "One slice (~25g)" },
+        { "unit_id": "portion_6_slices", "unit_name": "Small Portion (6 slices)", "gram_weight": 150.0, "description": "Standard side portion (~150g)" },
+        { "unit_id": "large_portion", "unit_name": "Large Portion (12 slices)", "gram_weight": 300.0, "description": "Double side portion (~300g)" }
       ]
     },
-    {
-      "dish_id": "moi_moi",
+    "moi_moi": {
       "dish_name": "Steamed Bean Cake (Moi Moi)",
-      "standard_serving_g": 200.0,
-      "cooking_yield_factor": 1.10,
-      "ingredients": [
-        { "ingredient_code": "ING_040", "name": "Black-Eyed Peas (Peeled Beans)", "quantity_g": 80.0 },
-        { "ingredient_code": "ING_041", "name": "Red Bell Pepper & Onion Paste", "quantity_g": 35.0 },
-        { "ingredient_code": "ING_042", "name": "Vegetable Oil", "quantity_g": 15.0 },
-        { "ingredient_code": "ING_043", "name": "Ground Crayfish & Seasoning", "quantity_g": 8.0 },
-        { "ingredient_code": "ING_044", "name": "Water", "quantity_g": 70.0 }
+      "default_unit_id": "single_wrap",
+      "default_quantity": 1.0,
+      "units": [
+        { "unit_id": "single_wrap", "unit_name": "Single Wrap / Cup", "gram_weight": 150.0, "description": "Standard leaf or foil wrap (~150g)" },
+        { "unit_id": "large_wrap", "unit_name": "Large Wrap", "gram_weight": 250.0, "description": "Large portion wrap (~250g)" }
       ]
     }
-  ]
+  }
 }
 ```
 
-### 4.3. Composite Dish Nutritional Compilation Formula
-For a given composite dish $D$ with $K$ ingredients:
+---
 
-1. **Total Batch Raw Mass**:
-   $$M_{\text{raw}} = \sum_{k=1}^{K} m_k$$
+## 5. Nutrition Calculation from User Portion Selection
 
-2. **Ingredient Mass Fraction**:
-   $$w_k = \frac{m_k}{M_{\text{raw}}}$$
+When the user selects a portion unit and quantity for each recognized food:
 
-3. **Composite Nutrient Concentration (per 100g raw equivalent)**:
-   $$\text{Nutrient}_{\text{raw 100g}} = \sum_{k=1}^{K} \left( w_k \times \text{Nutrient}_{k, \text{ per 100g}} \right)$$
+1. **Calculate Total Gram Weight**:
+   $$W_{\text{gram}} = \text{Unit Gram Weight} \times \text{Selected Quantity}$$
+   *(e.g., $2 \times \text{Serving Spoon (120g)} = 240\text{g}$)*
 
-4. **Yield Adjustment for Cooked Consumption (per 100g cooked dish)**:
-   $$\text{Nutrient}_{\text{cooked 100g}} = \frac{\text{Nutrient}_{\text{raw 100g}}}{\text{cooking\_yield\_factor}}$$
+2. **Scale Composite Nutrients**:
+   $$\text{Nutrient}_{\text{item}} = \left( \frac{\text{Nutrient}_{\text{cooked 100g}}}{100.0} \right) \times W_{\text{gram}}$$
 
-The compiled records are saved into `data/composite_dishes_db.json` and indexed into Qdrant.
+3. **Aggregate Multi-Food Meal Total**:
+   $$\text{Meal Total} = \sum_{i=1}^{M} \text{Nutrient}_{\text{item } i}$$
 
 ---
 
-## 5. Lookup-Before-Retrieval Query Flow
-
-```mermaid
-flowchart TD
-    Query[Incoming Dish Query e.g. 'jollof_rice', 250g] --> Step1{Check RIQ Lookup Table}
-    Step1 -->|Dish in 5 Core Recipes| Step2[Retrieve Composite Recipe & Weighted FCT Profile]
-    Step1 -->|Custom or Variant Query| Step3[Qdrant Semantic Vector Search over Composite Collection]
-    Step2 --> Step4[Scale Nutrients by Target Weight: 250g]
-    Step3 --> Step4
-    Step4 --> Output[Return Itemized & Scaled Meal Nutrition]
-```
-
-1. **Direct Recipe Lookup**: Query is first matched against the 5 core dishes in `recipe_ingredient_lookup.json`.
-2. **Semantic Vector Search**: If query has modifiers or aliases (e.g. *"Party Jollof with extra oil"*), vector search retrieves the closest composite dish embedding.
-3. **Linear Portion Scaling**:
-   $$\text{Nutrient}_{\text{total}} = \left( \frac{\text{Nutrient}_{\text{cooked 100g}}}{100.0} \right) \times W_{\text{gram}}$$
-   * Executed within the hard SLA limit of **$< 200\text{ ms}$**.
-
----
-
-## 6. Dummy Content & Fallback Strategy for Independent Development
-
-* **Offline Fallback**: If Qdrant is offline or `USE_IN_MEMORY_FALLBACK=true`, `src/semantic_search.py` performs in-memory dictionary lookup over `data/recipe_ingredient_lookup.json` and `data/dummy_wafct.json`.
-* **Zero-Blocking Assurance**: The Backend team can execute full end-to-end meal analysis and nutrition scaling without waiting for vector database deployment.
-
----
-
-## 7. Execution Commands & Prerequisite Validation
+## 6. Execution Commands & Prerequisite Validation
 
 ```bash
 # 1. Install dependencies
 pip install -r requirements.txt
 
-# 2. Validate the 3 required inputs (Target 5 Dishes, FCT, RIQ Lookup)
+# 2. Validate the 3 required inputs (Target 5 Dishes, FCT, RIQ & Portion Units)
 python src/validate_prerequisites.py
 
-# 3. Ingest raw FCT ingredient table
+# 3. Ingest raw FCT table
 python src/ingest_wafct.py --input data/raw_wafct_2019.csv --output data/food_composition_table.json
 
-# 4. Compile composite dish nutrition using RIQ Lookup + FCT
+# 4. Compile composite dishes using RIQ lookup
 python src/composite_dish_builder.py --riq data/recipe_ingredient_lookup.json --fct data/food_composition_table.json --output data/composite_dishes_db.json
 
 # 5. Bootstrap Qdrant vector index
 python scripts/init_qdrant.py --host localhost --port 6333 --data data/composite_dishes_db.json
 
-# 6. Run unit and integration tests
+# 6. Run test suite
 pytest tests/ -v --cov=src --cov-report=term-missing
 ```
 
 ---
 
-## 8. Definition of Done (DoD) Checklist
+## 7. Definition of Done (DoD) Checklist
 
-- [ ] `validate_prerequisites.py` verifies the presence of the 5 focus dishes, the Food Composition Table (FCT), and the RIQ lookup table before execution.
-- [ ] `recipe_ingredient_lookup.json` contains complete ingredient gram breakdowns for the 5 target dishes.
-- [ ] `composite_dish_builder.py` correctly calculates weighted per-100g nutrients with yield factors.
-- [ ] `semantic_search.py` executes the lookup-before-retrieval flow in $< 200\text{ms}$.
-- [ ] In-memory dummy fallback works seamlessly when Qdrant is offline.
-- [ ] Test coverage exceeds $90\%$ across all modules in `tests/`.
-
-
----
-
-## Automated Task Completion & Submission Protocol
-
-When all functional requirements are implemented and local unit tests pass, execute the following submission sequence in the terminal:
-
-### Step 1: Pre-Submission Health Check
-Run the local test suite for your module. Do NOT push if any test fails.
-* `pytest` (or `npm run build` for Frontend)
-
-### Step 2: Automated Commit, Push & PR Creation
-Execute these exact bash commands:
-
-```bash
-# 1. Switch to (or create) the dedicated sub-team branch
-git checkout -B data-and-rag
-
-# 2. Stage and commit changes
-git add .
-git commit -m "feat(data-and-rag): completed subteam task deliverables"
-
-# 3. Push branch to GitHub
-git push origin data-and-rag
-
-# 4. Open Pull Request via GitHub CLI
-gh pr create \
-  --title "feat(data-and-rag): Completed data-and-rag Deliverables" \
-  --body "Automated PR generated by Coding Agent upon completing INSTRUCTION.md tasks. All local tests passed." \
-  --base main
+- [ ] `validate_prerequisites.py` verifies the presence of 5 target dishes, FCT table, RIQ lookup, and portion units before execution.
+- [ ] `portion_units.json` provides culturally accurate conventional units and gram mappings for all 5 dishes.
+- [ ] `portion_service.py` calculates correct gram mass and macro scaling ($< 200\text{ms}$ SLA).
+- [ ] In-memory offline fallback works without Qdrant container.
+- [ ] Test coverage $\ge 90\%$ in `tests/`.

@@ -1,9 +1,10 @@
-"""Mandatory Pre-Execution Gate: Validate the 3 required inputs.
+"""Mandatory Pre-Execution Gate: Validate required inputs and portion units.
 
 Checks:
 1. Target 5 Dishes Scope ('jollof_rice', 'egusi_soup', 'amala', 'fried_plantain', 'moi_moi')
-2. Food Composition Table (data/raw_wafct_2019.csv or data/food_composition_table.json)
+2. Food Composition Table (data/raw_wafct_2019.csv or data/food_composition_table.json or data/NCT_Nigeria.xlsx)
 3. Recipe-Ingredient-Quantity (RIQ) Table (data/recipe_ingredient_lookup.json)
+4. Conventional Portion Units Registry (data/portion_units.json)
 """
 
 import json
@@ -29,7 +30,6 @@ class PrerequisiteValidationError(Exception):
 def get_default_data_dir() -> Path:
     """Return the absolute path to data_pipeline/data directory."""
     current_file = Path(__file__).resolve()
-    # current_file is data_pipeline/src/validate_prerequisites.py
     return current_file.parent.parent / "data"
 
 
@@ -37,7 +37,7 @@ def validate_prerequisites(
     data_dir: Optional[Path] = None,
     auto_recover: bool = True
 ) -> Dict[str, Any]:
-    """Validate all 3 mandatory inputs.
+    """Validate all mandatory inputs.
     
     Args:
         data_dir: Directory containing data artifacts. Defaults to data_pipeline/data.
@@ -60,8 +60,10 @@ def validate_prerequisites(
         "dishes_found": [],
         "fct_file": None,
         "riq_file": None,
+        "portion_units_file": None,
         "missing_dishes": [],
         "missing_ingredients": [],
+        "missing_portion_dishes": [],
         "errors": [],
     }
 
@@ -135,8 +137,6 @@ def validate_prerequisites(
                         c_str = str(code).strip()
                     available_ing_codes.add(c_str)
                     available_ing_codes.add(f"NCT_{c_str}")
-            # The constituent ingredients for the 5 target dishes (ING_001..ING_044)
-            # are derived from authentic NCT items (14, 71, 76, 532, 147, 50, etc.)
             nct_to_ing = [
                 "ING_001", "ING_002", "ING_003", "ING_004", "ING_005", "ING_006",
                 "ING_010", "ING_011", "ING_012", "ING_013", "ING_014", "ING_015",
@@ -182,7 +182,6 @@ def validate_prerequisites(
                     if code:
                         needed_codes.add(code)
             
-            # Also check dummy_wafct if needed
             if dummy_fct_path.exists():
                 with open(dummy_fct_path, "r", encoding="utf-8") as f:
                     available_ing_codes.update(json.load(f).keys())
@@ -194,9 +193,40 @@ def validate_prerequisites(
         except Exception as e:
             results["errors"].append(f"Error checking ingredient coverage: {e}")
 
+    # 4. Validate Conventional Portion Units Registry
+    portion_path = data_dir / "portion_units.json"
+    if not portion_path.exists():
+        err_msg = f"Missing required portion units file: {portion_path}"
+        results["errors"].append(err_msg)
+        if not auto_recover:
+            raise PrerequisiteValidationError(err_msg)
+    else:
+        results["portion_units_file"] = str(portion_path)
+        try:
+            with open(portion_path, "r", encoding="utf-8") as f:
+                p_data = json.load(f)
+            portion_map = p_data.get("portion_units", {})
+            portion_dishes = set(portion_map.keys())
+            
+            missing_p = TARGET_5_DISHES - portion_dishes
+            if missing_p:
+                err_msg = f"Portion units registry is missing target dishes: {sorted(list(missing_p))}"
+                results["missing_portion_dishes"] = sorted(list(missing_p))
+                results["errors"].append(err_msg)
+
+            for dish_id, p_conf in portion_map.items():
+                units = p_conf.get("units", [])
+                if not units:
+                    results["errors"].append(f"Portion config for '{dish_id}' has empty units list.")
+                for u in units:
+                    if u.get("gram_weight", 0) <= 0:
+                        results["errors"].append(f"Dish '{dish_id}', unit '{u.get('unit_id')}' has non-positive gram_weight.")
+        except Exception as e:
+            results["errors"].append(f"Error parsing portion_units.json: {e}")
+
     if results["errors"]:
         results["status"] = "failed"
-        if not auto_recover or results["missing_dishes"]:
+        if not auto_recover or results["missing_dishes"] or results["missing_portion_dishes"]:
             raise PrerequisiteValidationError("\n".join(results["errors"]))
     else:
         results["status"] = "passed"
@@ -209,10 +239,11 @@ def main() -> int:
     try:
         res = validate_prerequisites(auto_recover=True)
         if res["status"] == "passed":
-            print("[SUCCESS] All 3 prerequisites verified:")
+            print("[SUCCESS] All prerequisites verified:")
             print(f"  - Target 5 Dishes present: {res['dishes_found']}")
             print(f"  - RIQ File: {res['riq_file']}")
             print(f"  - FCT File: {res['fct_file']}")
+            print(f"  - Portion Units File: {res['portion_units_file']}")
             return 0
         else:
             print("[ERROR] Prerequisite validation failed with errors:")
