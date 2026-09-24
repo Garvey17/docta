@@ -1,1 +1,165 @@
+﻿# =============================================================================
+# Docta — monorepo .gitignore
+# Covers: Python (backend / data_pipeline / ai_services), Node/React (frontend)
+# =============================================================================
+
+# ---------------------------------------------------------------------------
+# Environment & secrets — NEVER commit these
+# ---------------------------------------------------------------------------
 .env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets/
+
+# ---------------------------------------------------------------------------
+# Python
+# ---------------------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyd
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+*.egg
+.eggs/
+wheels/
+
+# Testing & coverage
+.pytest_cache/
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+*.lcov
+
+# Type checkers / linters
+.mypy_cache/
+.ruff_cache/
+.pytype/
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# ---------------------------------------------------------------------------
+# Node / Frontend
+# ---------------------------------------------------------------------------
+node_modules/
+.npm/
+.yarn/
+.pnp.*
+
+# Vite build output
+frontend/dist/
+frontend/.vite/
+
+# Parcel
+.parcel-cache/
+
+# Local env overrides
+frontend/.env.local
+frontend/.env.*.local
+
+# ---------------------------------------------------------------------------
+# Database & storage
+# ---------------------------------------------------------------------------
+# Local PostgreSQL data volume (docker-compose)
+backend/postgres_data/
+*.db
+*.sqlite
+*.sqlite3
+
+# Uploaded meal images (local dev storage)
+uploads/
+*.jpg
+*.jpeg
+*.png
+*.webp
+*.gif
+*.mp4
+!frontend/public/**
+!frontend/src/**
+
+# ---------------------------------------------------------------------------
+# Docker
+# ---------------------------------------------------------------------------
+# Don't ignore Dockerfile or compose files — those are committed
+.dockerenv
+
+# ---------------------------------------------------------------------------
+# Alembic
+# ---------------------------------------------------------------------------
+# Keep versions/ committed; ignore local state
+backend/alembic/versions/__pycache__/
+
+# ---------------------------------------------------------------------------
+# Logs
+# ---------------------------------------------------------------------------
+*.log
+logs/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# ---------------------------------------------------------------------------
+# OS & editors
+# ---------------------------------------------------------------------------
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# VSCode
+.vscode/
+!.vscode/extensions.json
+!.vscode/settings.json.example
+
+# JetBrains
+.idea/
+*.iml
+*.iws
+
+# Vim / Emacs
+*.swp
+*.swo
+*~
+\#*\#
+
+# ---------------------------------------------------------------------------
+# AI / ML artefacts
+# ---------------------------------------------------------------------------
+# Model weights — too large for git; use DVC or S3
+ai_services/models/*.pt
+ai_services/models/*.pth
+ai_services/models/*.onnx
+ai_services/models/*.bin
+ai_services/models/*.h5
+
+# Telemetry / active-learning exports
+telemetry_exports/
+*.csv
+
+# ---------------------------------------------------------------------------
+# Misc
+# ---------------------------------------------------------------------------
+tmp/
+.tmp/
+scratch/
