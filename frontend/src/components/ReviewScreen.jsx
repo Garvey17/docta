@@ -5,9 +5,7 @@ import {
   Plus,
   Flame,
   ArrowLeft,
-  Utensils,
-  Layers,
-  Sparkles,
+  MoreVertical,
   Info
 } from 'lucide-react';
 import BoundingOverlay from './BoundingOverlay';
@@ -123,184 +121,135 @@ function ReviewScreen({
   const telemetryPayload = buildTelemetryPayload({ ...draft, items }, mealType);
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-8 animate-fade-in pb-28">
-      {/* Top Bar Navigation & Actions */}
-      <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
+    <div className="max-w-md mx-auto px-4 pt-2 pb-36 animate-fade-in select-none">
+      {/* 1. Top Header */}
+      <header className="flex items-center justify-between pt-2 pb-4 px-1">
         <button
           type="button"
           onClick={onBack}
-          className="inline-flex items-center gap-1.5 text-xs font-semibold text-gray-500 hover:text-gray-900 bg-white border border-gray-200 px-3.5 py-2 rounded-xl hover:bg-gray-50 shadow-2xs transition-all"
+          aria-label="Go back"
+          className="w-11 h-11 bg-white hover:bg-gray-50 rounded-full flex items-center justify-center shadow-xs border border-gray-100 transition-transform active:scale-95 text-gray-800"
         >
-          <ArrowLeft className="w-4 h-4" />
-          Capture Another Dish
+          <ArrowLeft className="w-5 h-5 stroke-[2]" />
         </button>
 
-        <div className="flex items-center gap-2">
-          {/* Meal Type Pill Selector */}
-          <div className="flex items-center bg-white border border-gray-200 p-1 rounded-xl shadow-2xs">
-            {['breakfast', 'lunch', 'dinner', 'snack'].map((type) => (
-              <button
-                key={type}
-                type="button"
-                onClick={() => setMealType(type)}
-                className={`px-3 py-1 rounded-lg text-xs font-bold capitalize transition-colors ${
-                  mealType === type
-                    ? 'bg-indigo-600 text-white shadow-xs'
-                    : 'text-gray-500 hover:text-gray-900'
-                }`}
-              >
-                {type}
-              </button>
-            ))}
-          </div>
-
-          <button
-            type="button"
-            onClick={() => setShowTelemetryModal(true)}
-            className="inline-flex items-center gap-1.5 text-xs font-semibold text-indigo-700 bg-indigo-50 hover:bg-indigo-100 border border-indigo-200 px-3.5 py-2 rounded-xl transition-colors"
-            title="Inspect 'Log Everything' Payload"
-          >
-            <Database className="w-4 h-4 text-indigo-600" />
-            Inspect Telemetry
-          </button>
-        </div>
-      </div>
-
-      {/* Screen Title */}
-      <div className="mb-6">
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight flex items-center gap-2">
-          <span>Multi-Food Portion Review</span>
-          <span className="text-xs font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded-full">
-            {items.length} dishes detected
-          </span>
+        <h1 className="text-[20px] sm:text-[22px] font-bold text-gray-900 tracking-tight">
+          Review Meal
         </h1>
-        <p className="text-sm text-gray-500 mt-1">
-          Adjust conventional portion sizes (spoons, wraps, slices) or correct dish labels. Macros recalculate in real-time.
-        </p>
+
+        <button
+          type="button"
+          onClick={() => setShowTelemetryModal(true)}
+          aria-label="Inspect Telemetry"
+          className="w-11 h-11 bg-white hover:bg-gray-50 rounded-full flex items-center justify-center shadow-xs border border-gray-100 transition-transform active:scale-95 text-gray-800"
+        >
+          <MoreVertical className="w-5 h-5 stroke-[2]" />
+        </button>
+      </header>
+
+      {/* 2. Meal Category Pill Selector */}
+      <div className="flex items-center justify-center gap-1.5 mb-4 bg-white p-1.5 rounded-full shadow-xs border border-gray-100">
+        {['breakfast', 'lunch', 'dinner', 'snack'].map((type) => (
+          <button
+            key={type}
+            type="button"
+            onClick={() => setMealType(type)}
+            className={`flex-1 py-1.5 rounded-full text-xs font-bold capitalize transition-all ${
+              mealType === type
+                ? 'bg-[#e3f79e] text-gray-950 shadow-2xs'
+                : 'text-gray-500 hover:text-gray-900'
+            }`}
+          >
+            {type}
+          </button>
+        ))}
       </div>
 
-      {/* Layout Grid: Visual Overlay (Left) + Portion Cards (Right) */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-        {/* Left Column: Meal Photo with Responsive Canvas Bounding Boxes */}
-        <div className="lg:col-span-5 space-y-4 lg:sticky lg:top-8">
-          <BoundingOverlay
-            imageUrl={draft?.image_url}
-            items={items}
-            activeItemId={activeItemId}
-            onSelectItem={(id) => setActiveItemId(id)}
+      {/* 3. Image Overlay */}
+      <div className="mb-4">
+        <BoundingOverlay
+          imageUrl={draft?.image_url}
+          items={items}
+          activeItemId={activeItemId}
+          onSelectItem={(id) => setActiveItemId(id)}
+        />
+      </div>
+
+      {/* 4. Food Items Cards */}
+      <div className="space-y-3.5 mb-4">
+        {items.map((item) => (
+          <FoodItemCard
+            key={item.item_id}
+            item={item}
+            isActive={activeItemId === item.item_id}
+            onSelect={() => setActiveItemId(item.item_id)}
+            onUpdatePortion={handleUpdatePortion}
+            onUpdateLabel={handleUpdateLabel}
+            onRemove={items.length > 1 ? handleRemoveItem : null}
           />
+        ))}
 
-          {/* Active Learning Explainer Card */}
-          <div className="bg-white border border-gray-200 rounded-2xl p-4 text-xs text-gray-600 shadow-xs flex items-start gap-3">
-            <Info className="w-4 h-4 text-indigo-500 shrink-0 mt-0.5" />
-            <div>
-              <span className="font-bold text-gray-900 block mb-0.5">Active Decision Feedback</span>
-              Your unit selections and label modifications are audited with the image bounding box to improve future automated portion models for African gastronomy.
-            </div>
-          </div>
-        </div>
-
-        {/* Right Column: Independent Food Item Cards & Dynamic Totals */}
-        <div className="lg:col-span-7 space-y-5">
-          {items.map((item) => (
-            <FoodItemCard
-              key={item.item_id}
-              item={item}
-              isActive={activeItemId === item.item_id}
-              onSelect={() => setActiveItemId(item.item_id)}
-              onUpdatePortion={handleUpdatePortion}
-              onUpdateLabel={handleUpdateLabel}
-              onRemove={items.length > 1 ? handleRemoveItem : null}
-            />
-          ))}
-
-          {/* Add Additional Dish Button */}
-          <div className="relative">
-            {showAddDishMenu ? (
-              <div className="bg-white border border-gray-200 rounded-2xl p-4 shadow-lg animate-fade-in space-y-3">
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold uppercase tracking-wider text-gray-600">
-                    Add Unrecognized African Dish
-                  </span>
-                  <button
-                    type="button"
-                    onClick={() => setShowAddDishMenu(false)}
-                    className="text-xs text-gray-400 hover:text-gray-600 font-semibold"
-                  >
-                    Cancel
-                  </button>
-                </div>
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                  {ALL_SUPPORTED_DISHES.map((d) => (
-                    <button
-                      key={d.id}
-                      type="button"
-                      onClick={() => handleAddDish(d)}
-                      className="text-left p-2.5 rounded-xl border border-gray-200 hover:border-indigo-400 hover:bg-indigo-50/50 text-xs font-semibold text-gray-800 transition-colors"
-                    >
-                      {d.name}
-                    </button>
-                  ))}
-                </div>
+        {/* Add Side Dish Button */}
+        <div>
+          {showAddDishMenu ? (
+            <div className="bg-white rounded-[24px] p-4 shadow-sm border border-gray-100 space-y-3 animate-fade-in">
+              <div className="flex items-center justify-between px-1">
+                <span className="text-xs font-bold text-gray-800">
+                  Select African Dish
+                </span>
+                <button
+                  type="button"
+                  onClick={() => setShowAddDishMenu(false)}
+                  className="text-xs text-gray-400 hover:text-gray-600 font-semibold"
+                >
+                  Cancel
+                </button>
               </div>
-            ) : (
-              <button
-                type="button"
-                onClick={() => setShowAddDishMenu(true)}
-                className="w-full py-3.5 border-2 border-dashed border-gray-300 hover:border-indigo-400 rounded-2xl text-xs font-bold text-gray-600 hover:text-indigo-600 flex items-center justify-center gap-2 transition-colors bg-white/50"
-              >
-                <Plus className="w-4 h-4" />
-                Add Another Food / Side Item
-              </button>
-            )}
-          </div>
+              <div className="grid grid-cols-2 gap-2 max-h-48 overflow-y-auto">
+                {ALL_SUPPORTED_DISHES.map((d) => (
+                  <button
+                    key={d.id}
+                    type="button"
+                    onClick={() => handleAddDish(d)}
+                    className="text-left p-2.5 rounded-xl border border-gray-100 hover:border-lime-400 hover:bg-[#e3f79e]/20 text-xs font-semibold text-gray-800 transition-colors"
+                  >
+                    {d.name}
+                  </button>
+                ))}
+              </div>
+            </div>
+          ) : (
+            <button
+              type="button"
+              onClick={() => setShowAddDishMenu(true)}
+              className="w-full py-3 border-2 border-dashed border-gray-200 hover:border-gray-300 rounded-[20px] text-xs font-bold text-gray-600 flex items-center justify-center gap-1.5 transition-colors bg-white/60"
+            >
+              <Plus className="w-4 h-4" />
+              Add Another Dish
+            </button>
+          )}
         </div>
       </div>
 
-      {/* Floating Bottom Total & Decision Submission Bar */}
-      <div className="fixed bottom-0 left-0 right-0 lg:right-20 bg-white/95 backdrop-blur-md border-t border-gray-200 p-4 z-30 shadow-xl">
-        <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-          {/* Meal Total Macro Summary */}
-          <div className="flex items-center gap-4 sm:gap-6 text-center sm:text-left">
-            <div>
-              <span className="text-[11px] font-semibold text-gray-400 uppercase tracking-wider block">
-                Total Calories
-              </span>
-              <span className="text-2xl font-extrabold text-indigo-700 tracking-tight flex items-center gap-1 justify-center sm:justify-start">
-                <Flame className="w-5 h-5 fill-indigo-600 text-indigo-600" />
-                {formatCalories(totals.totalCaloriesKcal)}
-              </span>
-            </div>
-
-            <div className="hidden sm:flex items-center gap-4 text-xs font-semibold text-gray-600 border-l border-gray-200 pl-6">
-              <div>
-                <span className="text-gray-400 block text-[10px] uppercase">Protein</span>
-                <span className="text-gray-900 font-bold">{formatGrams(totals.totalProteinG)}</span>
-              </div>
-              <div>
-                <span className="text-gray-400 block text-[10px] uppercase">Carbs</span>
-                <span className="text-gray-900 font-bold">{formatGrams(totals.totalCarbsG)}</span>
-              </div>
-              <div>
-                <span className="text-gray-400 block text-[10px] uppercase">Fat</span>
-                <span className="text-gray-900 font-bold">{formatGrams(totals.totalFatG)}</span>
-              </div>
-              <div>
-                <span className="text-gray-400 block text-[10px] uppercase">Sodium</span>
-                <span className="text-gray-900 font-bold">{formatMg(totals.totalSodiumMg)}</span>
-              </div>
-            </div>
+      {/* 5. Fixed Floating Submission Pill Bar */}
+      <div className="fixed bottom-4 left-0 right-0 z-40 flex justify-center px-4 pointer-events-none">
+        <div className="pointer-events-auto bg-white/95 backdrop-blur-md rounded-full px-5 py-3 shadow-2xl shadow-black/15 border border-gray-100 flex items-center justify-between w-full max-w-[390px] gap-3">
+          <div className="flex items-baseline gap-1">
+            <Flame className="w-4 h-4 fill-gray-950 text-gray-950" />
+            <span className="text-[18px] font-extrabold text-gray-950 tracking-tight">
+              {formatCalories(totals.totalCaloriesKcal)}
+            </span>
+            <span className="text-[11px] font-semibold text-gray-400">kcal</span>
           </div>
 
-          {/* Confirm & Log Telemetry Button */}
           <button
             type="button"
             onClick={handleConfirm}
             disabled={isLogging || items.length === 0}
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-8 py-3.5 rounded-xl shadow-lg shadow-indigo-200 hover:shadow-xl transition-all active:scale-98 disabled:opacity-50 text-sm"
+            className="inline-flex items-center gap-2 bg-gray-950 hover:bg-black text-white font-bold px-6 py-2.5 rounded-full shadow-md active:scale-95 transition-all text-xs"
           >
-            <CheckCircle2 className="w-4 h-4" />
-            {isLogging ? 'Logging Everything & Telemetry...' : 'Confirm & Log Meal'}
+            <CheckCircle2 className="w-3.5 h-3.5 text-[#bef264]" />
+            {isLogging ? 'Logging...' : 'Confirm Meal'}
           </button>
         </div>
       </div>

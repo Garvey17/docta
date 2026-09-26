@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Sparkles, MessageSquare, ArrowRight, Loader2 } from 'lucide-react';
+import { ArrowLeft, MoreVertical, Sparkles, MessageSquare, ArrowRight, Loader2 } from 'lucide-react';
 import CameraFeed from './CameraFeed';
 
-function CaptureScreen({ onAnalyze, isAnalyzing }) {
+function CaptureScreen({ onAnalyze, isAnalyzing, onBack, onOptionsClick }) {
   const [capturedFile, setCapturedFile] = useState(null);
   const [capturedPreview, setCapturedPreview] = useState(null);
   const [promptText, setPromptText] = useState('');
@@ -22,29 +22,39 @@ function CaptureScreen({ onAnalyze, isAnalyzing }) {
   };
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8 animate-fade-in">
-      {/* Page Header */}
-      <div className="mb-6">
-        <div className="flex items-center gap-2 mb-1">
-          <span className="text-xs font-bold uppercase tracking-wider text-indigo-600 bg-indigo-50 border border-indigo-100 px-2.5 py-0.5 rounded-full">
-            Multimodal CV Analysis
-          </span>
-        </div>
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">
-          Scan African Dish & Ingredients
-        </h1>
-        <p className="text-sm text-gray-500 mt-1 max-w-xl">
-          Point your camera at any African or Nigerian dish. The vision system localizes food items, while conventional portion sizing ensures precise nutritional scaling.
-        </p>
-      </div>
+    <div className="max-w-md mx-auto px-4 pt-2 pb-28 animate-fade-in select-none">
+      {/* 1. Top Header */}
+      <header className="flex items-center justify-between pt-2 pb-5 px-1">
+        <button
+          type="button"
+          onClick={onBack || (() => window.history.back())}
+          aria-label="Go back"
+          className="w-11 h-11 bg-white hover:bg-gray-50 rounded-full flex items-center justify-center shadow-xs border border-gray-100 transition-transform active:scale-95 text-gray-800"
+        >
+          <ArrowLeft className="w-5 h-5 stroke-[2]" />
+        </button>
 
-      <div className="space-y-6">
-        {/* Camera / Upload Section */}
+        <h1 className="text-[20px] sm:text-[22px] font-bold text-gray-900 tracking-tight">
+          Scan Meal
+        </h1>
+
+        <button
+          type="button"
+          onClick={onOptionsClick}
+          aria-label="More options"
+          className="w-11 h-11 bg-white hover:bg-gray-50 rounded-full flex items-center justify-center shadow-xs border border-gray-100 transition-transform active:scale-95 text-gray-800"
+        >
+          <MoreVertical className="w-5 h-5 stroke-[2]" />
+        </button>
+      </header>
+
+      {/* 2. Camera Viewfinder or Photo Preview */}
+      <div className="space-y-4">
         {capturedPreview ? (
-          <div className="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm">
-            <div className="flex items-center justify-between mb-4">
-              <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                Photo Ready for Analysis
+          <div className="bg-white rounded-[28px] p-5 shadow-xs border border-gray-100/60">
+            <div className="flex items-center justify-between mb-3 px-1">
+              <span className="text-[12px] font-bold text-gray-900 bg-[#e3f79e] px-3 py-1 rounded-full">
+                Ready for Analysis
               </span>
               <button
                 type="button"
@@ -52,13 +62,13 @@ function CaptureScreen({ onAnalyze, isAnalyzing }) {
                   setCapturedFile(null);
                   setCapturedPreview(null);
                 }}
-                className="text-xs text-indigo-600 hover:text-indigo-700 font-semibold"
+                className="text-[12px] text-gray-500 hover:text-gray-900 font-semibold"
               >
-                Retake / Change Photo
+                Retake
               </button>
             </div>
 
-            <div className="relative aspect-[4/3] rounded-xl overflow-hidden bg-slate-900 max-h-96 w-full">
+            <div className="relative aspect-[4/3] rounded-[20px] overflow-hidden bg-slate-900 w-full shadow-inner">
               <img
                 src={capturedPreview}
                 alt="Captured Meal"
@@ -74,43 +84,43 @@ function CaptureScreen({ onAnalyze, isAnalyzing }) {
           />
         )}
 
-        {/* Multimodal Context Prompt (Optional) */}
-        <div className="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm">
-          <label className="block text-xs font-semibold text-gray-600 uppercase tracking-wider mb-2 flex items-center gap-2">
-            <MessageSquare className="w-4 h-4 text-indigo-500" />
-            <span>Additional Context Prompt (Optional)</span>
+        {/* 3. Optional Context Input */}
+        <div className="bg-white rounded-[28px] p-5 shadow-xs border border-gray-100/60">
+          <label className="block text-[13px] font-bold text-gray-900 mb-1.5 flex items-center gap-2">
+            <MessageSquare className="w-4 h-4 text-gray-700" />
+            <span>Additional Context (Optional)</span>
           </label>
-          <p className="text-xs text-gray-400 mb-3">
-            Add context like extra oil, spicy stew, condiments, or specific swallow type.
+          <p className="text-[11px] text-gray-400 mb-3">
+            Add context like extra oil, spicy stew, condiments, or swallow type.
           </p>
           <textarea
             value={promptText}
             onChange={(e) => setPromptText(e.target.value)}
-            placeholder="e.g., Nigerian party jollof with 2 extra fried plantains and peppered beef..."
+            placeholder="e.g. Nigerian party jollof with extra plantains and beef..."
             rows={2}
-            className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-900 placeholder:text-gray-400 focus:bg-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 outline-none transition-all resize-none"
+            className="w-full bg-[#f8f9fa] border border-gray-100 rounded-2xl px-4 py-3 text-xs sm:text-sm text-gray-900 placeholder:text-gray-400 focus:bg-white focus:ring-2 focus:ring-lime-400 outline-none transition-all resize-none"
           />
         </div>
 
-        {/* Action Button */}
+        {/* 4. Action Button */}
         {capturedPreview && (
-          <div className="flex justify-end">
+          <div className="pt-2">
             <button
               type="button"
               onClick={handleSubmitAnalysis}
               disabled={isAnalyzing}
-              className="inline-flex items-center gap-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-8 py-4 rounded-2xl shadow-lg shadow-indigo-200 hover:shadow-xl transition-all active:scale-98 disabled:opacity-50 text-base"
+              className="w-full inline-flex items-center justify-center gap-2 bg-gray-950 hover:bg-black text-white font-bold py-4 rounded-full shadow-lg shadow-black/20 hover:shadow-xl transition-all active:scale-98 disabled:opacity-50 text-[15px]"
             >
               {isAnalyzing ? (
                 <>
                   <Loader2 className="w-5 h-5 animate-spin" />
-                  Running African Vision Model...
+                  Running Vision Analysis...
                 </>
               ) : (
                 <>
-                  <Sparkles className="w-5 h-5" />
-                  Analyze Meal & Portions
-                  <ArrowRight className="w-5 h-5" />
+                  <Sparkles className="w-4 h-4 text-[#bef264]" />
+                  Analyze Dish & Portions
+                  <ArrowRight className="w-4 h-4" />
                 </>
               )}
             </button>

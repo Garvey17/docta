@@ -57,3 +57,33 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #94a3b8;
 }
+
+/* Diagonal stripe pattern for health/progress bars */
+.bg-striped-pattern {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    #ecefe6,
+    #ecefe6 6px,
+    #f4f6ef 6px,
+    #f4f6ef 12px
+  );
+}
+
+.bg-striped-pattern-subtle {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    rgba(0, 0, 0, 0.03),
+    rgba(0, 0, 0, 0.03) 5px,
+    rgba(0, 0, 0, 0.01) 5px,
+    rgba(0, 0, 0, 0.01) 10px
+  );
+}
+
+/* Hide scrollbar while keeping scroll functionality */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

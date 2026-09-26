@@ -3,10 +3,11 @@ import { LayoutDashboard, Camera, ClipboardCheck, Database, User, ShieldCheck } 
 
 const NAV_ITEMS = [
   { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
+  { id: 'statistics', label: 'Statistic', icon: Database },
   { id: 'capture', label: 'Capture', icon: Camera },
   { id: 'review', label: 'Review', icon: ClipboardCheck },
-  { id: 'telemetry', label: 'Telemetry', icon: Database },
 ];
+
 
 function RightSidebar({ currentScreen, onNavigate, hasActiveReview }) {
   return (
