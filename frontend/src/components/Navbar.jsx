@@ -1,5 +1,5 @@
-import React from 'react';
-import { Home, BarChart2, User, Scan } from 'lucide-react';
+import React, { useState } from 'react';
+import { Home, BarChart2, Menu, Scan, LogOut } from 'lucide-react';
 
 /** Custom AI chat icon — speech bubble with a small sparkle node */
 function AiChatIcon({ className = 'w-5 h-5' }) {
@@ -20,14 +20,27 @@ function AiChatIcon({ className = 'w-5 h-5' }) {
   );
 }
 
-function Navbar({ currentScreen, onNavigate, hasActiveReview, onOpenAuth }) {
+function Navbar({ currentScreen, onNavigate, onLogout }) {
+  const [showMenu, setShowMenu] = useState(false);
+
   return (
-    <div className="fixed bottom-4 left-0 right-0 z-50 flex justify-center px-4 pointer-events-none">
-      <nav className="pointer-events-auto bg-white/95 backdrop-blur-md rounded-full px-3 py-2 shadow-2xl shadow-black/15 border border-gray-100 flex items-center justify-between w-full max-w-[360px] relative">
+    <div className="fixed bottom-4 left-0 right-0 z-50 flex justify-center px-4 pointer-events-none select-none">
+      {/* Click outside overlay when menu popup is open */}
+      {showMenu && (
+        <div
+          className="fixed inset-0 pointer-events-auto z-40"
+          onClick={() => setShowMenu(false)}
+        />
+      )}
+
+      <nav className="pointer-events-auto bg-white/95 backdrop-blur-md rounded-full px-3 py-2 shadow-2xl shadow-black/15 border border-gray-100 flex items-center justify-between w-full max-w-[360px] relative z-50">
         {/* 1. Home Tab */}
         <button
           type="button"
-          onClick={() => onNavigate('dashboard')}
+          onClick={() => {
+            setShowMenu(false);
+            onNavigate('dashboard');
+          }}
           aria-label="Home Dashboard"
           className={`transition-all duration-200 flex items-center justify-center ${
             currentScreen === 'dashboard'
@@ -45,7 +58,10 @@ function Navbar({ currentScreen, onNavigate, hasActiveReview, onOpenAuth }) {
         {/* 2. Stats / Analytics Tab */}
         <button
           type="button"
-          onClick={() => onNavigate('statistics')}
+          onClick={() => {
+            setShowMenu(false);
+            onNavigate('statistics');
+          }}
           aria-label="Statistics"
           className={`transition-all duration-200 flex items-center justify-center ${
             currentScreen === 'telemetry' || currentScreen === 'statistics'
@@ -56,12 +72,14 @@ function Navbar({ currentScreen, onNavigate, hasActiveReview, onOpenAuth }) {
           <BarChart2 className="w-5 h-5 stroke-[2.2]" />
         </button>
 
-
         {/* 3. Center Floating Scanner / Camera Button */}
         <div className="relative -mt-6">
           <button
             type="button"
-            onClick={() => onNavigate('capture')}
+            onClick={() => {
+              setShowMenu(false);
+              onNavigate('capture');
+            }}
             aria-label="Scan Meal"
             className="w-12 h-12 rounded-full bg-gray-950 hover:bg-black text-white flex items-center justify-center shadow-xl shadow-black/30 border-[3px] border-white transition-transform active:scale-95"
           >
@@ -72,7 +90,10 @@ function Navbar({ currentScreen, onNavigate, hasActiveReview, onOpenAuth }) {
         {/* 4. AI Insights Tab */}
         <button
           type="button"
-          onClick={() => onNavigate('insights')}
+          onClick={() => {
+            setShowMenu(false);
+            onNavigate('insights');
+          }}
           aria-label="AI Insights"
           className={`transition-all duration-200 flex items-center justify-center relative ${
             currentScreen === 'insights' || currentScreen === 'review'
@@ -83,16 +104,38 @@ function Navbar({ currentScreen, onNavigate, hasActiveReview, onOpenAuth }) {
           <AiChatIcon className="w-5 h-5" />
         </button>
 
+        {/* 5. Menu Button with Popup */}
+        <div className="relative">
+          <button
+            type="button"
+            onClick={() => setShowMenu(!showMenu)}
+            aria-label="App Menu"
+            className={`w-10 h-10 rounded-full flex items-center justify-center transition-all ${
+              showMenu
+                ? 'bg-gray-950 text-white shadow-sm'
+                : 'text-gray-700 hover:text-gray-950 hover:bg-gray-50'
+            }`}
+          >
+            <Menu className="w-5 h-5 stroke-[2.2]" />
+          </button>
 
-        {/* 5. User Profile Tab */}
-        <button
-          type="button"
-          onClick={() => (onOpenAuth ? onOpenAuth() : onNavigate('dashboard'))}
-          aria-label="User Profile"
-          className="w-10 h-10 rounded-full text-gray-700 hover:text-gray-950 hover:bg-gray-50 flex items-center justify-center transition-colors"
-        >
-          <User className="w-5 h-5 stroke-[2]" />
-        </button>
+          {/* Menu Popup Container */}
+          {showMenu && (
+            <div className="absolute bottom-14 right-0 bg-white rounded-2xl p-1.5 shadow-2xl shadow-black/20 border border-gray-100 min-w-[140px] animate-fade-in z-50">
+              <button
+                type="button"
+                onClick={() => {
+                  setShowMenu(false);
+                  if (onLogout) onLogout();
+                }}
+                className="w-full flex items-center gap-2.5 px-3 py-2.5 text-[13px] font-bold text-rose-600 hover:bg-rose-50 rounded-xl transition-colors text-left"
+              >
+                <LogOut className="w-4 h-4 stroke-[2.2] text-rose-600" />
+                <span>Log out</span>
+              </button>
+            </div>
+          )}
+        </div>
       </nav>
     </div>
   );

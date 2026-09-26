@@ -5,10 +5,10 @@ import DashboardScreen from './components/DashboardScreen';
 import CaptureScreen from './components/CaptureScreen';
 import ReviewScreen from './components/ReviewScreen';
 import TelemetryModal from './components/TelemetryModal';
-import AuthModal from './components/AuthModal';
+import AuthScreen from './components/AuthScreen';
 import { analyzeMeal, logMeal, fetchMealHistory } from './api/mealApi';
 import { initializeDraftItems, buildTelemetryPayload } from './store/mealDraftStore';
-import { getStoredAuth } from './store/authStore';
+import { getStoredAuth, clearAuth } from './store/authStore';
 import { MOCK_ANALYZE_RESPONSE, MOCK_MEAL_HISTORY } from './data/mockData';
 import { CheckCircle2, AlertTriangle, ShieldCheck } from 'lucide-react';
 
@@ -62,7 +62,6 @@ import InsightsChatScreen from './components/InsightsChatScreen';
 function App() {
   const [currentScreen, setCurrentScreen] = useState('dashboard');
   const [auth, setAuth] = useState(getStoredAuth());
-  const [showAuthModal, setShowAuthModal] = useState(false);
   const [showTelemetryModal, setShowTelemetryModal] = useState(false);
 
   const [draftMeal, setDraftMeal] = useState(null);
@@ -183,6 +182,28 @@ function App() {
     setCurrentScreen(screenId);
   };
 
+  const handleLogout = () => {
+    clearAuth();
+    setAuth({ token: null, user: null, isAuthenticated: false });
+    setCurrentScreen('auth');
+    showToast('Logged out successfully');
+  };
+
+  const handleAuthSuccess = (userData) => {
+    setAuth({ token: `jwt_token_${Date.now()}`, user: userData, isAuthenticated: true });
+    setCurrentScreen('dashboard');
+    showToast(`Welcome, ${userData.name || 'Alex'}!`);
+  };
+
+  // If user is logged out or auth screen is requested
+  if (!auth?.isAuthenticated || currentScreen === 'auth') {
+    return (
+      <ErrorBoundary>
+        <AuthScreen onAuthSuccess={handleAuthSuccess} />
+      </ErrorBoundary>
+    );
+  }
+
   return (
     <ErrorBoundary>
       <div className="min-h-screen bg-[#f7f8fa] font-sans text-gray-900 flex flex-col antialiased">
@@ -225,6 +246,7 @@ function App() {
               mealHistory={mealHistory}
               onBack={() => setCurrentScreen('dashboard')}
               onOptionsClick={() => setShowTelemetryModal(true)}
+              onStartCapture={handleStartCapture}
             />
           )}
 
@@ -249,13 +271,13 @@ function App() {
 
 
 
-        {/* Floating Bottom Navigation Bar */}
-        {currentScreen !== 'review' && (
+        {/* Floating Bottom Navigation Bar (Shown on Dashboard & Statistics) */}
+        {currentScreen !== 'review' && currentScreen !== 'insights' && (
           <Navbar
             currentScreen={currentScreen}
             onNavigate={handleNavigate}
             hasActiveReview={Boolean(draftMeal)}
-            onOpenAuth={() => setShowAuthModal(true)}
+            onLogout={handleLogout}
           />
         )}
 
@@ -265,13 +287,6 @@ function App() {
           isOpen={showTelemetryModal}
           onClose={() => setShowTelemetryModal(false)}
           lastTelemetryPayload={lastTelemetryPayload}
-        />
-
-        {/* Auth / Profile Modal */}
-        <AuthModal
-          isOpen={showAuthModal}
-          onClose={() => setShowAuthModal(false)}
-          onAuthSuccess={(u) => setAuth((prev) => ({ ...prev, user: u }))}
         />
       </div>
     </ErrorBoundary>

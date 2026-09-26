@@ -38,14 +38,8 @@ function CaptureScreen({ onAnalyze, isAnalyzing, onBack, onOptionsClick }) {
           Scan Meal
         </h1>
 
-        <button
-          type="button"
-          onClick={onOptionsClick}
-          aria-label="More options"
-          className="w-11 h-11 bg-white hover:bg-gray-50 rounded-full flex items-center justify-center shadow-xs border border-gray-100 transition-transform active:scale-95 text-gray-800"
-        >
-          <MoreVertical className="w-5 h-5 stroke-[2]" />
-        </button>
+        {/* Balance placeholder for centered title */}
+        <div className="w-11" aria-hidden="true" />
       </header>
 
       {/* 2. Camera Viewfinder or Photo Preview */}

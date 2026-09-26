@@ -1,15 +1,9 @@
 import React from 'react';
-import { Camera, Calendar, Sparkles, Plus, Clock, Utensils, Award, Info } from 'lucide-react';
-import MacroProgressRing from './MacroProgressRing';
-import MacroBar from './MacroBar';
-import NutritionSummaryCards from './NutritionSummaryCards';
-import MealHistoryCard from './MealHistoryCard';
-import { formatCalories } from '../utils/formatters';
-
 import HeaderSection from './HeaderSection';
 import WeeklyCalendarCard from './WeeklyCalendarCard';
 import MealProgressCard from './MealProgressCard';
 import ActivityMetricCards from './ActivityMetricCards';
+import MealHistoryCard from './MealHistoryCard';
 
 function DashboardScreen({
   user,
