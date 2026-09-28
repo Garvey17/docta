@@ -1,12 +1,10 @@
-"""Health and Readiness Routers for AWS ECS / Fargate and Load Balancers."""
+"""Health and Diagnostics Routers for ECS/Fargate and Load Balancers."""
 
 import time
-from fastapi import APIRouter, Depends, status, Response
-from sqlalchemy import text
-from sqlalchemy.ext.asyncio import AsyncSession
+from fastapi import APIRouter, status, Response
 
 from ..config import get_settings
-from ..database import get_db
+from ..supabase_client import get_supabase_client
 
 router = APIRouter(tags=["Health & Diagnostics"])
 settings = get_settings()
@@ -15,8 +13,9 @@ _start_time = time.time()
 
 
 @router.get("/health", status_code=status.HTTP_200_OK)
+@router.get("/api/v1/health", status_code=status.HTTP_200_OK)
 async def health_check():
-    """Liveness probe for container orchestrator (AWS Fargate / ECS)."""
+    """Liveness probe for container orchestrator and gateways."""
     return {
         "status": "healthy",
         "app_name": settings.app_name,
@@ -26,18 +25,18 @@ async def health_check():
 
 
 @router.get("/health/ready", status_code=status.HTTP_200_OK)
-async def readiness_check(response: Response, db: AsyncSession = Depends(get_db)):
-    """Readiness probe checking database connectivity and core services."""
-    db_status = "unknown"
+async def readiness_check(response: Response):
+    """Readiness probe checking Supabase connectivity and mock flags."""
+    db_status = "connected"
     try:
-        await db.execute(text("SELECT 1"))
-        db_status = "connected"
+        supabase = get_supabase_client()
+        supabase.from_("meals").select("id").limit(1).execute()
     except Exception as e:
-        db_status = f"error: {str(e)}"
+        db_status = f"unconnected: {str(e)}"
         response.status_code = status.HTTP_503_SERVICE_UNAVAILABLE
 
     return {
-        "status": "ready" if db_status == "connected" else "unready",
+        "status": "ready" if "connected" in db_status else "unready",
         "database": db_status,
         "mock_ai": settings.use_mock_ai,
         "mock_rag": settings.use_mock_rag,

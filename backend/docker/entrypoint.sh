@@ -1,13 +1,7 @@
 #!/bin/sh
 set -e
 
-echo "Starting docta Backend Container..."
-
-# Run database migrations if DATABASE_URL is configured
-if [ -n "$DATABASE_URL" ]; then
-    echo "Running Alembic database migrations..."
-    alembic upgrade head || echo "Alembic migration completed or skipped (e.g. SQLite/Direct init)."
-fi
+echo "Starting docta Backend Container with Supabase Infrastructure..."
 
 PORT="${PORT:-8000}"
 HOST="${HOST:-0.0.0.0}"

@@ -33,7 +33,7 @@ async def test_telemetry_export_json_and_csv(client: AsyncClient, auth_headers: 
     await client.post("/api/v1/meals/log", json=payload, headers=auth_headers)
 
     # 1. Test JSON Export
-    json_resp = await client.get("/api/v1/telemetry/export?format=json")
+    json_resp = await client.get("/api/v1/telemetry/export?format=json", headers=auth_headers)
     assert json_resp.status_code == 200
     export_data = json_resp.json()
     assert export_data["total_records"] >= 1
@@ -44,7 +44,7 @@ async def test_telemetry_export_json_and_csv(client: AsyncClient, auth_headers: 
     assert "calculated_gram_weight" in rec
 
     # 2. Test CSV Export
-    csv_resp = await client.get("/api/v1/telemetry/export?format=csv")
+    csv_resp = await client.get("/api/v1/telemetry/export?format=csv", headers=auth_headers)
     assert csv_resp.status_code == 200
     assert "text/csv" in csv_resp.headers["content-type"]
     assert "predicted_dish_id" in csv_resp.text

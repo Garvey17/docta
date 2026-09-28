@@ -4,14 +4,11 @@ from typing import Optional
 from fastapi import (
     APIRouter,
     Depends,
-    UploadFile,
-    File,
-    Form,
     Request,
     status,
 )
 
-from ..schemas.analyze import AnalyzeMealResponse, AnalyzeImageURLRequest
+from ..schemas.analyze import AnalyzeMealResponse
 from ..services.orchestrator_service import get_orchestrator_service, OrchestratorService
 
 router = APIRouter(prefix="/api/v1", tags=["Analysis & Computer Vision"])
@@ -29,8 +26,8 @@ async def analyze_meal_endpoint(
 ):
     """
     Multimodal meal analysis pipeline (<2.0s SLA):
-    1. Invokes Computer Vision inference (Food Identification & Bounding Boxes only).
-    2. Queries RAG / Portion Registry to attach available conventional units (spoons, wraps, slices).
+    1. Invokes Computer Vision inference (Food Identification & Bounding Boxes).
+    2. Attaches culturally conventional units (serving spoon, wrap, slices, etc.).
     3. Attaches base 100g WAFCT nutritional profiles.
     4. Emits structured payload for user quantity confirmation on frontend.
     """
@@ -39,12 +36,15 @@ async def analyze_meal_endpoint(
     # 1. Handle multipart/form-data (File upload)
     if "multipart/form-data" in content_type:
         form = await request.form()
-        file = form.get("file")
+        # Accept both 'image' (frontend) and 'file' (tests)
+        file = form.get("image") or form.get("file")
         prompt = form.get("prompt")
         prompt_str = str(prompt) if prompt is not None else None
 
         if file and hasattr(file, "filename") and file.filename:
             return await orchestrator.analyze_image_file(file=file, prompt=prompt_str)
+        elif prompt_str:
+            return await orchestrator.analyze_image_url(prompt=prompt_str)
 
     # 2. Handle application/json (Image URL / Base64 / Prompt)
     if "application/json" in content_type:

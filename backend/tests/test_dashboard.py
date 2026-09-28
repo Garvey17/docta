@@ -16,7 +16,6 @@ async def test_dashboard_summary_empty(client: AsyncClient, auth_headers: dict):
 
 @pytest.mark.asyncio
 async def test_dashboard_summary_with_meals(client: AsyncClient, auth_headers: dict):
-    # Log a meal today
     payload = {
         "meal_type": "lunch",
         "items": [
@@ -48,3 +47,8 @@ async def test_dashboard_summary_with_meals(client: AsyncClient, auth_headers: d
     assert data["today"]["total_calories_kcal"] == 336.0
     assert data["calorie_progress_pct"] > 0
     assert len(data["recent_meals"]) == 1
+
+    # Test alias /api/v1/dashboard
+    alias_resp = await client.get("/api/v1/dashboard", headers=auth_headers)
+    assert alias_resp.status_code == 200
+    assert alias_resp.json()["today"]["meal_count"] == 1

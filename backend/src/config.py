@@ -2,7 +2,7 @@
 
 import os
 from functools import lru_cache
-from typing import List, Union
+from typing import List, Union, Optional
 from pydantic import Field, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -23,13 +23,10 @@ class Settings(BaseSettings):
     port: int = 8000
     host: str = "0.0.0.0"
 
-    # Database
-    # Standard: postgresql+asyncpg://postgres:postgres@localhost:5432/docta_db
-    # Or SQLite fallback for local test execution: sqlite+aiosqlite:///./docta.db
-    database_url: str = Field(
-        default="postgresql+asyncpg://postgres:postgres@localhost:5432/docta_db",
-        alias="DATABASE_URL",
-    )
+    # Supabase Infrastructure
+    supabase_url: Optional[str] = Field(default=None, alias="SUPABASE_URL")
+    supabase_key: Optional[str] = Field(default=None, alias="SUPABASE_KEY")
+    supabase_service_role_key: Optional[str] = Field(default=None, alias="SUPABASE_SERVICE_ROLE_KEY")
 
     # Authentication & Security
     secret_key: str = Field(
@@ -40,36 +37,18 @@ class Settings(BaseSettings):
     access_token_expire_minutes: int = 60 * 24 * 7  # 7 days
 
     # CORS
+    frontend_url: str = Field(default="http://localhost:3000", alias="FRONTEND_URL")
     cors_origins: Union[List[str], str] = ["*"]
 
-    # Storage & Uploads (AWS Fargate / S3 / Local allowances)
+    # Storage & Uploads
     upload_dir: str = "uploads"
-    aws_region: str = "eu-central-1"
-    s3_bucket_name: Union[str, None] = None
+    supabase_storage_bucket: str = "meals"
 
     # Service Bridges & Mocking
     use_mock_ai: bool = Field(default=True, alias="USE_MOCK_AI")
-    use_mock_rag: bool = Field(default=False, alias="USE_MOCK_RAG")
-    ai_service_url: Union[str, None] = Field(default=None, alias="AI_SERVICE_URL")
-
-    # Qdrant / OpenAI passthrough if needed
-    openai_api_key: Union[str, None] = Field(default=None, alias="OPENAI_API_KEY")
-    qdrant_url: Union[str, None] = Field(default=None, alias="QDRANT_URL")
-    qdrant_api_key: Union[str, None] = Field(default=None, alias="QDRANT_API_KEY")
-
-    @field_validator("database_url", mode="before")
-    @classmethod
-    def normalize_database_url(cls, v: str) -> str:
-        if not v:
-            return "sqlite+aiosqlite:///./docta.db"
-        # If user provides standard postgres:// or postgresql://, adapt to postgresql+asyncpg://
-        if v.startswith("postgres://"):
-            return v.replace("postgres://", "postgresql+asyncpg://", 1)
-        if v.startswith("postgresql://") and not v.startswith("postgresql+asyncpg://"):
-            return v.replace("postgresql://", "postgresql+asyncpg://", 1)
-        if v.startswith("sqlite://") and not v.startswith("sqlite+aiosqlite://"):
-            return v.replace("sqlite://", "sqlite+aiosqlite://", 1)
-        return v
+    use_mock_rag: bool = Field(default=True, alias="USE_MOCK_RAG")
+    cv_service_url: Optional[str] = Field(default=None, alias="CV_SERVICE_URL")
+    rag_service_url: Optional[str] = Field(default=None, alias="RAG_SERVICE_URL")
 
     @field_validator("cors_origins", mode="before")
     @classmethod

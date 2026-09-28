@@ -1,55 +1,56 @@
-"""User Dashboard and Macro Analytics API Endpoints."""
+"""User Dashboard and Macro Analytics API Endpoints using Supabase."""
 
-from datetime import datetime, timezone, date, timedelta
+from datetime import datetime, timezone, date, time
 from typing import Optional, List
 from fastapi import APIRouter, Depends
-from sqlalchemy import select, desc
-from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.orm import selectinload
 
-from ..database import get_db
-from ..models.user import User
-from ..models.meal import Meal
+from ..supabase_client import get_supabase_client
+from ..schemas.auth import UserResponse
 from ..schemas.dashboard import (
     DashboardStatsResponse,
     DailyMacroSummary,
     MacroTarget,
 )
-from ..schemas.meal import MealDetailResponse
-from ..services.auth_service import get_current_user_optional
+from ..schemas.meal import MealDetailResponse, MealItemResponse
+from ..dependencies.auth import get_current_user_optional
 
 router = APIRouter(prefix="/api/v1/dashboard", tags=["Dashboard & Analytics"])
 
 
-@router.get("/summary", response_model=DashboardStatsResponse)
+@router.get("/summary", response_model=DashboardStatsResponse, summary="Get today's macro summary")
+@router.get("", response_model=DashboardStatsResponse, summary="Get today's macro summary (alias)")
 async def get_dashboard_summary(
-    current_user: Optional[User] = Depends(get_current_user_optional),
-    db: AsyncSession = Depends(get_db),
+    current_user: Optional[UserResponse] = Depends(get_current_user_optional),
 ):
     """Retrieve today's nutritional intake summary and progress toward dietary targets."""
+    supabase = get_supabase_client()
+    user_id = current_user.id if current_user else "usr_4a89fb21"
+
     today = date.today()
-    start_of_day = datetime.combine(today, datetime.min.time(), tzinfo=timezone.utc)
-    end_of_day = datetime.combine(today, datetime.max.time(), tzinfo=timezone.utc)
+    start_of_day = datetime.combine(today, time.min).replace(tzinfo=timezone.utc).isoformat()
+    end_of_day = datetime.combine(today, time.max).replace(tzinfo=timezone.utc).isoformat()
 
-    query = select(Meal).where(
-        Meal.logged_at >= start_of_day,
-        Meal.logged_at <= end_of_day,
-    ).options(selectinload(Meal.items))
+    # Query today's meals
+    query = (
+        supabase.from_("meals")
+        .select("*")
+        .gte("logged_at", start_of_day)
+        .lte("logged_at", end_of_day)
+    )
+    if user_id:
+        query = query.eq("user_id", user_id)
 
-    if current_user:
-        query = query.where(Meal.user_id == current_user.id)
+    res = query.execute()
+    today_meals = res.data or []
 
-    res = await db.execute(query)
-    today_meals = res.scalars().all()
-
-    cal = sum(m.total_calories_kcal for m in today_meals)
-    pro = sum(m.total_protein_g for m in today_meals)
-    fat = sum(m.total_fat_g for m in today_meals)
-    carb = sum(m.total_carbs_g for m in today_meals)
-    fib = sum(m.total_fiber_g for m in today_meals)
-    sod = sum(m.total_sodium_mg for m in today_meals)
-    calc = sum(m.total_calcium_mg for m in today_meals)
-    iron = sum(m.total_iron_mg for m in today_meals)
+    cal = sum(float(m.get("total_calories_kcal", 0.0)) for m in today_meals)
+    pro = sum(float(m.get("total_protein_g", 0.0)) for m in today_meals)
+    fat = sum(float(m.get("total_fat_g", 0.0)) for m in today_meals)
+    carb = sum(float(m.get("total_carbs_g", 0.0)) for m in today_meals)
+    fib = sum(float(m.get("total_fiber_g", 0.0)) for m in today_meals)
+    sod = sum(float(m.get("total_sodium_mg", 0.0)) for m in today_meals)
+    calc = sum(float(m.get("total_calcium_mg", 0.0)) for m in today_meals)
+    iron = sum(float(m.get("total_iron_mg", 0.0)) for m in today_meals)
 
     today_summary = DailyMacroSummary(
         summary_date=today,
@@ -64,20 +65,60 @@ async def get_dashboard_summary(
         total_iron_mg=round(iron, 1),
     )
 
-    targets = MacroTarget()
+    # User's targets
+    target_cal = float(current_user.dailyCalorieTarget) if current_user else 2200.0
+    target_pro = float(current_user.dailyProteinTargetG) if current_user else 110.0
+    target_carb = float(current_user.dailyCarbsTargetG) if current_user else 250.0
+    target_fat = float(current_user.dailyFatTargetG) if current_user else 65.0
+    target_fib = float(current_user.dailyFiberTargetG) if current_user else 30.0
 
-    cal_pct = round((cal / targets.target_calories_kcal) * 100, 1) if targets.target_calories_kcal > 0 else 0.0
-    pro_pct = round((pro / targets.target_protein_g) * 100, 1) if targets.target_protein_g > 0 else 0.0
-    carb_pct = round((carb / targets.target_carbs_g) * 100, 1) if targets.target_carbs_g > 0 else 0.0
-    fat_pct = round((fat / targets.target_fat_g) * 100, 1) if targets.target_fat_g > 0 else 0.0
+    targets = MacroTarget(
+        target_calories_kcal=target_cal,
+        target_protein_g=target_pro,
+        target_fat_g=target_fat,
+        target_carbs_g=target_carb,
+        target_fiber_g=target_fib,
+    )
+
+    cal_pct = round((cal / target_cal) * 100, 1) if target_cal > 0 else 0.0
+    pro_pct = round((pro / target_pro) * 100, 1) if target_pro > 0 else 0.0
+    carb_pct = round((carb / target_carb) * 100, 1) if target_carb > 0 else 0.0
+    fat_pct = round((fat / target_fat) * 100, 1) if target_fat > 0 else 0.0
 
     # Recent meals (last 5)
-    recent_q = select(Meal).options(selectinload(Meal.items))
-    if current_user:
-        recent_q = recent_q.where(Meal.user_id == current_user.id)
-    recent_q = recent_q.order_by(desc(Meal.logged_at)).limit(5)
-    recent_res = await db.execute(recent_q)
-    recent_meals = [MealDetailResponse.model_validate(m) for m in recent_res.scalars().all()]
+    recent_q = supabase.from_("meals").select("*")
+    if user_id:
+        recent_q = recent_q.eq("user_id", user_id)
+    recent_res = recent_q.order("logged_at", desc=True).limit(5).execute()
+    recent_raw = recent_res.data or []
+
+    recent_meals: List[MealDetailResponse] = []
+    for m in recent_raw:
+        m_id = str(m["id"])
+        items_res = supabase.from_("meal_items").select("*").eq("meal_id", m_id).execute()
+        item_rows = [MealItemResponse(**i) for i in (items_res.data or [])]
+        recent_meals.append(
+            MealDetailResponse(
+                id=m_id,
+                meal_id=m_id,
+                user_id=str(m.get("user_id")),
+                image_url=m.get("image_url"),
+                meal_type=m.get("meal_type", "lunch"),
+                notes=m.get("notes"),
+                logged_at=m.get("logged_at"),
+                created_at=m.get("created_at"),
+                total_calories_kcal=float(m.get("total_calories_kcal", 0.0)),
+                total_protein_g=float(m.get("total_protein_g", 0.0)),
+                total_fat_g=float(m.get("total_fat_g", 0.0)),
+                total_carbs_g=float(m.get("total_carbs_g", 0.0)),
+                total_fiber_g=float(m.get("total_fiber_g", 0.0)),
+                total_sodium_mg=float(m.get("total_sodium_mg", 0.0)),
+                total_calcium_mg=float(m.get("total_calcium_mg", 0.0)),
+                total_iron_mg=float(m.get("total_iron_mg", 0.0)),
+                items=item_rows,
+                items_logged=len(item_rows),
+            )
+        )
 
     return DashboardStatsResponse(
         today=today_summary,
