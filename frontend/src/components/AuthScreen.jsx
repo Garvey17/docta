@@ -50,7 +50,7 @@ function AuthScreen({ onAuthSuccess }) {
       <div className="text-center pt-4 pb-6">
         <div className="flex items-center justify-center mb-3">
           <img
-            src="/docta-logo.png"
+            src="/docta-logo.svg"
             alt="docta"
             className="h-12 sm:h-14 object-contain"
             onError={(e) => {
