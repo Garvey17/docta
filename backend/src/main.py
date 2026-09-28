@@ -3,11 +3,10 @@
 Engineered for:
 - Food Identification + Conventional Portion Units
 - 'Log Everything' Active Learning Telemetry
+- Supabase Cloud & In-Memory Offline Architecture
 - AWS ECS / Fargate Container Deployment
-- PostgreSQL Async Database Integration
 """
 
-import os
 from contextlib import asynccontextmanager
 from pathlib import Path
 from fastapi import FastAPI
@@ -15,7 +14,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 
 from .config import get_settings
-from .database import init_db
+from .supabase_client import get_supabase_client
 from .routers import (
     health_router,
     auth_router,
@@ -23,6 +22,7 @@ from .routers import (
     meal_router,
     telemetry_router,
     dashboard_router,
+    profile_router,
 )
 
 settings = get_settings()
@@ -31,8 +31,8 @@ settings = get_settings()
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """Application startup and shutdown lifecycles."""
-    # Ensure tables are initialized on startup (helpful for local dev and testing)
-    await init_db()
+    # Initialize Supabase client
+    get_supabase_client()
 
     # Ensure uploads directory exists
     upload_path = Path(settings.upload_dir)
@@ -74,6 +74,7 @@ app.include_router(analyze_router)
 app.include_router(meal_router)
 app.include_router(telemetry_router)
 app.include_router(dashboard_router)
+app.include_router(profile_router)
 
 
 @app.get("/", tags=["Root"])

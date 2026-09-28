@@ -1,15 +1,14 @@
 """Tests for the /api/v1/analyze endpoint (CV Identification + Portion Units attachment)."""
 
-import io
 import pytest
 from httpx import AsyncClient
 
 
 @pytest.mark.asyncio
-async def test_analyze_meal_multipart_upload(client: AsyncClient):
-    # Prepare dummy image file bytes
-    file_content = b"fake-jpeg-image-bytes-for-testing"
-    files = {"file": ("test_lunch.jpg", file_content, "image/jpeg")}
+async def test_analyze_meal_multipart_image_field(client: AsyncClient):
+    """Test frontend standard multipart upload where field is 'image'."""
+    file_content = b"fake-jpeg-image-bytes-for-frontend"
+    files = {"image": ("meal_photo.jpg", file_content, "image/jpeg")}
     data = {"prompt": "Plate of Nigerian food"}
 
     response = await client.post("/api/v1/analyze", files=files, data=data)
@@ -41,7 +40,21 @@ async def test_analyze_meal_multipart_upload(client: AsyncClient):
 
 
 @pytest.mark.asyncio
-async def test_analyze_meal_json_url(client: AsyncClient):
+async def test_analyze_meal_multipart_file_field(client: AsyncClient):
+    """Test compatibility when field name is 'file'."""
+    file_content = b"fake-jpeg-image-bytes-for-testing"
+    files = {"file": ("test_lunch.jpg", file_content, "image/jpeg")}
+    data = {"prompt": "Plate of Nigerian food"}
+
+    response = await client.post("/api/v1/analyze", files=files, data=data)
+    assert response.status_code == 200
+    res_data = response.json()
+    assert res_data["status"] == "success"
+    assert len(res_data["detected_items"]) >= 2
+
+
+@pytest.mark.asyncio
+async def test_analyze_meal_json_url_and_prompt(client: AsyncClient):
     payload = {
         "image_url": "https://storage.docta.ng/meals/test_amala.jpg",
         "prompt": "I had amala with egusi soup",

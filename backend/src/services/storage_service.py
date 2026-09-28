@@ -1,39 +1,50 @@
-"""Storage Service for meal image uploads (Local & AWS S3 ready)."""
+"""Storage Service supporting Supabase Storage and local fallback."""
 
 import os
 import uuid
+import logging
 from pathlib import Path
 from typing import Optional
 from fastapi import UploadFile
 
 from ..config import get_settings
+from ..supabase_client import get_supabase_client
 
+logger = logging.getLogger(__name__)
 settings = get_settings()
 
 
 async def save_uploaded_image(file: UploadFile, prefix: str = "meal") -> str:
-    """Save an uploaded file and return its accessible URL/path."""
+    """Save an uploaded meal image and return its accessible public URL or path."""
     ext = file.filename.split(".")[-1] if file.filename and "." in file.filename else "jpg"
     file_id = f"{prefix}_{uuid.uuid4().hex[:12]}.{ext}"
+    contents = await file.read()
+    await file.seek(0)
 
-    # If S3 is configured for AWS Fargate deployment
-    if settings.s3_bucket_name:
-        return f"https://{settings.s3_bucket_name}.s3.{settings.aws_region}.amazonaws.com/meals/{file_id}"
+    # 1. Attempt Supabase Storage
+    try:
+        supabase = get_supabase_client()
+        bucket = settings.supabase_storage_bucket or "meals"
+        supabase.storage.from_(bucket).upload(file_id, contents, {"content-type": file.content_type or "image/jpeg"})
+        public_url = supabase.storage.from_(bucket).get_public_url(file_id)
+        if public_url:
+            return public_url
+    except Exception as e:
+        logger.debug("Supabase storage upload skipped or failed: %s. Using local disk.", e)
 
-    # Local disk
+    # 2. Local disk fallback
     upload_dir = Path(settings.upload_dir)
     upload_dir.mkdir(parents=True, exist_ok=True)
     destination = upload_dir / file_id
-    contents = await file.read()
     with open(destination, "wb") as f:
         f.write(contents)
-    await file.seek(0)
 
     return f"/uploads/{file_id}"
 
 
 class StorageService:
-    """Compatibility wrapper for StorageService."""
+    """Storage wrapper class."""
+
     async def save_image(self, file: UploadFile, prefix: str = "meal") -> str:
         return await save_uploaded_image(file, prefix)
 
