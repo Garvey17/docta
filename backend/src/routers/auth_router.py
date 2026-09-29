@@ -11,7 +11,7 @@ from ..schemas.auth import (
     UserResponse,
 )
 from ..services.auth_service import AuthService
-from ..dependencies.auth import get_current_user
+from ..dependencies.auth import get_current_user, oauth2_scheme
 
 router = APIRouter(prefix="/api/v1/auth", tags=["Authentication"])
 
@@ -97,9 +97,9 @@ async def login_user(
 
 
 @router.post("/logout", summary="Log out the current user")
-async def logout_user():
+async def logout_user(token: Optional[str] = Depends(oauth2_scheme)):
     """Sign out from Supabase Auth."""
-    await AuthService.logout()
+    await AuthService.logout(token=token)
     return {"message": "Logged out successfully"}
 
 

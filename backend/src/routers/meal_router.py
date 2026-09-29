@@ -15,7 +15,7 @@ from ..schemas.meal import (
     HistoryItemDetail,
     MealItemResponse,
 )
-from ..dependencies.auth import get_current_user_optional, get_current_user
+from ..dependencies.auth import get_current_user
 from ..services.telemetry_service import TelemetryService
 
 router = APIRouter(prefix="/api/v1/meals", tags=["Meals & Logging"])
@@ -29,7 +29,7 @@ router = APIRouter(prefix="/api/v1/meals", tags=["Meals & Logging"])
 )
 async def log_meal(
     payload: LogMealRequest,
-    current_user: Optional[UserResponse] = Depends(get_current_user_optional),
+    current_user: UserResponse = Depends(get_current_user),
 ):
     """
     Log an approved meal with atomic decision telemetry:
@@ -39,7 +39,7 @@ async def log_meal(
     4. Simultaneously writes each decision to `meal_item_feedback_logs` (active learning dataset).
     """
     supabase = get_supabase_client()
-    user_id = current_user.id if current_user else "usr_4a89fb21"
+    user_id = current_user.id
 
     # 1. Aggregate Nutritional Totals
     total_cal = sum(item.calories_kcal for item in payload.items)
@@ -157,11 +157,11 @@ async def log_meal(
     summary="Get user meal history formatted for frontend consumption",
 )
 async def get_meal_history(
-    current_user: Optional[UserResponse] = Depends(get_current_user_optional),
+    current_user: UserResponse = Depends(get_current_user),
 ):
     """Retrieve logged meal history array expected by frontend."""
     supabase = get_supabase_client()
-    user_id = current_user.id if current_user else "usr_4a89fb21"
+    user_id = current_user.id
 
     res = (
         supabase.from_("meals")
@@ -210,15 +210,13 @@ async def get_meal_history(
 async def list_meals(
     page: int = Query(1, ge=1),
     page_size: int = Query(20, ge=1, le=100),
-    current_user: Optional[UserResponse] = Depends(get_current_user_optional),
+    current_user: UserResponse = Depends(get_current_user),
 ):
     """Retrieve paginated meals for current authenticated user."""
     supabase = get_supabase_client()
-    user_id = current_user.id if current_user else "usr_4a89fb21"
+    user_id = current_user.id
 
-    query = supabase.from_("meals").select("*", count="exact")
-    if user_id:
-        query = query.eq("user_id", user_id)
+    query = supabase.from_("meals").select("*", count="exact").eq("user_id", user_id)
 
     offset = (page - 1) * page_size
     res = query.order("logged_at", desc=True).range(offset, offset + page_size - 1).execute()
@@ -264,13 +262,11 @@ async def list_meals(
 @router.get("/{meal_id}", response_model=MealDetailResponse, summary="Get meal details by ID")
 async def get_meal(
     meal_id: str,
-    current_user: Optional[UserResponse] = Depends(get_current_user_optional),
+    current_user: UserResponse = Depends(get_current_user),
 ):
     """Retrieve a single meal by ID ensuring user ownership isolation."""
     supabase = get_supabase_client()
-    query = supabase.from_("meals").select("*").eq("id", str(meal_id))
-    if current_user:
-        query = query.eq("user_id", current_user.id)
+    query = supabase.from_("meals").select("*").eq("id", str(meal_id)).eq("user_id", current_user.id)
 
     res = query.execute()
     if not res.data:
@@ -306,13 +302,11 @@ async def get_meal(
 @router.delete("/{meal_id}", status_code=status.HTTP_204_NO_CONTENT, summary="Delete a meal")
 async def delete_meal(
     meal_id: str,
-    current_user: Optional[UserResponse] = Depends(get_current_user_optional),
+    current_user: UserResponse = Depends(get_current_user),
 ):
     """Delete a logged meal enforcing user ownership."""
     supabase = get_supabase_client()
-    query = supabase.from_("meals").select("*").eq("id", str(meal_id))
-    if current_user:
-        query = query.eq("user_id", current_user.id)
+    query = supabase.from_("meals").select("*").eq("id", str(meal_id)).eq("user_id", current_user.id)
 
     res = query.execute()
     if not res.data:

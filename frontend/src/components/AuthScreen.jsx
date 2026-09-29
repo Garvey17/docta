@@ -23,7 +23,7 @@ function AuthScreen({ onAuthSuccess }) {
         res = await signupUser(name, email, password);
       }
       if (res?.user) {
-        onAuthSuccess(res.user);
+        onAuthSuccess(res.user, res.access_token);
       }
     } catch (err) {
       setError(err.message || 'Authentication failed. Please try again.');
@@ -37,8 +37,10 @@ function AuthScreen({ onAuthSuccess }) {
     try {
       const res = await loginUser('balkisu@docta.ng', 'demo1234');
       if (res?.user) {
-        onAuthSuccess(res.user);
+        onAuthSuccess(res.user, res.access_token);
       }
+    } catch (err) {
+      setError(err.message || 'Demo sign in failed. Is the backend running?');
     } finally {
       setLoading(false);
     }

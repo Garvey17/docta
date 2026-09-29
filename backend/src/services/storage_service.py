@@ -35,11 +35,11 @@ async def save_uploaded_image(file: UploadFile, prefix: str = "meal") -> str:
     # 2. Local disk fallback
     upload_dir = Path(settings.upload_dir)
     upload_dir.mkdir(parents=True, exist_ok=True)
-    destination = upload_dir / file_id
     with open(destination, "wb") as f:
         f.write(contents)
 
-    return f"/uploads/{file_id}"
+    backend_base = f"http://127.0.0.1:{settings.port}"
+    return f"{backend_base}/uploads/{file_id}"
 
 
 class StorageService:

@@ -6,10 +6,10 @@ import CaptureScreen from './components/CaptureScreen';
 import ReviewScreen from './components/ReviewScreen';
 import TelemetryModal from './components/TelemetryModal';
 import AuthScreen from './components/AuthScreen';
-import { analyzeMeal, logMeal, fetchMealHistory } from './api/mealApi';
+import { analyzeMeal, logMeal, fetchMealHistory, fetchDashboardSummary } from './api/mealApi';
+import { fetchCurrentUser, logoutUser } from './api/authApi';
 import { initializeDraftItems, buildTelemetryPayload } from './store/mealDraftStore';
 import { getStoredAuth, clearAuth } from './store/authStore';
-import { MOCK_ANALYZE_RESPONSE, MOCK_MEAL_HISTORY } from './data/mockData';
 import { CheckCircle2, AlertTriangle, ShieldCheck } from 'lucide-react';
 
 class ErrorBoundary extends React.Component {
@@ -65,7 +65,8 @@ function App() {
   const [showTelemetryModal, setShowTelemetryModal] = useState(false);
 
   const [draftMeal, setDraftMeal] = useState(null);
-  const [mealHistory, setMealHistory] = useState(MOCK_MEAL_HISTORY);
+  const [mealHistory, setMealHistory] = useState([]);
+  const [dashboardData, setDashboardData] = useState(null);
   const [lastTelemetryPayload, setLastTelemetryPayload] = useState(null);
 
   const [isAnalyzing, setIsAnalyzing] = useState(false);
@@ -73,13 +74,60 @@ function App() {
   const [toastMessage, setToastMessage] = useState(null);
 
   useEffect(() => {
-    // Attempt loading meal history from backend or local mock
-    fetchMealHistory().then((data) => {
-      if (Array.isArray(data) && data.length > 0) {
-        setMealHistory(data);
-      }
-    });
+    const handleUnauthorized = () => {
+      clearAuth();
+      setAuth({ token: null, user: null, isAuthenticated: false });
+      setCurrentScreen('auth');
+      showToast('Session expired. Please sign in again.');
+    };
+    window.addEventListener('docta:unauthorized', handleUnauthorized);
+    return () => window.removeEventListener('docta:unauthorized', handleUnauthorized);
   }, []);
+
+  // Validate stored token on startup via GET /api/v1/auth/me
+  useEffect(() => {
+    const stored = getStoredAuth();
+    if (stored.token) {
+      fetchCurrentUser()
+        .then((userProfile) => {
+          if (userProfile && userProfile.id) {
+            setAuth({ token: stored.token, user: userProfile, isAuthenticated: true });
+          } else {
+            clearAuth();
+            setAuth({ token: null, user: null, isAuthenticated: false });
+          }
+        })
+        .catch(() => {
+          clearAuth();
+          setAuth({ token: null, user: null, isAuthenticated: false });
+        });
+    }
+  }, []);
+
+  useEffect(() => {
+    if (auth?.isAuthenticated) {
+      fetchMealHistory()
+        .then((data) => {
+          if (Array.isArray(data)) {
+            setMealHistory(data);
+          }
+        })
+        .catch((err) => {
+          console.error('Failed to load meal history:', err);
+          showToast(`Backend connection notice: ${err.message}`);
+        });
+
+      fetchDashboardSummary()
+        .then((summary) => {
+          if (summary) {
+            setDashboardData(summary);
+          }
+        })
+        .catch((err) => {
+          console.debug('Dashboard summary note:', err);
+        });
+    }
+  }, [auth?.isAuthenticated]);
 
   const showToast = (message) => {
     setToastMessage(message);
@@ -104,20 +152,14 @@ function App() {
       const draft = {
         ...analysisResult,
         items: initializedItems,
-        image_url: analysisResult.image_url || (imageFile ? URL.createObjectURL(imageFile) : MOCK_ANALYZE_RESPONSE.image_url),
+        image_url: analysisResult.image_url || (imageFile ? URL.createObjectURL(imageFile) : null),
       };
 
       setDraftMeal(draft);
       setCurrentScreen('review');
     } catch (err) {
       console.error('Analysis failed:', err);
-      // Fallback to deterministic mock
-      const initializedItems = initializeDraftItems(MOCK_ANALYZE_RESPONSE.detected_items);
-      setDraftMeal({
-        ...MOCK_ANALYZE_RESPONSE,
-        items: initializedItems,
-      });
-      setCurrentScreen('review');
+      showToast(`Analysis failed: ${err.message}`);
     } finally {
       setIsAnalyzing(false);
     }
@@ -143,7 +185,7 @@ function App() {
       const totalFat = telemetryPayload.items.reduce((acc, i) => acc + (i.fat_g || 0), 0);
 
       const newHistoryEntry = {
-        meal_id: response.meal_id || `meal_${Date.now()}`,
+        meal_id: response.meal_id || response.id || `meal_${Date.now()}`,
         meal_type: telemetryPayload.meal_type || 'lunch',
         logged_at: telemetryPayload.logged_at || new Date().toISOString(),
         total_calories_kcal: totalCals,
@@ -165,6 +207,7 @@ function App() {
       showToast('Meal successfully recorded! Decisions saved to active learning telemetry.');
     } catch (err) {
       console.error('Failed to log meal:', err);
+      showToast(`Failed to log meal: ${err.message}`);
     } finally {
       setIsLogging(false);
     }
@@ -172,27 +215,30 @@ function App() {
 
   const handleNavigate = (screenId) => {
     if (screenId === 'review' && !draftMeal) {
-      // Auto-load demo meal so review is always accessible even before capturing
-      const initializedItems = initializeDraftItems(MOCK_ANALYZE_RESPONSE.detected_items);
-      setDraftMeal({
-        ...MOCK_ANALYZE_RESPONSE,
-        items: initializedItems,
-      });
+      showToast('No active meal capture to review. Please capture a plate first.');
+      setCurrentScreen('capture');
+      return;
     }
     setCurrentScreen(screenId);
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    try {
+      await logoutUser();
+    } catch (e) {
+      console.warn('Backend logout failed:', e);
+    }
     clearAuth();
     setAuth({ token: null, user: null, isAuthenticated: false });
     setCurrentScreen('auth');
     showToast('Logged out successfully');
   };
 
-  const handleAuthSuccess = (userData) => {
-    setAuth({ token: `jwt_token_${Date.now()}`, user: userData, isAuthenticated: true });
+  const handleAuthSuccess = (userData, token) => {
+    const activeToken = token || localStorage.getItem('docta_auth_token');
+    setAuth({ token: activeToken, user: userData, isAuthenticated: true });
     setCurrentScreen('dashboard');
-    showToast(`Welcome, ${userData.name || 'Alex'}!`);
+    showToast(`Welcome, ${userData.name || 'User'}!`);
   };
 
   // If user is logged out or auth screen is requested
@@ -228,6 +274,7 @@ function App() {
             <DashboardScreen
               user={auth.user}
               mealHistory={mealHistory}
+              dashboardData={dashboardData}
               onStartCapture={handleStartCapture}
               onOpenTelemetry={() => setCurrentScreen('telemetry')}
             />
@@ -235,6 +282,8 @@ function App() {
 
           {(currentScreen === 'telemetry' || currentScreen === 'statistics') && (
             <StatisticScreen
+              user={auth.user}
+              mealHistory={mealHistory}
               onBack={() => setCurrentScreen('dashboard')}
               onOptionsClick={() => setShowTelemetryModal(true)}
             />

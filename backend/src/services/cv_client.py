@@ -7,10 +7,41 @@ import httpx
 from ..config import get_settings
 from .mock_ai_service import MockAIService
 
+from abc import ABC, abstractmethod
+
 logger = logging.getLogger(__name__)
 
 
-class CVClient:
+class BaseCVProvider(ABC):
+    """Abstract interface defining the strict contract for Computer Vision models.
+    
+    CRITICAL ARCHITECTURAL BOUNDARY:
+    CV providers MUST only output food identification (dish_id, display_name, confidence, bounding_box).
+    CV providers MUST NEVER calculate or estimate nutrition, calories, or gram weights.
+    Authoritative nutrition and portion units belong strictly to RAGService.
+    """
+
+    @abstractmethod
+    async def detect_dishes(
+        self,
+        image_bytes: Optional[bytes] = None,
+        image_url: Optional[str] = None,
+        prompt: Optional[str] = None,
+    ) -> List[Dict[str, Any]]:
+        """Detect dishes in an image.
+        
+        Returns:
+            List of dicts, each containing:
+            - item_id (str)
+            - predicted_dish_id (str)
+            - display_name (str)
+            - confidence (float 0.0 - 1.0)
+            - bounding_box (List[float] [ymin, xmin, ymax, xmax])
+        """
+        pass
+
+
+class CVClient(BaseCVProvider):
     """Client for Computer Vision inference with automatic mock fallback."""
 
     def __init__(self):

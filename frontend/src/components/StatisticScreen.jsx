@@ -5,7 +5,38 @@ import WeeklyCalorieBarChart from './WeeklyCalorieBarChart';
 import HeartRateCard from './HeartRateCard';
 import VitalsMetricCards from './VitalsMetricCards';
 
-function StatisticScreen({ onBack, onOptionsClick }) {
+function StatisticScreen({ user, mealHistory = [], onBack, onOptionsClick }) {
+  const targetCal = user?.dailyCalorieTarget || 2200;
+
+  // Compute days of the week calories from real mealHistory
+  const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  const dayTotals = { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0 };
+  let currentDayCals = 0;
+  const todayDayIndex = new Date().getDay();
+
+  mealHistory.forEach((meal) => {
+    if (meal.logged_at) {
+      const d = new Date(meal.logged_at);
+      const dayIdx = d.getDay();
+      const cals = meal.total_calories_kcal || 0;
+      dayTotals[dayIdx] += cals;
+      if (dayIdx === todayDayIndex) {
+        currentDayCals += cals;
+      }
+    }
+  });
+
+  const weeklyData = dayNames.map((day, idx) => {
+    const cals = Math.round(dayTotals[idx]);
+    const pct = targetCal > 0 ? Math.min(100, Math.round((cals / targetCal) * 100)) : 0;
+    return {
+      day,
+      calories: cals,
+      percentage: Math.max(8, pct),
+      label: `${pct}%`,
+    };
+  });
+
   return (
     <div className="max-w-md mx-auto px-4 pt-2 pb-28 animate-fade-in select-none">
       {/* 1. Top Header */}
@@ -31,8 +62,9 @@ function StatisticScreen({ onBack, onOptionsClick }) {
 
       {/* 2. Weekly Calorie Bar Chart Card */}
       <WeeklyCalorieBarChart
-        currentCalories={1250}
-        targetCalories={1920}
+        currentCalories={Math.round(currentDayCals)}
+        targetCalories={Math.round(targetCal)}
+        weeklyData={weeklyData}
       />
 
       {/* 3. Heart Rate Card */}

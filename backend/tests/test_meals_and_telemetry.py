@@ -218,3 +218,100 @@ async def test_cross_user_isolation(client: AsyncClient, auth_headers: dict):
     # User 2 cannot delete User 1's meal
     user2_del = await client.delete(f"/api/v1/meals/{meal_id}", headers=user2_headers)
     assert user2_del.status_code == 404
+
+
+@pytest.mark.asyncio
+async def test_user_a_and_b_complete_meal_isolation(client: AsyncClient):
+    # 1. Signup User A and User B
+    res_a = await client.post(
+        "/api/v1/auth/signup",
+        json={"email": "alpha_iso@docta.ng", "password": "passwordA123", "name": "Alpha"},
+    )
+    token_a = res_a.json()["access_token"]
+    headers_a = {"Authorization": f"Bearer {token_a}"}
+
+    res_b = await client.post(
+        "/api/v1/auth/signup",
+        json={"email": "beta_iso@docta.ng", "password": "passwordB123", "name": "Beta"},
+    )
+    token_b = res_b.json()["access_token"]
+    headers_b = {"Authorization": f"Bearer {token_b}"}
+
+    # 2. User A logs Meal A
+    meal_a_payload = {
+        "meal_type": "breakfast",
+        "items": [
+            {
+                "food_name": "Meal A Jollof",
+                "predicted_dish_id": "jollof_rice",
+                "final_dish_id": "jollof_rice",
+                "selected_unit_id": "serving_spoon",
+                "selected_quantity": 1.0,
+                "gram_weight": 120.0,
+                "calories_kcal": 168.0,
+            }
+        ],
+    }
+    post_a = await client.post("/api/v1/meals/log", json=meal_a_payload, headers=headers_a)
+    assert post_a.status_code == 201
+    meal_a_id = post_a.json()["id"]
+
+    # 3. User B logs Meal B
+    meal_b_payload = {
+        "meal_type": "dinner",
+        "items": [
+            {
+                "food_name": "Meal B Egusi",
+                "predicted_dish_id": "egusi_soup",
+                "final_dish_id": "egusi_soup",
+                "selected_unit_id": "serving_spoon",
+                "selected_quantity": 1.0,
+                "gram_weight": 100.0,
+                "calories_kcal": 210.0,
+            }
+        ],
+    }
+    post_b = await client.post("/api/v1/meals/log", json=meal_b_payload, headers=headers_b)
+    assert post_b.status_code == 201
+    meal_b_id = post_b.json()["id"]
+
+    # 4. User A sees A's meal in history, but NOT B's
+    hist_a = await client.get("/api/v1/meals/history", headers=headers_a)
+    assert hist_a.status_code == 200
+    ids_a = [m["meal_id"] for m in hist_a.json()]
+    assert meal_a_id in ids_a
+    assert meal_b_id not in ids_a
+
+    # 5. User B sees B's meal in history, but NOT A's
+    hist_b = await client.get("/api/v1/meals/history", headers=headers_b)
+    assert hist_b.status_code == 200
+    ids_b = [m["meal_id"] for m in hist_b.json()]
+    assert meal_b_id in ids_b
+    assert meal_a_id not in ids_b
+
+    # 6. User A can access meal A, cannot access meal B
+    get_a_a = await client.get(f"/api/v1/meals/{meal_a_id}", headers=headers_a)
+    assert get_a_a.status_code == 200
+    get_a_b = await client.get(f"/api/v1/meals/{meal_b_id}", headers=headers_a)
+    assert get_a_b.status_code == 404
+
+    # 7. User B can access meal B, cannot access meal A
+    get_b_b = await client.get(f"/api/v1/meals/{meal_b_id}", headers=headers_b)
+    assert get_b_b.status_code == 200
+    get_b_a = await client.get(f"/api/v1/meals/{meal_a_id}", headers=headers_b)
+    assert get_b_a.status_code == 404
+
+    # 8. User A cannot delete meal B
+    del_a_b = await client.delete(f"/api/v1/meals/{meal_b_id}", headers=headers_a)
+    assert del_a_b.status_code == 404
+
+    # 9. User B cannot delete meal A
+    del_b_a = await client.delete(f"/api/v1/meals/{meal_a_id}", headers=headers_b)
+    assert del_b_a.status_code == 404
+
+    # 10. Unauthenticated access rejected with 401
+    unauth_log = await client.post("/api/v1/meals/log", json=meal_a_payload)
+    assert unauth_log.status_code == 401
+    unauth_hist = await client.get("/api/v1/meals/history")
+    assert unauth_hist.status_code == 401
+

@@ -5,13 +5,13 @@ from httpx import AsyncClient
 
 
 @pytest.mark.asyncio
-async def test_analyze_meal_multipart_image_field(client: AsyncClient):
+async def test_analyze_meal_multipart_image_field(client: AsyncClient, auth_headers: dict):
     """Test frontend standard multipart upload where field is 'image'."""
     file_content = b"fake-jpeg-image-bytes-for-frontend"
     files = {"image": ("meal_photo.jpg", file_content, "image/jpeg")}
     data = {"prompt": "Plate of Nigerian food"}
 
-    response = await client.post("/api/v1/analyze", files=files, data=data)
+    response = await client.post("/api/v1/analyze", files=files, data=data, headers=auth_headers)
     assert response.status_code == 200
     res_data = response.json()
 
@@ -40,13 +40,13 @@ async def test_analyze_meal_multipart_image_field(client: AsyncClient):
 
 
 @pytest.mark.asyncio
-async def test_analyze_meal_multipart_file_field(client: AsyncClient):
+async def test_analyze_meal_multipart_file_field(client: AsyncClient, auth_headers: dict):
     """Test compatibility when field name is 'file'."""
     file_content = b"fake-jpeg-image-bytes-for-testing"
     files = {"file": ("test_lunch.jpg", file_content, "image/jpeg")}
     data = {"prompt": "Plate of Nigerian food"}
 
-    response = await client.post("/api/v1/analyze", files=files, data=data)
+    response = await client.post("/api/v1/analyze", files=files, data=data, headers=auth_headers)
     assert response.status_code == 200
     res_data = response.json()
     assert res_data["status"] == "success"
@@ -54,12 +54,12 @@ async def test_analyze_meal_multipart_file_field(client: AsyncClient):
 
 
 @pytest.mark.asyncio
-async def test_analyze_meal_json_url_and_prompt(client: AsyncClient):
+async def test_analyze_meal_json_url_and_prompt(client: AsyncClient, auth_headers: dict):
     payload = {
         "image_url": "https://storage.docta.ng/meals/test_amala.jpg",
         "prompt": "I had amala with egusi soup",
     }
-    response = await client.post("/api/v1/analyze", json=payload)
+    response = await client.post("/api/v1/analyze", json=payload, headers=auth_headers)
     assert response.status_code == 200
     res_data = response.json()
 
@@ -68,3 +68,10 @@ async def test_analyze_meal_json_url_and_prompt(client: AsyncClient):
 
     dish_ids = [i["predicted_dish_id"] for i in res_data["detected_items"]]
     assert "amala" in dish_ids or "egusi_soup" in dish_ids
+
+
+@pytest.mark.asyncio
+async def test_analyze_meal_unauthorized_returns_401(client: AsyncClient):
+    payload = {"prompt": "Plate of rice"}
+    response = await client.post("/api/v1/analyze", json=payload)
+    assert response.status_code == 401

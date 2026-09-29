@@ -6,29 +6,16 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from ..supabase_client import get_supabase_client
 from ..schemas.auth import UserResponse
 from ..schemas.profile import ProfileResponse, ProfileUpdateRequest
-from ..dependencies.auth import get_current_user_optional, get_current_user
+from ..dependencies.auth import get_current_user
 
 router = APIRouter(prefix="/api/v1/profile", tags=["Profile & Settings"])
 
 
 @router.get("", response_model=ProfileResponse, summary="Get user profile and dietary targets")
 async def get_profile(
-    current_user: Optional[UserResponse] = Depends(get_current_user_optional),
+    current_user: UserResponse = Depends(get_current_user),
 ):
     """Retrieve authenticated user's profile and nutritional targets."""
-    if not current_user:
-        return ProfileResponse(
-            id="usr_4a89fb21",
-            email="balkisu@docta.ng",
-            name="Balkisu Habib",
-            dailyCalorieTarget=2200,
-            dailyProteinTargetG=110.0,
-            dailyCarbsTargetG=250.0,
-            dailyFatTargetG=65.0,
-            dailyFiberTargetG=30.0,
-            dailySodiumTargetMg=2300.0,
-        )
-
     return ProfileResponse(
         id=current_user.id,
         email=current_user.email,

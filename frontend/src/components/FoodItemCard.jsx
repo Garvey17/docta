@@ -124,6 +124,7 @@ function FoodItemCard({
         selectedQuantity={item.selectedQuantity}
         onUnitChange={(unitId) => onUpdatePortion(item.item_id, unitId, item.selectedQuantity)}
         onQuantityChange={(qty) => onUpdatePortion(item.item_id, item.selectedUnitId, qty)}
+        onCustomGramsChange={(grams) => onUpdatePortion(item.item_id, 'custom_grams', 1.0, grams)}
       />
 
       {/* Real-time Subtotal Nutrition Pill Bar */}

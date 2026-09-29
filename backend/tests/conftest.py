@@ -37,7 +37,7 @@ async def client():
 def test_user():
     """Default test user."""
     return UserResponse(
-        id="usr_4a89fb21",
+        id="f47ac10b-58cc-4372-a567-0e02b2c3d479",
         email="balkisu@docta.ng",
         name="Balkisu Habib",
         full_name="Balkisu Habib",

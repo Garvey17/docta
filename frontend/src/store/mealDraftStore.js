@@ -41,7 +41,10 @@ export function initializeDraftItems(detectedItems = []) {
 export function buildTelemetryPayload(draft, mealType = 'lunch') {
   return {
     analysis_id: draft.analysis_id || `anlz_${Date.now().toString(16)}`,
-    image_url: draft.image_url || 'https://storage.docta.ng/meals/captured_meal.jpg',
+    image_url:
+      draft.image_url && !draft.image_url.startsWith('blob:')
+        ? draft.image_url
+        : 'https://storage.docta.ng/meals/captured_meal.jpg',
     meal_type: mealType,
     logged_at: new Date().toISOString(),
     items: (draft.items || []).map((item) => {

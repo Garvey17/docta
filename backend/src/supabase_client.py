@@ -249,7 +249,9 @@ class InMemoryAuth:
 
         return MockAuthResponse(user, access_token, refresh_token)
 
-    def sign_out(self):
+    def sign_out(self, jwt_token: Optional[str] = None):
+        if jwt_token and jwt_token in self.active_sessions:
+            del self.active_sessions[jwt_token]
         return True
 
     def get_user(self, jwt_token: str):
@@ -259,17 +261,6 @@ class InMemoryAuth:
                 def __init__(self, u):
                     self.user = type("MockUser", (), u)
             return MockUserWrapper(session["user"])
-        # Support demo token or arbitrary test token
-        if jwt_token.startswith("sb_token_") or jwt_token.startswith("jwt_"):
-            demo_user = self.users[0] if self.users else {
-                "id": "usr_demo",
-                "email": "demo@docta.ng",
-                "name": "Demo User",
-            }
-            class MockUserWrapper:
-                def __init__(self, u):
-                    self.user = type("MockUser", (), u)
-            return MockUserWrapper(demo_user)
         return None
 
 
@@ -312,7 +303,7 @@ class InMemorySupabaseClient:
 
     def _init_demo_data(self):
         demo_user = {
-            "id": "usr_4a89fb21",
+            "id": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
             "email": "balkisu@docta.ng",
             "name": "Balkisu Habib",
             "password": "demo1234",

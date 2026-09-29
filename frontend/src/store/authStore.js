@@ -1,7 +1,8 @@
-import { MOCK_USER } from '../data/mockData';
+import { MOCK_USER } from '../data/mockData.js';
 
 const TOKEN_KEY = 'docta_auth_token';
 const USER_KEY = 'docta_auth_user';
+const USE_MOCK = typeof import.meta !== 'undefined' && import.meta.env?.VITE_USE_MOCK === 'true';
 
 export function getStoredAuth() {
   try {
@@ -13,7 +14,12 @@ export function getStoredAuth() {
   } catch (e) {
     console.error('Failed to read auth from localStorage', e);
   }
-  return { token: 'mock-jwt-token-docta-01', user: MOCK_USER, isAuthenticated: true };
+
+  if (USE_MOCK) {
+    return { token: 'mock-jwt-token-docta-01', user: MOCK_USER, isAuthenticated: true };
+  }
+
+  return { token: null, user: null, isAuthenticated: false };
 }
 
 export function saveAuth(token, user) {

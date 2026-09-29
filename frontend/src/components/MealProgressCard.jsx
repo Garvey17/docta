@@ -2,17 +2,13 @@ import React from 'react';
 import { MoreVertical } from 'lucide-react';
 
 function MealProgressCard({
-  mealName = 'Breakfast',
-  currentCalories = 456,
-  targetCalories = 512,
-  ingredients = [
-    { name: 'Avocado', calories: 200, color: 'bg-[#fb7185]', trackColor: 'bg-[#ffe4e6]', progress: '75%' },
-    { name: 'Bread', calories: 150, color: 'bg-[#38bdf8]', trackColor: 'bg-[#e0f2fe]', progress: '65%' },
-    { name: 'Olive oil', calories: 80, color: 'bg-[#a3e635]', trackColor: 'bg-[#ecfccb]', progress: '85%' },
-  ],
+  mealName = "Today's Intake",
+  currentCalories = 0,
+  targetCalories = 2000,
+  ingredients = [],
   onOptionsClick,
 }) {
-  const percentage = Math.min(100, Math.round((currentCalories / targetCalories) * 100));
+  const percentage = Math.min(100, Math.round(((currentCalories || 0) / Math.max(1, targetCalories)) * 100));
 
   return (
     <div className="w-full bg-white rounded-[28px] p-5 sm:p-6 mb-4 shadow-xs border border-gray-100/60">
@@ -51,10 +47,11 @@ function MealProgressCard({
       </div>
 
       {/* Ingredients Section Subtitle */}
-      <div className="pt-2">
-        <p className="text-[12px] font-medium text-gray-400 mb-3">
-          {ingredients.length} ingredients
-        </p>
+      {ingredients && ingredients.length > 0 && (
+        <div className="pt-2">
+          <p className="text-[12px] font-medium text-gray-400 mb-3">
+            {ingredients.length} {ingredients.length === 1 ? 'item' : 'items'}
+          </p>
 
         {/* 3 Ingredients Columns Breakdown */}
         <div className="grid grid-cols-3 gap-3">
@@ -81,6 +78,7 @@ function MealProgressCard({
           ))}
         </div>
       </div>
+      )}
     </div>
   );
 }

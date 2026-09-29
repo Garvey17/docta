@@ -15,6 +15,7 @@ import { calculateMealTotals, calculateItemMacros } from '../utils/macroCalculat
 import { buildTelemetryPayload } from '../store/mealDraftStore';
 import { ALL_SUPPORTED_DISHES, PORTION_UNITS_REGISTRY, GENERIC_DEFAULT_UNITS } from '../data/portionUnitsRegistry';
 import { formatCalories, formatGrams, formatMg } from '../utils/formatters';
+import { fetchDishDetails } from '../api/mealApi';
 
 function ReviewScreen({
   draft,
@@ -31,41 +32,71 @@ function ReviewScreen({
   const items = draft?.items || [];
   const totals = calculateMealTotals(items);
 
-  const handleUpdatePortion = (itemId, unitId, quantity) => {
+  const handleUpdatePortion = (itemId, unitId, quantity, customGrams = null) => {
     const updated = items.map((item) => {
       if (item.item_id !== itemId) return item;
-      const unit = item.available_portion_units?.find((u) => u.unit_id === unitId) || item.selectedUnit;
-      const macros = calculateItemMacros(item.nutrients_per_100g, unit?.gram_weight || 100, quantity);
+      let unit = item.available_portion_units?.find((u) => u.unit_id === unitId);
+      if (unitId === 'custom_grams') {
+        const grams = customGrams !== null && customGrams !== undefined ? customGrams : (item.selectedUnit?.gram_weight || 150.0);
+        unit = {
+          unit_id: 'custom_grams',
+          unit_name: 'Custom Grams',
+          gram_weight: grams,
+          description: 'Custom gram mass',
+        };
+      } else if (!unit) {
+        unit = item.selectedUnit;
+      }
+      const effectiveQty = unitId === 'custom_grams' ? 1.0 : quantity;
+      const macros = calculateItemMacros(item.nutrients_per_100g, unit?.gram_weight || 100, effectiveQty);
       return {
         ...item,
         selectedUnitId: unitId,
         selectedUnit: unit,
-        selectedQuantity: quantity,
+        selectedQuantity: effectiveQty,
         calculatedMacros: macros,
       };
     });
     onUpdateDraftItems(updated);
   };
 
-  const handleUpdateLabel = (itemId, newName, newDishId, newUnits) => {
+  const handleUpdateLabel = async (itemId, newName, newDishId, newUnits) => {
+    let freshNutrients = null;
+    let freshUnits = newUnits;
+    let freshDisplayName = newName;
+
+    try {
+      const details = await fetchDishDetails(newDishId);
+      if (details) {
+        freshNutrients = details.nutrients_per_100g;
+        freshUnits = details.available_portion_units || newUnits;
+        freshDisplayName = details.display_name || newName;
+      }
+    } catch (e) {
+      console.warn('Failed to fetch real dish details for correction:', e);
+    }
+
     const updated = items.map((item) => {
       if (item.item_id !== itemId) return item;
-      const availableUnits = newUnits || item.available_portion_units || GENERIC_DEFAULT_UNITS;
+      const availableUnits = freshUnits || item.available_portion_units || GENERIC_DEFAULT_UNITS;
       const selectedUnit = availableUnits[0];
+      const nutrients100g = freshNutrients || item.nutrients_per_100g;
       const macros = calculateItemMacros(
-        item.nutrients_per_100g,
+        nutrients100g,
         selectedUnit.gram_weight,
         item.selectedQuantity || 1.0
       );
 
       return {
         ...item,
-        food_name: newName,
+        food_name: freshDisplayName,
+        display_name: freshDisplayName,
         final_dish_id: newDishId,
         label_modified: true,
         available_portion_units: availableUnits,
         selectedUnitId: selectedUnit.unit_id,
         selectedUnit,
+        nutrients_per_100g: nutrients100g,
         calculatedMacros: macros,
       };
     });
@@ -77,10 +108,23 @@ function ReviewScreen({
     onUpdateDraftItems(updated);
   };
 
-  const handleAddDish = (dish) => {
+  const handleAddDish = async (dish) => {
+    let details = null;
+    try {
+      details = await fetchDishDetails(dish.id);
+    } catch (e) {
+      console.warn('Failed to fetch dish details for added dish:', e);
+    }
+
     const config = PORTION_UNITS_REGISTRY[dish.id];
-    const defaultUnit = config?.units?.[0] || GENERIC_DEFAULT_UNITS[0];
-    const dummyMacros = {
+    const availableUnits = details?.available_portion_units?.length > 0
+      ? details.available_portion_units
+      : config?.units || GENERIC_DEFAULT_UNITS;
+
+    const defaultUnitId = details?.default_unit_id || availableUnits[0].unit_id;
+    const defaultUnit = availableUnits.find((u) => u.unit_id === defaultUnitId) || availableUnits[0];
+    const defaultQty = details?.default_quantity || 1.0;
+    const nutrients100g = details?.nutrients_per_100g || {
       calories_kcal: 180.0,
       protein_g: 4.5,
       fat_g: 5.0,
@@ -90,24 +134,25 @@ function ReviewScreen({
       calcium_mg: 15.0,
       iron_mg: 1.2,
     };
+
     const newItem = {
       item_id: `manual_${Date.now()}`,
-      food_name: dish.name,
-      display_name: dish.name,
-      predicted_dish_id: dish.id,
-      final_dish_id: dish.id,
+      food_name: details?.display_name || dish.name,
+      display_name: details?.display_name || dish.name,
+      predicted_dish_id: details?.dish_id || dish.id,
+      final_dish_id: details?.dish_id || dish.id,
       label_modified: false,
       confidence: 1.0,
       bounding_box: [0.2, 0.2, 0.8, 0.8],
       default_unit_id: defaultUnit.unit_id,
-      default_quantity: 1.0,
-      default_weight_g: defaultUnit.gram_weight,
-      available_portion_units: config?.units || GENERIC_DEFAULT_UNITS,
+      default_quantity: defaultQty,
+      default_weight_g: defaultUnit.gram_weight * defaultQty,
+      available_portion_units: availableUnits,
       selectedUnitId: defaultUnit.unit_id,
       selectedUnit: defaultUnit,
-      selectedQuantity: 1.0,
-      nutrients_per_100g: dummyMacros,
-      calculatedMacros: calculateItemMacros(dummyMacros, defaultUnit.gram_weight, 1.0),
+      selectedQuantity: defaultQty,
+      nutrients_per_100g: nutrients100g,
+      calculatedMacros: calculateItemMacros(nutrients100g, defaultUnit.gram_weight, defaultQty),
     };
     onUpdateDraftItems([...items, newItem]);
     setShowAddDishMenu(false);

@@ -8,7 +8,9 @@ function PortionUnitSelector({
   selectedQuantity = 1.0,
   onUnitChange,
   onQuantityChange,
+  onCustomGramsChange,
 }) {
+  const isCustom = selectedUnitId === 'custom_grams';
   const currentUnit = availableUnits.find((u) => u.unit_id === selectedUnitId) || availableUnits[0];
   const step = 0.5;
   const minQty = 0.5;
@@ -24,7 +26,9 @@ function PortionUnitSelector({
     onQuantityChange(next);
   };
 
-  const totalItemGrams = Math.round((currentUnit?.gram_weight || 100) * selectedQuantity);
+  const totalItemGrams = isCustom
+    ? Math.round(currentUnit?.gram_weight || 150)
+    : Math.round((currentUnit?.gram_weight || 100) * selectedQuantity);
 
   return (
     <div className="space-y-3">
@@ -47,46 +51,72 @@ function PortionUnitSelector({
               {u.unit_name} ({u.gram_weight}g) {u.description ? `— ${u.description}` : ''}
             </option>
           ))}
+          <option value="custom_grams">Custom Mass (Grams)</option>
         </select>
       </div>
 
-      {/* Quantity Stepper */}
-      <div>
-        <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5">
-          Quantity / Servings
-        </label>
-        <div className="flex items-center gap-3">
-          <div className="flex items-center border border-gray-200 rounded-xl bg-gray-50 p-1 shadow-2xs">
-            <button
-              type="button"
-              onClick={handleDecrement}
-              disabled={selectedQuantity <= minQty}
-              className="w-9 h-9 rounded-lg bg-white border border-gray-200 flex items-center justify-center text-gray-700 hover:bg-gray-100 disabled:opacity-40 disabled:cursor-not-allowed transition-all shadow-2xs active:scale-95"
-              aria-label="Decrease quantity"
-            >
-              <Minus className="w-4 h-4" />
-            </button>
-
-            <span className="w-16 text-center text-sm font-bold text-gray-900 select-none">
-              {selectedQuantity.toFixed(1)}
-            </span>
-
-            <button
-              type="button"
-              onClick={handleIncrement}
-              disabled={selectedQuantity >= maxQty}
-              className="w-9 h-9 rounded-lg bg-white border border-gray-200 flex items-center justify-center text-gray-700 hover:bg-gray-100 disabled:opacity-40 disabled:cursor-not-allowed transition-all shadow-2xs active:scale-95"
-              aria-label="Increase quantity"
-            >
-              <Plus className="w-4 h-4" />
-            </button>
+      {/* Quantity Stepper or Custom Grams Input */}
+      {isCustom ? (
+        <div>
+          <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5">
+            Exact Mass (Grams)
+          </label>
+          <div className="flex items-center gap-2">
+            <input
+              type="number"
+              min="10"
+              max="2500"
+              step="5"
+              value={currentUnit?.gram_weight || 150}
+              onChange={(e) => {
+                const val = parseFloat(e.target.value) || 0;
+                if (onCustomGramsChange) {
+                  onCustomGramsChange(val);
+                }
+              }}
+              className="w-32 bg-white border border-gray-200 text-gray-900 text-sm rounded-xl px-3.5 py-2 font-bold focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600"
+            />
+            <span className="text-xs text-gray-500 font-medium">grams total weight</span>
           </div>
-
-          <span className="text-xs text-gray-500 font-medium">
-            {selectedQuantity === 1 ? 'serving' : 'servings'} of {currentUnit?.unit_name || 'unit'}
-          </span>
         </div>
-      </div>
+      ) : (
+        <div>
+          <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5">
+            Quantity / Servings
+          </label>
+          <div className="flex items-center gap-3">
+            <div className="flex items-center border border-gray-200 rounded-xl bg-gray-50 p-1 shadow-2xs">
+              <button
+                type="button"
+                onClick={handleDecrement}
+                disabled={selectedQuantity <= minQty}
+                className="w-9 h-9 rounded-lg bg-white border border-gray-200 flex items-center justify-center text-gray-700 hover:bg-gray-100 disabled:opacity-40 disabled:cursor-not-allowed transition-all shadow-2xs active:scale-95"
+                aria-label="Decrease quantity"
+              >
+                <Minus className="w-4 h-4" />
+              </button>
+
+              <span className="w-16 text-center text-sm font-bold text-gray-900 select-none">
+                {selectedQuantity.toFixed(1)}
+              </span>
+
+              <button
+                type="button"
+                onClick={handleIncrement}
+                disabled={selectedQuantity >= maxQty}
+                className="w-9 h-9 rounded-lg bg-white border border-gray-200 flex items-center justify-center text-gray-700 hover:bg-gray-100 disabled:opacity-40 disabled:cursor-not-allowed transition-all shadow-2xs active:scale-95"
+                aria-label="Increase quantity"
+              >
+                <Plus className="w-4 h-4" />
+              </button>
+            </div>
+
+            <span className="text-xs text-gray-500 font-medium">
+              {selectedQuantity === 1 ? 'serving' : 'servings'} of {currentUnit?.unit_name || 'unit'}
+            </span>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

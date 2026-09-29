@@ -12,7 +12,7 @@ from ..schemas.dashboard import (
     MacroTarget,
 )
 from ..schemas.meal import MealDetailResponse, MealItemResponse
-from ..dependencies.auth import get_current_user_optional
+from ..dependencies.auth import get_current_user
 
 router = APIRouter(prefix="/api/v1/dashboard", tags=["Dashboard & Analytics"])
 
@@ -20,11 +20,11 @@ router = APIRouter(prefix="/api/v1/dashboard", tags=["Dashboard & Analytics"])
 @router.get("/summary", response_model=DashboardStatsResponse, summary="Get today's macro summary")
 @router.get("", response_model=DashboardStatsResponse, summary="Get today's macro summary (alias)")
 async def get_dashboard_summary(
-    current_user: Optional[UserResponse] = Depends(get_current_user_optional),
+    current_user: UserResponse = Depends(get_current_user),
 ):
     """Retrieve today's nutritional intake summary and progress toward dietary targets."""
     supabase = get_supabase_client()
-    user_id = current_user.id if current_user else "usr_4a89fb21"
+    user_id = current_user.id
 
     today = date.today()
     start_of_day = datetime.combine(today, time.min).replace(tzinfo=timezone.utc).isoformat()
@@ -36,9 +36,8 @@ async def get_dashboard_summary(
         .select("*")
         .gte("logged_at", start_of_day)
         .lte("logged_at", end_of_day)
+        .eq("user_id", user_id)
     )
-    if user_id:
-        query = query.eq("user_id", user_id)
 
     res = query.execute()
     today_meals = res.data or []
@@ -86,10 +85,14 @@ async def get_dashboard_summary(
     fat_pct = round((fat / target_fat) * 100, 1) if target_fat > 0 else 0.0
 
     # Recent meals (last 5)
-    recent_q = supabase.from_("meals").select("*")
-    if user_id:
-        recent_q = recent_q.eq("user_id", user_id)
-    recent_res = recent_q.order("logged_at", desc=True).limit(5).execute()
+    recent_res = (
+        supabase.from_("meals")
+        .select("*")
+        .eq("user_id", user_id)
+        .order("logged_at", desc=True)
+        .limit(5)
+        .execute()
+    )
     recent_raw = recent_res.data or []
 
     recent_meals: List[MealDetailResponse] = []

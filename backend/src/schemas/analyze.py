@@ -56,3 +56,17 @@ class AnalyzeMealResponse(BaseModel):
     processing_duration_ms: float
     image_url: Optional[str] = None
     detected_items: List[DetectedItemNutrition] = Field(default_factory=list)
+
+
+class DishDetailsResponse(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+
+    dish_id: str
+    display_name: str
+    default_unit_id: str = "standard_serving"
+    default_quantity: float = 1.0
+    default_weight_g: float = 100.0
+    available_portion_units: List[PortionUnitInfo] = Field(default_factory=list)
+    nutrients_per_100g: NutrientProfile100g = Field(default_factory=NutrientProfile100g)
+    wafct_code: Optional[str] = "00_COMPOSITE"
+

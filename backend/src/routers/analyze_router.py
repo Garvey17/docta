@@ -9,6 +9,8 @@ from fastapi import (
 )
 
 from ..schemas.analyze import AnalyzeMealResponse
+from ..schemas.auth import UserResponse
+from ..dependencies.auth import get_current_user
 from ..services.orchestrator_service import get_orchestrator_service, OrchestratorService
 
 router = APIRouter(prefix="/api/v1", tags=["Analysis & Computer Vision"])
@@ -22,6 +24,7 @@ router = APIRouter(prefix="/api/v1", tags=["Analysis & Computer Vision"])
 )
 async def analyze_meal_endpoint(
     request: Request,
+    current_user: UserResponse = Depends(get_current_user),
     orchestrator: OrchestratorService = Depends(get_orchestrator_service),
 ):
     """

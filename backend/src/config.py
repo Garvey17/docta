@@ -1,17 +1,21 @@
 """Configuration and Environment Settings for docta Backend."""
 
 import os
+from pathlib import Path
 from functools import lru_cache
 from typing import List, Union, Optional
 from pydantic import Field, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
+BACKEND_DIR = Path(__file__).resolve().parent.parent
+
+
 class Settings(BaseSettings):
     """Application settings with environment variable management."""
 
     model_config = SettingsConfigDict(
-        env_file=(".env", "../.env"),
+        env_file=(str(BACKEND_DIR / ".env"), ".env", "../.env", "backend/.env"),
         env_file_encoding="utf-8",
         extra="ignore",
     )

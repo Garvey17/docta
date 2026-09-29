@@ -214,11 +214,15 @@ class AuthService:
         return None
 
     @staticmethod
-    async def logout() -> bool:
+    async def logout(token: Optional[str] = None) -> bool:
         """Sign out user from Supabase Auth."""
         supabase = get_supabase_client()
         try:
-            supabase.auth.sign_out()
+            if hasattr(supabase, "auth") and hasattr(supabase.auth, "sign_out"):
+                try:
+                    supabase.auth.sign_out(token)
+                except TypeError:
+                    supabase.auth.sign_out()
             return True
         except Exception as e:
             logger.warning("Sign out error: %s", e)

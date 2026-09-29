@@ -2,20 +2,22 @@ import React, { useState } from 'react';
 import { Flame } from 'lucide-react';
 
 function WeeklyCalorieBarChart({
-  currentCalories = 1250,
-  targetCalories = 1920,
+  currentCalories = 0,
+  targetCalories = 2200,
+  weeklyData = null,
 }) {
-  const [selectedDayIndex, setSelectedDayIndex] = useState(3); // Default to Wed (index 3)
-
-  const weeklyData = [
-    { day: 'Sun', percentage: 55, calories: 1050, label: '55%' },
-    { day: 'Mon', percentage: 70, calories: 1340, label: '70%' },
-    { day: 'Tue', percentage: 45, calories: 860, label: '45%' },
-    { day: 'Wed', percentage: 88, calories: 1250, label: '120%' },
-    { day: 'Thu', percentage: 65, calories: 1240, label: '65%' },
-    { day: 'Fri', percentage: 48, calories: 920, label: '48%' },
-    { day: 'Sat', percentage: 75, calories: 1440, label: '75%' },
+  const defaultWeeklyData = [
+    { day: 'Sun', percentage: 10, calories: 0, label: '0%' },
+    { day: 'Mon', percentage: 10, calories: 0, label: '0%' },
+    { day: 'Tue', percentage: 10, calories: 0, label: '0%' },
+    { day: 'Wed', percentage: 10, calories: 0, label: '0%' },
+    { day: 'Thu', percentage: 10, calories: 0, label: '0%' },
+    { day: 'Fri', percentage: 10, calories: 0, label: '0%' },
+    { day: 'Sat', percentage: 10, calories: 0, label: '0%' },
   ];
+
+  const dataToRender = weeklyData || defaultWeeklyData;
+  const [selectedDayIndex, setSelectedDayIndex] = useState(new Date().getDay());
 
   return (
     <div className="w-full bg-white rounded-[28px] p-5 sm:p-6 mb-4 shadow-xs border border-gray-100/60 select-none">
@@ -42,7 +44,7 @@ function WeeklyCalorieBarChart({
       {/* Bar Chart Container */}
       <div className="pt-8 pb-1">
         <div className="grid grid-cols-7 gap-2 sm:gap-2.5 items-end h-[145px]">
-          {weeklyData.map((item, index) => {
+          {dataToRender.map((item, index) => {
             const isSelected = index === selectedDayIndex;
 
             return (

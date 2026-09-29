@@ -23,6 +23,7 @@ from .routers import (
     telemetry_router,
     dashboard_router,
     profile_router,
+    dish_router,
 )
 
 settings = get_settings()
@@ -75,6 +76,7 @@ app.include_router(meal_router)
 app.include_router(telemetry_router)
 app.include_router(dashboard_router)
 app.include_router(profile_router)
+app.include_router(dish_router)
 
 
 @app.get("/", tags=["Root"])
