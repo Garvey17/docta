@@ -4,12 +4,12 @@ import json
 from pathlib import Path
 import pytest
 
-from data_pipeline.src.composite_dish_builder import (
+from backend.src.data_pipeline.src.composite_dish_builder import (
     compute_composite_profile,
     compile_composite_dishes,
     main as cli_main,
 )
-from data_pipeline.src.schemas import Recipe, Ingredient
+from backend.src.data_pipeline.src.schemas import Recipe, Ingredient
 
 
 @pytest.fixture

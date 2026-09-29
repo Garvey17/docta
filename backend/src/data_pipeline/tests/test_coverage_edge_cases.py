@@ -3,7 +3,7 @@
 from pathlib import Path
 import pytest
 
-from data_pipeline.src.schemas import (
+from backend.src.data_pipeline.src.schemas import (
     NutrientProfile,
     TotalNutrition,
     MealAnalysisResponse,
@@ -11,27 +11,27 @@ from data_pipeline.src.schemas import (
     CompositeDish,
     Ingredient,
 )
-from data_pipeline.src.macro_scaler import (
+from backend.src.data_pipeline.src.macro_scaler import (
     scale_nutrients,
     build_scaled_item,
     aggregate_meal_nutrition,
 )
-from data_pipeline.src.semantic_search import (
+from backend.src.data_pipeline.src.semantic_search import (
     SemanticSearchEngine,
     _normalize_text,
     _token_jaccard_similarity,
 )
-from data_pipeline.src.vector_indexer import (
+from backend.src.data_pipeline.src.vector_indexer import (
     TextEmbedder,
     get_qdrant_client,
     build_dish_document_text,
 )
-from data_pipeline.src.rag_service import (
+from backend.src.data_pipeline.src.rag_service import (
     RAGService,
     get_rag_service,
     analyze_meal,
 )
-from data_pipeline.src.validate_prerequisites import (
+from backend.src.data_pipeline.src.validate_prerequisites import (
     validate_prerequisites,
     PrerequisiteValidationError,
     main as prereq_main,

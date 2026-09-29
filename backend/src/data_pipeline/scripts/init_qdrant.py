@@ -8,8 +8,8 @@ from pathlib import Path
 # Add project root to sys.path so data_pipeline modules can be imported
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent.parent))
 
-from data_pipeline.src.config import Settings, get_settings
-from data_pipeline.src.vector_indexer import index_composite_dishes
+from backend.src.data_pipeline.src.config import Settings, get_settings
+from backend.src.data_pipeline.src.vector_indexer import index_composite_dishes
 
 
 def main() -> int:

@@ -4,13 +4,13 @@ import json
 from pathlib import Path
 import pytest
 
-from data_pipeline.src.ingest_wafct import (
+from backend.src.data_pipeline.src.ingest_wafct import (
     _clean_numeric_value,
     normalize_fct_row,
     ingest_wafct,
     main as cli_main,
 )
-from data_pipeline.src.schemas import FoodItemFCT
+from backend.src.data_pipeline.src.schemas import FoodItemFCT
 
 
 def test_clean_numeric_value():
@@ -107,8 +107,8 @@ def test_ingest_wafct_cli_main(tmp_path, monkeypatch):
 
 def test_blend_nutrients():
     """Verify _blend_nutrients produces correct weighted average."""
-    from data_pipeline.src.ingest_wafct import _blend_nutrients
-    from data_pipeline.src.schemas import NutrientProfile
+    from backend.src.data_pipeline.src.ingest_wafct import _blend_nutrients
+    from backend.src.data_pipeline.src.schemas import NutrientProfile
 
     by_code = {
         "A": FoodItemFCT(code="A", food_name="Food A", nutrients=NutrientProfile(calories_kcal=100.0, protein_g=10.0, fat_g=5.0, carbs_g=10.0)),
@@ -123,8 +123,8 @@ def test_blend_nutrients():
 
 def test_generate_riq_mappings_from_nct():
     """Verify generate_riq_mappings_from_nct maps NCT codes to ING_001..044."""
-    from data_pipeline.src.ingest_wafct import generate_riq_mappings_from_nct
-    from data_pipeline.src.schemas import NutrientProfile
+    from backend.src.data_pipeline.src.ingest_wafct import generate_riq_mappings_from_nct
+    from backend.src.data_pipeline.src.schemas import NutrientProfile
 
     sample_nct = {
         "14": FoodItemFCT(code="14", food_name="Rice", nutrients=NutrientProfile(calories_kcal=350, protein_g=7, fat_g=1, carbs_g=78)),

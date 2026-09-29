@@ -5,7 +5,7 @@ from pathlib import Path
 import numpy as np
 import pytest
 
-from data_pipeline.src.vector_indexer import (
+from backend.src.data_pipeline.src.vector_indexer import (
     TextEmbedder,
     get_qdrant_client,
     build_dish_document_text,
@@ -92,7 +92,7 @@ def test_qdrant_client_path(tmp_path):
 
 def test_init_qdrant_cli_main(monkeypatch):
     """Verify scripts/init_qdrant.py CLI execution."""
-    from data_pipeline.scripts.init_qdrant import main as init_qdrant_main
+    from backend.src.data_pipeline.scripts.init_qdrant import main as init_qdrant_main
     monkeypatch.setattr("sys.argv", ["init_qdrant.py", "--memory"])
     exit_code = init_qdrant_main()
     assert exit_code == 0
@@ -106,7 +106,7 @@ def test_qdrant_client_host_fallback():
 
 def test_init_qdrant_cli_missing_file(monkeypatch):
     """Verify init_qdrant CLI returns 1 on non-existent file."""
-    from data_pipeline.scripts.init_qdrant import main as init_qdrant_main
+    from backend.src.data_pipeline.scripts.init_qdrant import main as init_qdrant_main
     monkeypatch.setattr("sys.argv", ["init_qdrant.py", "--data", "non_existent_file.json"])
     exit_code = init_qdrant_main()
     assert exit_code == 1

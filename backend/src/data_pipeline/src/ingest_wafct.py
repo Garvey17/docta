@@ -16,7 +16,7 @@ from typing import Dict, Any, Optional
 try:
     from .schemas import FoodItemFCT, NutrientProfile
 except ImportError:
-    from schemas import FoodItemFCT, NutrientProfile
+    from backend.src.data_pipeline.src.schemas import FoodItemFCT, NutrientProfile
 
 
 COLUMN_MAPPING = {

@@ -25,17 +25,17 @@ try:
     from .portion_service import PortionService
     from .macro_scaler import aggregate_meal_nutrition
 except ImportError:
-    from config import Settings, get_settings
-    from schemas import (
+    from backend.src.data_pipeline.src.config import Settings, get_settings
+    from backend.src.data_pipeline.src.schemas import (
         ScaledItemNutrition,
         TotalNutrition,
         MealAnalysisResponse,
         MealItemInput,
         DishPortionConfig,
     )
-    from semantic_search import SemanticSearchEngine
-    from portion_service import PortionService
-    from macro_scaler import aggregate_meal_nutrition
+    from backend.src.data_pipeline.src.semantic_search import SemanticSearchEngine
+    from backend.src.data_pipeline.src.portion_service import PortionService
+    from backend.src.data_pipeline.src.macro_scaler import aggregate_meal_nutrition
 
 
 class RAGService:

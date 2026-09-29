@@ -1,7 +1,7 @@
 """Tests for semantic_search.py module."""
 
 import pytest
-from data_pipeline.src.semantic_search import SemanticSearchEngine
+from backend.src.data_pipeline.src.semantic_search import SemanticSearchEngine
 
 
 @pytest.fixture(scope="module")

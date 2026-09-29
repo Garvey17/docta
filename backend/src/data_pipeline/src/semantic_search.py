@@ -27,11 +27,11 @@ try:
     from .portion_service import PortionService
     from .vector_indexer import get_qdrant_client, get_embeddings
 except ImportError:
-    from config import Settings, get_settings
-    from schemas import ScaledItemNutrition, CompositeDish, NutrientProfile, PortionUnit
-    from macro_scaler import build_scaled_item
-    from portion_service import PortionService
-    from vector_indexer import get_qdrant_client, get_embeddings
+    from backend.src.data_pipeline.src.config import Settings, get_settings
+    from backend.src.data_pipeline.src.schemas import ScaledItemNutrition, CompositeDish, NutrientProfile, PortionUnit
+    from backend.src.data_pipeline.src.macro_scaler import build_scaled_item
+    from backend.src.data_pipeline.src.portion_service import PortionService
+    from backend.src.data_pipeline.src.vector_indexer import get_qdrant_client, get_embeddings
 
 logger = logging.getLogger(__name__)
 

@@ -5,7 +5,7 @@ import shutil
 from pathlib import Path
 import pytest
 
-from data_pipeline.src.validate_prerequisites import (
+from backend.src.data_pipeline.src.validate_prerequisites import (
     validate_prerequisites,
     PrerequisiteValidationError,
     TARGET_5_DISHES,

@@ -1,8 +1,8 @@
 """Tests for rag_service.py."""
 
 import pytest
-from data_pipeline.src.rag_service import RAGService, analyze_meal
-from data_pipeline.src.schemas import MealItemInput, MealAnalysisResponse
+from backend.src.data_pipeline.src.rag_service import RAGService, analyze_meal
+from backend.src.data_pipeline.src.schemas import MealItemInput, MealAnalysisResponse
 
 
 @pytest.fixture(scope="module")

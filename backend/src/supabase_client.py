@@ -348,6 +348,23 @@ class InMemorySupabaseClient:
 _supabase_client = None
 
 
+def _is_placeholder_credential(value: Optional[str]) -> bool:
+    """Treat example/docs values as unset so they cannot mask a real key."""
+    if value is None:
+        return True
+    text = value.strip().lower()
+    if not text:
+        return True
+    return (
+        text.startswith("https://your-project")
+        or text.startswith("http://placeholder")
+        or "your-supabase" in text
+        or text.startswith("your-")
+        or text.endswith("-key")
+        and "your-" in text
+    )
+
+
 def get_supabase_client():
     """Retrieve initialized Supabase client singleton."""
     global _supabase_client
@@ -356,10 +373,16 @@ def get_supabase_client():
 
     settings = get_settings()
     url = settings.supabase_url
-    key = settings.supabase_service_role_key or settings.supabase_key
+    service_role = settings.supabase_service_role_key
+    anon_or_secret = settings.supabase_key
+    key = None
+    if service_role and not _is_placeholder_credential(service_role):
+        key = service_role
+    elif anon_or_secret and not _is_placeholder_credential(anon_or_secret):
+        key = anon_or_secret
 
     # Use live client if URL is configured and not dummy
-    if url and key and not url.startswith("https://your-project") and not url.startswith("http://placeholder"):
+    if url and key and not _is_placeholder_credential(url):
         try:
             from supabase import create_client, Client
             _supabase_client = create_client(url, key)

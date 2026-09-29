@@ -2,8 +2,8 @@
 
 import pytest
 from pathlib import Path
-from data_pipeline.src.portion_service import PortionService
-from data_pipeline.src.schemas import PortionUnit, DishPortionConfig
+from backend.src.data_pipeline.src.portion_service import PortionService
+from backend.src.data_pipeline.src.schemas import PortionUnit, DishPortionConfig
 
 
 @pytest.fixture

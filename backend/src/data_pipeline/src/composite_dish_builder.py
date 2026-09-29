@@ -23,7 +23,7 @@ try:
         CompositeDish,
     )
 except ImportError:
-    from schemas import (
+    from backend.src.data_pipeline.src.schemas import (
         RecipeIngredientLookup,
         Recipe,
         FoodItemFCT,

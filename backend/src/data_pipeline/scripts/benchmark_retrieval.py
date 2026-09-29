@@ -18,7 +18,7 @@ import numpy as np
 # Add project root to sys.path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent.parent))
 
-from data_pipeline.src.semantic_search import SemanticSearchEngine
+from backend.src.data_pipeline.src.semantic_search import SemanticSearchEngine
 
 
 BENCHMARK_QUERIES: List[Tuple[str, str, str]] = [

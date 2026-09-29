@@ -1,12 +1,12 @@
 """Tests for macro_scaler.py."""
 
 import pytest
-from data_pipeline.src.macro_scaler import (
+from backend.src.data_pipeline.src.macro_scaler import (
     scale_nutrients,
     build_scaled_item,
     aggregate_meal_nutrition,
 )
-from data_pipeline.src.schemas import NutrientProfile, ScaledItemNutrition
+from backend.src.data_pipeline.src.schemas import NutrientProfile, ScaledItemNutrition
 
 
 def test_scale_nutrients_basic():

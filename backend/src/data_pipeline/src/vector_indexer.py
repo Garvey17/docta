@@ -38,8 +38,8 @@ try:
     from .config import Settings, get_settings
     from .schemas import CompositeDish
 except ImportError:
-    from config import Settings, get_settings
-    from schemas import CompositeDish
+    from backend.src.data_pipeline.src.config import Settings, get_settings
+    from backend.src.data_pipeline.src.schemas import CompositeDish
 
 logger = logging.getLogger(__name__)
 
