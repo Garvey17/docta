@@ -4,7 +4,7 @@ import uuid
 from fastapi import UploadFile
 
 from ..config import get_settings
-from ..supabase_client import get_supabase_client
+from ..supabase_client import get_supabase_storage_client
 
 settings = get_settings()
 
@@ -16,7 +16,7 @@ async def save_uploaded_image(file: UploadFile, prefix: str = "meal") -> str:
     contents = await file.read()
     await file.seek(0)
 
-    supabase = get_supabase_client()
+    supabase = get_supabase_storage_client()
     bucket = settings.supabase_storage_bucket or "meals"
     supabase.storage.from_(bucket).upload(
         file_id,

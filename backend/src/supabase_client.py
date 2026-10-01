@@ -336,6 +336,7 @@ class InMemorySupabaseClient:
 
 # Global Supabase client instance
 _supabase_client = None
+_supabase_storage_client = None
 
 
 def _is_placeholder_credential(value: Optional[str]) -> bool:
@@ -382,9 +383,41 @@ def get_supabase_client():
     return _supabase_client
 
 
+def get_supabase_storage_client():
+    """Return an isolated privileged client for server-side Storage operations.
+
+    AuthService signs users in through ``get_supabase_client``. Supabase SDKs can
+    then attach that user's access token to later requests made by the same
+    client, which would make Storage enforce the user's RLS policy instead of
+    using the configured service key. Keep upload operations on a separate
+    client that is never used for user authentication.
+    """
+    global _supabase_storage_client
+    if isinstance(_supabase_client, InMemorySupabaseClient):
+        return _supabase_client
+    if _supabase_storage_client is not None:
+        return _supabase_storage_client
+
+    settings = get_settings()
+    url = settings.supabase_url
+    key = settings.supabase_service_role_key
+    if not url or _is_placeholder_credential(url):
+        raise RuntimeError("SUPABASE_URL must point to the live Supabase project.")
+    if not key or _is_placeholder_credential(key):
+        raise RuntimeError(
+            "SUPABASE_SERVICE_ROLE_KEY is required for server-side Storage uploads."
+        )
+
+    from supabase import create_client
+    _supabase_storage_client = create_client(url, key)
+    logger.info("Initialized isolated Supabase Storage client.")
+    return _supabase_storage_client
+
+
 def reset_in_memory_supabase():
     """Explicitly initialize/reset the in-memory store for test fixtures only."""
-    global _supabase_client
+    global _supabase_client, _supabase_storage_client
+    _supabase_storage_client = None
     if isinstance(_supabase_client, InMemorySupabaseClient):
         _supabase_client.reset()
     else:
