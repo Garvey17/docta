@@ -15,7 +15,7 @@
 > Furthermore, portion sizing relies on **Conventional Units of Measurement** (e.g. *Serving Spoons*, *Wraps*, *Pieces*, *Slices*) rather than CV-based automated volumetric estimation.
 >
 > **The agent MUST verify the presence of all 3 required artifacts before proceeding with execution:**
-> 1. **Target 5 Dishes Scope**: The 5 specific Nigerian dishes to be considered (`jollof_rice`, `egusi_soup`, `amala`, `fried_plantain`, `moi_moi`).
+> 1. **Dish Scope**: The nine composite profiles currently supported (`jollof_rice`, `egusi_soup`, `amala`, `fried_plantain`, `moi_moi`, `akara`, `beef`, `fried_rice`, `efo`).
 > 2. **Food Composition Table (FCT)**: Raw ingredient-level nutrient dataset (`data/raw_wafct_2019.csv` or `data/food_composition_table.json`).
 > 3. **Recipe-Ingredient-Quantity (RIQ) & Portion Units Lookup Table**: Standardized recipe table (`data/recipe_ingredient_lookup.json`) AND conventional portion units table (`data/portion_units.json`).
 >
@@ -30,7 +30,7 @@ data_pipeline/
 ├── data/
 │   ├── raw_wafct_2019.csv             # Raw FAO/INFOODS ingredient composition table
 │   ├── food_composition_table.json    # Normalized per-100g raw ingredient database
-│   ├── recipe_ingredient_lookup.json  # [PREREQUISITE] 5-Dish Recipe-Ingredient-Quantity table
+│   ├── recipe_ingredient_lookup.json  # Recipe-Ingredient-Quantity table
 │   ├── portion_units.json             # [PREREQUISITE] Conventional portion units registry & gram mappings
 │   ├── composite_dishes_db.json       # Compiled finished dish profiles (RIQ + FCT)
 │   ├── dummy_wafct.json               # Seed dummy database for standalone offline testing
@@ -66,7 +66,7 @@ data_pipeline/
 
 ## 4. Conventional Portion Units Registry (`data/portion_units.json`)
 
-Each of the 5 focus dishes is mapped to culturally standard portion units:
+Each supported dish is mapped to conventional portion units:
 
 ```json
 {
@@ -148,7 +148,7 @@ When the user selects a portion unit and quantity for each recognized food:
 # 1. Install dependencies
 pip install -r requirements.txt
 
-# 2. Validate the 3 required inputs (Target 5 Dishes, FCT, RIQ & Portion Units)
+# 2. Validate the required inputs (dish profiles, FCT, RIQ & portion units)
 python src/validate_prerequisites.py
 
 # 3. Ingest raw FCT table
@@ -157,8 +157,8 @@ python src/ingest_wafct.py --input data/raw_wafct_2019.csv --output data/food_co
 # 4. Compile composite dishes using RIQ lookup
 python src/composite_dish_builder.py --riq data/recipe_ingredient_lookup.json --fct data/food_composition_table.json --output data/composite_dishes_db.json
 
-# 5. Bootstrap Qdrant vector index
-python scripts/init_qdrant.py --host localhost --port 6333 --data data/composite_dishes_db.json
+# 5. Replace the configured Qdrant Cloud collection with the compiled profiles
+python scripts/init_qdrant.py --data data/composite_dishes_db.json --recreate-collection
 
 # 6. Run test suite
 pytest tests/ -v --cov=src --cov-report=term-missing
@@ -168,8 +168,21 @@ pytest tests/ -v --cov=src --cov-report=term-missing
 
 ## 7. Definition of Done (DoD) Checklist
 
-- [ ] `validate_prerequisites.py` verifies the presence of 5 target dishes, FCT table, RIQ lookup, and portion units before execution.
-- [ ] `portion_units.json` provides culturally accurate conventional units and gram mappings for all 5 dishes.
+- [ ] `validate_prerequisites.py` verifies dish profiles, FCT table, RIQ lookup, and portion units before execution.
+- [ ] `portion_units.json` provides conventional units and gram mappings for every supported dish.
 - [ ] `portion_service.py` calculates correct gram mass and macro scaling ($< 200\text{ms}$ SLA).
-- [ ] In-memory offline fallback works without Qdrant container.
+- [ ] Live semantic retrieval uses OpenAI embeddings and Qdrant Cloud; in-memory mode is reserved for explicit development and tests.
 - [ ] Test coverage $\ge 90\%$ in `tests/`.
+
+## 8. Recipe provenance and live rebuild
+
+The requested seven foods use canonical names in `recipe_ingredient_lookup.json` and have no alias entries. Recipe-based nutrition is an estimate when the published recipe does not state all ingredient weights, oil absorption, or cooked yield; each profile records its source URL and assumptions. `Beef` uses the generic beef row in the local composition table. `Efo` is the displayed dish name for the vegetable soup recipe.
+
+From the repository root, compile the recipe profiles and replace the configured collection:
+
+```powershell
+backend\.venv\Scripts\python.exe -m backend.src.data_pipeline.src.composite_dish_builder --riq backend\src\data_pipeline\data\recipe_ingredient_lookup.json --fct backend\src\data_pipeline\data\food_composition_table.json --aliases backend\src\data_pipeline\data\aliases_map.json --output backend\src\data_pipeline\data\composite_dishes_db.json
+backend\.venv\Scripts\python.exe backend\src\data_pipeline\scripts\init_qdrant.py --data data\composite_dishes_db.json --recreate-collection
+```
+
+The rebuild deletes and recreates only the collection configured by `QDRANT_COLLECTION_NAME`, then indexes the compiled records with the configured live embedding service. Confirm that the environment points at the intended Qdrant Cloud project before running it.

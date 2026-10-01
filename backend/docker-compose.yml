@@ -12,10 +12,17 @@ services:
     environment:
       - SUPABASE_URL=${SUPABASE_URL:-}
       - SUPABASE_KEY=${SUPABASE_KEY:-}
+      - SUPABASE_SERVICE_ROLE_KEY=${SUPABASE_SERVICE_ROLE_KEY:-}
+      - SUPABASE_STORAGE_BUCKET=${SUPABASE_STORAGE_BUCKET:-meals}
       - SECRET_KEY=${SECRET_KEY:-docta-dev-jwt-secret-key-fargate-ready-123456}
-      - USE_MOCK_AI=true
-      - USE_MOCK_RAG=true
-      - ENVIRONMENT=development
-      - PORT=8000
+      - USE_MOCK_AI=${USE_MOCK_AI:-false}
+      - USE_MOCK_RAG=${USE_MOCK_RAG:-false}
+      - CV_SERVICE_URL=${CV_SERVICE_URL:-}
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - QDRANT_URL=${QDRANT_URL:-}
+      - QDRANT_API_KEY=${QDRANT_API_KEY:-}
+      - QDRANT_COLLECTION_NAME=${QDRANT_COLLECTION_NAME:-composite_dishes}
+      - ENVIRONMENT=${ENVIRONMENT:-development}
+      - PORT=${PORT:-8000}
     volumes:
       - ./uploads:/app/uploads

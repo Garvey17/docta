@@ -1,16 +1,11 @@
-"""Computer Vision Client with clean mock fallback."""
+"""Computer Vision client for the configured live inference service."""
 
-import logging
 from typing import List, Dict, Any, Optional
 import httpx
 
 from ..config import get_settings
-from .mock_ai_service import MockAIService
 
 from abc import ABC, abstractmethod
-
-logger = logging.getLogger(__name__)
-
 
 class BaseCVProvider(ABC):
     """Abstract interface defining the strict contract for Computer Vision models.
@@ -42,7 +37,7 @@ class BaseCVProvider(ABC):
 
 
 class CVClient(BaseCVProvider):
-    """Client for Computer Vision inference with automatic mock fallback."""
+    """Client for the configured live Computer Vision service."""
 
     def __init__(self):
         settings = get_settings()
@@ -55,27 +50,27 @@ class CVClient(BaseCVProvider):
         image_url: Optional[str] = None,
         prompt: Optional[str] = None,
     ) -> List[Dict[str, Any]]:
-        """Call live AI microservice or return deterministic mock detections."""
-        if not self.use_mock and self.service_url:
-            try:
-                async with httpx.AsyncClient(timeout=2.5) as client:
-                    if image_bytes:
-                        resp = await client.post(
-                            f"{self.service_url}/detect",
-                            files={"file": ("image.jpg", image_bytes, "image/jpeg")},
-                            data={"prompt": prompt} if prompt else None,
-                        )
-                    else:
-                        resp = await client.post(
-                            f"{self.service_url}/detect",
-                            json={"image_url": image_url, "prompt": prompt},
-                        )
-                    if resp.status_code == 200:
-                        return resp.json().get("detected_items", [])
-            except Exception as e:
-                logger.warning("Live CV service call failed: %s. Using MockAIService fallback.", e)
+        """Call live inference and propagate missing configuration or service errors."""
+        if self.use_mock:
+            raise RuntimeError("Mock AI is disabled for this application. Set USE_MOCK_AI=false.")
+        if not self.service_url:
+            raise RuntimeError("CV_SERVICE_URL is required when mock AI is disabled.")
 
-        return MockAIService.detect(prompt=prompt)
+        async with httpx.AsyncClient(timeout=30.0) as client:
+            if image_bytes:
+                resp = await client.post(
+                    f"{self.service_url.rstrip('/')}/detect",
+                    files={"file": ("image.jpg", image_bytes, "image/jpeg")},
+                    data={"prompt": prompt} if prompt else None,
+                )
+            else:
+                resp = await client.post(
+                    f"{self.service_url.rstrip('/')}/detect",
+                    json={"image_url": image_url, "prompt": prompt},
+                )
+            resp.raise_for_status()
+            payload = resp.json()
+            return payload["detected_items"]
 
 
 _cv_client: Optional[CVClient] = None

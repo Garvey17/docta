@@ -29,15 +29,13 @@ async def get_dish_details(
     """
     clean_id = dish_id.lower().strip().replace(" ", "_")
 
-    # If RAGService is available, resolve canonical dish & aliases
+    # Resolve the requested ID or alias through the configured RAG service.
     resolved_id = clean_id
-    if not rag_client.use_mock and rag_client.rag_service is not None:
-        try:
-            item = rag_client.rag_service.get_dish_nutrition(clean_id, weight_g=100.0)
-            if item and item.dish_id:
-                resolved_id = item.dish_id
-        except Exception:
-            resolved_id = clean_id
+    # Preserve natural-language spacing for semantic search. The normalized
+    # underscore form remains useful as the fallback canonical ID.
+    item = rag_client.rag_service.get_dish_nutrition(dish_id.strip(), weight_g=100.0)
+    if item and item.dish_id:
+        resolved_id = item.dish_id
 
     portion_data = rag_client.get_dish_portion_units(resolved_id)
     nutrient_data = rag_client.get_dish_base_nutrients(resolved_id)

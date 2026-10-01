@@ -1,9 +1,8 @@
-"""Supabase Client integration with offline High-Fidelity In-Memory Fallback.
+"""Supabase client integration with an explicit in-memory test fixture.
 
 Provides a unified interface for database and auth operations using Supabase:
-- Uses real supabase-py client when SUPABASE_URL and SUPABASE_KEY are provided.
-- Gracefully falls back to an in-memory client for deterministic local testing
-  and offline development without requiring live credentials.
+- Uses the real supabase-py client in application runtime.
+- In-memory behavior is available only when explicitly initialized by tests.
 """
 
 import os
@@ -357,7 +356,7 @@ def _is_placeholder_credential(value: Optional[str]) -> bool:
 
 
 def get_supabase_client():
-    """Retrieve initialized Supabase client singleton."""
+    """Retrieve the configured live Supabase client or fail clearly."""
     global _supabase_client
     if _supabase_client is not None:
         return _supabase_client
@@ -372,24 +371,21 @@ def get_supabase_client():
     elif anon_or_secret and not _is_placeholder_credential(anon_or_secret):
         key = anon_or_secret
 
-    # Use live client if URL is configured and not dummy
-    if url and key and not _is_placeholder_credential(url):
-        try:
-            from supabase import create_client, Client
-            _supabase_client = create_client(url, key)
-            logger.info("Connected to live Supabase project at %s", url)
-            return _supabase_client
-        except Exception as e:
-            logger.warning("Failed to initialize live Supabase client: %s. Using In-Memory fallback.", e)
+    if not url or _is_placeholder_credential(url):
+        raise RuntimeError("SUPABASE_URL must point to the live Supabase project.")
+    if not key:
+        raise RuntimeError("SUPABASE_KEY or SUPABASE_SERVICE_ROLE_KEY is required for live Supabase.")
 
-    # Fallback to high-fidelity In-Memory mock
-    logger.info("Using In-Memory Supabase Client for local/test execution.")
-    _supabase_client = InMemorySupabaseClient()
+    from supabase import create_client
+    _supabase_client = create_client(url, key)
+    logger.info("Initialized live Supabase client.")
     return _supabase_client
 
 
 def reset_in_memory_supabase():
-    """Reset the in-memory store for isolated test fixtures."""
+    """Explicitly initialize/reset the in-memory store for test fixtures only."""
     global _supabase_client
     if isinstance(_supabase_client, InMemorySupabaseClient):
         _supabase_client.reset()
+    else:
+        _supabase_client = InMemorySupabaseClient()

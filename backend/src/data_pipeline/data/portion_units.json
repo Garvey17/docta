@@ -2,7 +2,7 @@
   "portion_units": {
     "jollof_rice": {
       "dish_id": "jollof_rice",
-      "dish_name": "Nigerian Jollof Rice",
+      "dish_name": "Jollof rice",
       "default_unit_id": "serving_spoon",
       "default_quantity": 2.0,
       "units": [
@@ -54,7 +54,7 @@
     },
     "amala": {
       "dish_id": "amala",
-      "dish_name": "Amala (Yam Flour Swallow)",
+      "dish_name": "Amala",
       "default_unit_id": "medium_wrap",
       "default_quantity": 1.0,
       "units": [
@@ -106,7 +106,7 @@
     },
     "moi_moi": {
       "dish_id": "moi_moi",
-      "dish_name": "Steamed Bean Cake (Moi Moi)",
+      "dish_name": "Moi moi",
       "default_unit_id": "single_wrap",
       "default_quantity": 1.0,
       "units": [
@@ -122,6 +122,50 @@
           "gram_weight": 250.0,
           "description": "Large portion wrap (~250g)"
         }
+      ]
+    },
+    "akara": {
+      "dish_id": "akara",
+      "dish_name": "Akara",
+      "default_unit_id": "single_piece",
+      "default_quantity": 3.0,
+      "units": [
+        {"unit_id": "single_piece", "unit_name": "One Piece", "gram_weight": 40.0, "description": "Approximate small akara fritter"},
+        {"unit_id": "small_portion", "unit_name": "Small Portion (3 pieces)", "gram_weight": 120.0, "description": "Approximate three-piece portion"},
+        {"unit_id": "large_portion", "unit_name": "Large Portion (5 pieces)", "gram_weight": 200.0, "description": "Approximate five-piece portion"}
+      ]
+    },
+    "beef": {
+      "dish_id": "beef",
+      "dish_name": "Beef",
+      "default_unit_id": "100g_portion",
+      "default_quantity": 1.0,
+      "units": [
+        {"unit_id": "100g_portion", "unit_name": "100 g Portion", "gram_weight": 100.0, "description": "Reference 100 g portion"},
+        {"unit_id": "small_portion", "unit_name": "Small Portion", "gram_weight": 75.0, "description": "Approximate small portion"},
+        {"unit_id": "large_portion", "unit_name": "Large Portion", "gram_weight": 150.0, "description": "Approximate large portion"}
+      ]
+    },
+    "fried_rice": {
+      "dish_id": "fried_rice",
+      "dish_name": "Fried rice",
+      "default_unit_id": "serving_spoon",
+      "default_quantity": 2.0,
+      "units": [
+        {"unit_id": "serving_spoon", "unit_name": "Serving Spoon", "gram_weight": 120.0, "description": "Approximate catering spoon"},
+        {"unit_id": "plate", "unit_name": "Plate Portion", "gram_weight": 250.0, "description": "Approximate plate portion"},
+        {"unit_id": "takeaway_pack", "unit_name": "Takeaway Pack", "gram_weight": 500.0, "description": "Approximate full takeaway pack"}
+      ]
+    },
+    "efo": {
+      "dish_id": "efo",
+      "dish_name": "Efo",
+      "default_unit_id": "soup_spoon",
+      "default_quantity": 2.0,
+      "units": [
+        {"unit_id": "soup_spoon", "unit_name": "Soup Spoon", "gram_weight": 100.0, "description": "Approximate serving spoon"},
+        {"unit_id": "small_bowl", "unit_name": "Small Bowl", "gram_weight": 200.0, "description": "Approximate small bowl"},
+        {"unit_id": "large_bowl", "unit_name": "Large Bowl", "gram_weight": 350.0, "description": "Approximate large bowl"}
       ]
     }
   },

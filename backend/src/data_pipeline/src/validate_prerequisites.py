@@ -1,7 +1,7 @@
 """Mandatory Pre-Execution Gate: Validate required inputs and portion units.
 
 Checks:
-1. Target 5 Dishes Scope ('jollof_rice', 'egusi_soup', 'amala', 'fried_plantain', 'moi_moi')
+1. Current composite dish scope (nine canonical dish IDs)
 2. Food Composition Table (data/raw_wafct_2019.csv or data/food_composition_table.json or data/NCT_Nigeria.xlsx)
 3. Recipe-Ingredient-Quantity (RIQ) Table (data/recipe_ingredient_lookup.json)
 4. Conventional Portion Units Registry (data/portion_units.json)
@@ -13,12 +13,16 @@ import sys
 from pathlib import Path
 from typing import Dict, Any, List, Optional, Set
 
-TARGET_5_DISHES: Set[str] = {
+TARGET_DISHES: Set[str] = {
     "jollof_rice",
     "egusi_soup",
     "amala",
     "fried_plantain",
     "moi_moi",
+    "akara",
+    "beef",
+    "fried_rice",
+    "efo",
 }
 
 
@@ -67,7 +71,7 @@ def validate_prerequisites(
         "errors": [],
     }
 
-    # 1. Validate RIQ Lookup Table & Target 5 Dishes
+    # 1. Validate RIQ Lookup Table & current dish scope
     riq_path = data_dir / "recipe_ingredient_lookup.json"
     if not riq_path.exists():
         err_msg = f"Missing required RIQ lookup file: {riq_path}"
@@ -84,7 +88,7 @@ def validate_prerequisites(
             found_dishes = {r.get("dish_id") for r in recipes if "dish_id" in r}
             results["dishes_found"] = sorted(list(found_dishes))
 
-            missing = TARGET_5_DISHES - found_dishes
+            missing = TARGET_DISHES - found_dishes
             if missing:
                 err_msg = f"RIQ table is missing target dishes: {sorted(list(missing))}"
                 results["missing_dishes"] = sorted(list(missing))
@@ -208,7 +212,7 @@ def validate_prerequisites(
             portion_map = p_data.get("portion_units", {})
             portion_dishes = set(portion_map.keys())
             
-            missing_p = TARGET_5_DISHES - portion_dishes
+            missing_p = TARGET_DISHES - portion_dishes
             if missing_p:
                 err_msg = f"Portion units registry is missing target dishes: {sorted(list(missing_p))}"
                 results["missing_portion_dishes"] = sorted(list(missing_p))
@@ -240,7 +244,7 @@ def main() -> int:
         res = validate_prerequisites(auto_recover=True)
         if res["status"] == "passed":
             print("[SUCCESS] All prerequisites verified:")
-            print(f"  - Target 5 Dishes present: {res['dishes_found']}")
+            print(f"  - Target dishes present: {res['dishes_found']}")
             print(f"  - RIQ File: {res['riq_file']}")
             print(f"  - FCT File: {res['fct_file']}")
             print(f"  - Portion Units File: {res['portion_units_file']}")

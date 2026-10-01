@@ -1,8 +1,8 @@
 import React from 'react';
-import { ArrowLeft, MoreVertical } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 
 import WeeklyCalorieBarChart from './WeeklyCalorieBarChart';
-import HeartRateCard from './HeartRateCard';
+import NutritionTrendsChart from './NutritionTrendsChart';
 import VitalsMetricCards from './VitalsMetricCards';
 
 function StatisticScreen({ user, mealHistory = [], onBack, onOptionsClick }) {
@@ -37,6 +37,32 @@ function StatisticScreen({ user, mealHistory = [], onBack, onOptionsClick }) {
     };
   });
 
+  const today = new Date();
+  const weekStart = new Date(today.getFullYear(), today.getMonth(), today.getDate() - today.getDay());
+  const nutritionByDate = new Map();
+  mealHistory.forEach((meal) => {
+    if (!meal.logged_at) return;
+    const loggedDate = new Date(meal.logged_at);
+    if (Number.isNaN(loggedDate.getTime())) return;
+    const dateKey = `${loggedDate.getFullYear()}-${loggedDate.getMonth()}-${loggedDate.getDate()}`;
+    const totals = nutritionByDate.get(dateKey) || { protein: 0, carbs: 0, fats: 0 };
+    totals.protein += Number(meal.total_protein_g) || 0;
+    totals.carbs += Number(meal.total_carbs_g) || 0;
+    totals.fats += Number(meal.total_fat_g) || 0;
+    nutritionByDate.set(dateKey, totals);
+  });
+  const nutritionData = Array.from({ length: 7 }, (_, index) => {
+    const date = new Date(weekStart.getFullYear(), weekStart.getMonth(), weekStart.getDate() + index);
+    const dateKey = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
+    const totals = nutritionByDate.get(dateKey) || { protein: 0, carbs: 0, fats: 0 };
+    return {
+      day: dayNames[index],
+      protein: Math.round(totals.protein),
+      carbs: Math.round(totals.carbs),
+      fats: Math.round(totals.fats),
+    };
+  });
+
   return (
     <div className="max-w-md mx-auto px-4 pt-2 pb-28 animate-fade-in select-none">
       {/* 1. Top Header */}
@@ -67,13 +93,8 @@ function StatisticScreen({ user, mealHistory = [], onBack, onOptionsClick }) {
         weeklyData={weeklyData}
       />
 
-      {/* 3. Heart Rate Card */}
-      <HeartRateCard
-        rate={140}
-        unit="bpm"
-        status="Higher than usual"
-        onDetailsClick={onOptionsClick}
-      />
+      {/* 3. Weekly nutrition trends */}
+      <NutritionTrendsChart data={nutritionData} />
 
       {/* 4. Blood Pressure & Glucose Level Cards */}
       <VitalsMetricCards

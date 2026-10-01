@@ -3,9 +3,8 @@
 Implements Lookup-Before-Retrieval flow:
 1. Fast Direct Recipe & Alias exact match (< 1ms)
 2. LangChain Qdrant Vector Store similarity search with OpenAI Embeddings
-3. In-memory string & token similarity fallback
-4. Standard baseline defaults for unmapped items
-5. Automatic attachment of conventional portion units
+3. Explicit lookup failure when no supported dish matches
+4. Automatic attachment of conventional portion units
 """
 
 import json
@@ -67,6 +66,7 @@ class SemanticSearchEngine:
         force_memory: bool = False,
     ):
         self.settings = settings or get_settings()
+        self.force_memory = force_memory
         if data_dir is not None:
             self.data_dir = Path(data_dir)
         else:
@@ -78,17 +78,17 @@ class SemanticSearchEngine:
         self.embeddings = get_embeddings(self.settings) if not force_memory else None
         self.qdrant_client = get_qdrant_client(self.settings, use_memory=force_memory)
         
-        # Initialize LangChain Qdrant Vector Store if available
+        # Live mode must have a working remote vector store; local mode is explicit
+        # and reserved for tests or offline development.
         self.vector_store = None
-        if self.embeddings is not None and QdrantVectorStore is not None and not force_memory:
-            try:
-                self.vector_store = QdrantVectorStore(
-                    client=self.qdrant_client,
-                    collection_name=self.settings.qdrant_collection_name,
-                    embedding=self.embeddings,
-                )
-            except Exception as e:
-                logger.debug(f"LangChain QdrantVectorStore not initialized: {e}. Using local lookup fallback.")
+        if not force_memory:
+            if QdrantVectorStore is None:
+                raise ImportError("langchain-qdrant is required for live RAG.")
+            self.vector_store = QdrantVectorStore(
+                client=self.qdrant_client,
+                collection_name=self.settings.qdrant_collection_name,
+                embedding=self.embeddings,
+            )
 
     def _load_local_data(self) -> None:
         """Load composite dishes, aliases, and fallback profiles."""
@@ -159,31 +159,32 @@ class SemanticSearchEngine:
 
         # 2. LangChain Vector Store Similarity Search via Qdrant Cloud
         if self.vector_store is not None:
-            try:
-                results = self.vector_store.similarity_search_with_score(query, k=1)
-                if results:
-                    doc, score = results[0]
-                    dish_id = doc.metadata.get("dish_id")
-                    if dish_id and dish_id in self.composite_db:
-                        dish = self.composite_db[dish_id]
-                        return self._build_item(
-                            dish_id=dish["dish_id"],
-                            display_name=dish["dish_name"],
-                            cooked_nutrients=dish["nutrients_cooked_100g"],
-                            weight_g=weight_g,
-                            wafct_code=dish.get("wafct_code", "00_COMPOSITE"),
-                            confidence=confidence,
-                            item_id=item_id,
-                            bounding_box=bounding_box,
-                            similarity_score=float(score),
-                            is_fallback=False,
-                            selected_unit_id=selected_unit_id,
-                            selected_quantity=selected_quantity,
-                        )
-            except Exception as e:
-                logger.debug(f"LangChain vector similarity search failed: {e}. Falling back to in-memory matching.")
+            results = self.vector_store.similarity_search_with_score(query, k=1)
+            if results:
+                doc, score = results[0]
+                dish_id = doc.metadata.get("dish_id")
+                if dish_id and dish_id in self.composite_db:
+                    dish = self.composite_db[dish_id]
+                    return self._build_item(
+                        dish_id=dish["dish_id"],
+                        display_name=dish["dish_name"],
+                        cooked_nutrients=dish["nutrients_cooked_100g"],
+                        weight_g=weight_g,
+                        wafct_code=dish.get("wafct_code", "00_COMPOSITE"),
+                        confidence=confidence,
+                        item_id=item_id,
+                        bounding_box=bounding_box,
+                        similarity_score=float(score),
+                        is_fallback=False,
+                        selected_unit_id=selected_unit_id,
+                        selected_quantity=selected_quantity,
+                    )
+            raise LookupError(f"Qdrant returned no indexed dish for query: {query}")
 
-        # 3. In-Memory Token Similarity Fallback
+        if not self.force_memory:
+            raise RuntimeError("Live RAG has no vector store configured.")
+
+        # Local matching is available only when force_memory=True is explicitly used.
         best_dish = None
         best_score = 0.0
         for dish_id, dish in self.composite_db.items():
@@ -210,32 +211,7 @@ class SemanticSearchEngine:
                 selected_quantity=selected_quantity,
             )
 
-        # 4. Standard Generic Fallback
-        fallback_profile = self.fallback_defaults.get("generic_cooked_meal", {})
-        fallback_nutrients = fallback_profile.get("nutrients") or {
-            "calories_kcal": 150.0,
-            "protein_g": 5.0,
-            "fat_g": 5.0,
-            "carbs_g": 20.0,
-            "fiber_g": 1.5,
-            "sodium_mg": 100.0,
-            "calcium_mg": 15.0,
-            "iron_mg": 1.0,
-        }
-        return self._build_item(
-            dish_id="unmapped_dish",
-            display_name=f"Standard Meal ({query})",
-            cooked_nutrients=fallback_nutrients,
-            weight_g=weight_g,
-            wafct_code="FALLBACK_DEFAULT",
-            confidence=confidence,
-            item_id=item_id,
-            bounding_box=bounding_box,
-            similarity_score=0.0,
-            is_fallback=True,
-            selected_unit_id=selected_unit_id,
-            selected_quantity=selected_quantity,
-        )
+        raise LookupError(f"No known dish matched query: {query}")
 
     def _build_item(
         self,

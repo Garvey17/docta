@@ -64,11 +64,10 @@ function DashboardScreen({
         onOptionsClick={onOpenTelemetry}
       />
 
-      {/* Activity Metric Cards (Step to walk & Drink water) */}
+      {/* Activity Metric Cards (mock streak & water reminder) */}
       <ActivityMetricCards
-        steps={5234}
+        streakDays={4}
         waterGlasses={12}
-        onStepClick={onOpenTelemetry}
         onWaterClick={onOpenTelemetry}
       />
 

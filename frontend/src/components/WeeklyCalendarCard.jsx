@@ -1,31 +1,49 @@
 import React, { useState } from 'react';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 
-function WeeklyCalendarCard() {
-  const [selectedDayIndex, setSelectedDayIndex] = useState(3); // Default Wed 15
+function startOfWeek(date) {
+  const weekStart = new Date(date);
+  weekStart.setHours(0, 0, 0, 0);
+  weekStart.setDate(weekStart.getDate() - weekStart.getDay());
+  return weekStart;
+}
 
-  const days = [
-    { day: 'Sun', date: 12 },
-    { day: 'Mon', date: 13 },
-    { day: 'Tue', date: 14 },
-    { day: 'Wed', date: 15 },
-    { day: 'Thu', date: 16 },
-    { day: 'Thu', date: 16 },
-    { day: 'Fri', date: 17 },
-  ];
+function addDays(date, amount) {
+  const nextDate = new Date(date);
+  nextDate.setDate(nextDate.getDate() + amount);
+  return nextDate;
+}
+
+function sameDay(first, second) {
+  return first.getFullYear() === second.getFullYear()
+    && first.getMonth() === second.getMonth()
+    && first.getDate() === second.getDate();
+}
+
+function WeeklyCalendarCard() {
+  const [selectedDate, setSelectedDate] = useState(() => new Date());
+  const weekStart = startOfWeek(selectedDate);
+  const days = Array.from({ length: 7 }, (_, index) => addDays(weekStart, index));
+  const monthLabel = selectedDate.toLocaleDateString(undefined, {
+    month: 'long',
+    year: 'numeric',
+  });
 
   return (
-    <div className="w-full bg-[#e3f79e] rounded-[28px] p-5 mb-4 shadow-xs select-none">
-      {/* Top Header: Month & Navigation Arrows */}
+    <section
+      className="w-full bg-[#e3f79e] rounded-[28px] p-5 mb-4 shadow-xs select-none"
+      aria-label="Choose a dashboard date"
+    >
       <div className="flex items-center justify-between mb-4 px-1">
-        <h2 className="text-[17px] font-bold text-gray-900 tracking-tight">
-          November 2025
+        <h2 className="text-[17px] font-bold text-gray-900 tracking-tight" aria-live="polite">
+          {monthLabel}
         </h2>
 
         <div className="flex items-center gap-1.5">
           <button
             type="button"
             aria-label="Previous week"
+            onClick={() => setSelectedDate((date) => addDays(date, -7))}
             className="w-8 h-8 rounded-full bg-white/90 hover:bg-white flex items-center justify-center text-gray-800 shadow-2xs transition-all active:scale-95"
           >
             <ArrowLeft className="w-3.5 h-3.5 stroke-[2.2]" />
@@ -33,6 +51,7 @@ function WeeklyCalendarCard() {
           <button
             type="button"
             aria-label="Next week"
+            onClick={() => setSelectedDate((date) => addDays(date, 7))}
             className="w-8 h-8 rounded-full bg-white/90 hover:bg-white flex items-center justify-center text-gray-800 shadow-2xs transition-all active:scale-95"
           >
             <ArrowRight className="w-3.5 h-3.5 stroke-[2.2]" />
@@ -40,40 +59,37 @@ function WeeklyCalendarCard() {
         </div>
       </div>
 
-      {/* Days & Date Circles Row */}
       <div className="grid grid-cols-7 gap-1 text-center">
-        {days.map((item, index) => {
-          const isSelected = index === selectedDayIndex;
-          return (
-            <div
-              key={`${item.day}-${index}`}
-              onClick={() => setSelectedDayIndex(index)}
-              className="flex flex-col items-center gap-2 cursor-pointer group"
-            >
-              {/* Day Label */}
-              <span
-                className={`text-[12px] font-medium transition-colors ${
-                  isSelected ? 'text-gray-900 font-bold' : 'text-gray-700/80 group-hover:text-gray-900'
-                }`}
-              >
-                {item.day}
-              </span>
+        {days.map((date) => {
+          const isSelected = sameDay(date, selectedDate);
+          const dayName = date.toLocaleDateString(undefined, { weekday: 'short' });
+          const accessibleDate = date.toLocaleDateString(undefined, {
+            weekday: 'long',
+            month: 'long',
+            day: 'numeric',
+            year: 'numeric',
+          });
 
-              {/* Date Circle Pill */}
-              <div
-                className={`w-10 h-10 rounded-full flex items-center justify-center text-[13px] font-semibold transition-all duration-200 ${
-                  isSelected
-                    ? 'bg-[#d0ed7e] border-2 border-[#82b826] text-gray-950 font-bold shadow-xs scale-105'
-                    : 'bg-white/95 text-gray-800 group-hover:bg-white shadow-2xs group-hover:scale-102'
-                }`}
-              >
-                {item.date}
-              </div>
-            </div>
+          return (
+            <button
+              key={date.toISOString()}
+              type="button"
+              aria-label={accessibleDate}
+              aria-pressed={isSelected}
+              onClick={() => setSelectedDate(date)}
+              className="flex flex-col items-center gap-2 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#527d12] focus-visible:ring-offset-2 focus-visible:ring-offset-[#e3f79e] rounded-xl"
+            >
+              <span className={`text-[12px] font-medium transition-colors ${isSelected ? 'text-gray-900 font-bold' : 'text-gray-700/80 group-hover:text-gray-900'}`}>
+                {dayName}
+              </span>
+              <span className={`w-10 h-10 rounded-full flex items-center justify-center text-[13px] font-semibold transition-all duration-200 ${isSelected ? 'bg-[#d0ed7e] border-2 border-[#82b826] text-gray-950 font-bold shadow-xs scale-105' : 'bg-white/95 text-gray-800 group-hover:bg-white shadow-2xs group-hover:scale-102'}`}>
+                {date.getDate()}
+              </span>
+            </button>
           );
         })}
       </div>
-    </div>
+    </section>
   );
 }
 

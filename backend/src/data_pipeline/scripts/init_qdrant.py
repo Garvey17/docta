@@ -5,8 +5,8 @@ import json
 import sys
 from pathlib import Path
 
-# Add project root to sys.path so data_pipeline modules can be imported
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent.parent))
+# Add the repository root so the documented backend.src imports work from any cwd.
+sys.path.insert(0, str(Path(__file__).resolve().parents[4]))
 
 from backend.src.data_pipeline.src.config import Settings, get_settings
 from backend.src.data_pipeline.src.vector_indexer import index_composite_dishes
@@ -18,6 +18,11 @@ def main() -> int:
     parser.add_argument("--url", default=None, help="Qdrant Cloud URL (overrides .env)")
     parser.add_argument("--api-key", default=None, help="Qdrant Cloud API Key (overrides .env)")
     parser.add_argument("--collection", default=None, help="Qdrant Collection Name (overrides .env)")
+    parser.add_argument(
+        "--recreate-collection",
+        action="store_true",
+        help="Delete and rebuild only the configured collection before indexing.",
+    )
     parser.add_argument("--memory", action="store_true", help="Force in-memory Qdrant client")
     parser.add_argument("--host", default=None, help="Qdrant server host")
     parser.add_argument("--port", type=int, default=6333, help="Qdrant server port")
@@ -48,7 +53,11 @@ def main() -> int:
     print(f"Target Qdrant: {settings.qdrant_url or 'in-memory'} (Collection: {settings.qdrant_collection_name})")
 
     try:
-        count = index_composite_dishes(dishes_db, settings=settings)
+        count = index_composite_dishes(
+            dishes_db,
+            settings=settings,
+            recreate_collection=args.recreate_collection,
+        )
         print(f"[SUCCESS] Successfully indexed {count} dishes into Qdrant Cloud via LangChain.")
         return 0
     except Exception as e:

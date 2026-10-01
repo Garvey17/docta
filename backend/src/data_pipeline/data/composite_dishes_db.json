@@ -1,82 +1,78 @@
 {
   "jollof_rice": {
     "dish_id": "jollof_rice",
-    "dish_name": "Nigerian Jollof Rice",
+    "dish_name": "Jollof rice",
     "standard_serving_g": 250.0,
-    "cooking_yield_factor": 0.88,
-    "raw_batch_mass_g": 230.0,
+    "cooking_yield_factor": 2.0,
     "raw_ingredients": [
       {
-        "ingredient_code": "ING_001",
-        "name": "Long Grain White Rice",
+        "ingredient_code": "14",
+        "name": "Rice - imported",
+        "quantity_g": 250.0
+      },
+      {
+        "ingredient_code": "71",
+        "name": "Tomato puree",
         "quantity_g": 120.0
       },
       {
-        "ingredient_code": "ING_002",
-        "name": "Tomato Paste",
-        "quantity_g": 30.0
+        "ingredient_code": "76",
+        "name": "Fresh pepper",
+        "quantity_g": 35.0
       },
       {
-        "ingredient_code": "ING_003",
-        "name": "Red Bell Pepper & Scotch Bonnet Blend",
+        "ingredient_code": "72",
+        "name": "Onions",
         "quantity_g": 40.0
       },
       {
-        "ingredient_code": "ING_004",
-        "name": "Vegetable Oil",
-        "quantity_g": 15.0
+        "ingredient_code": "532",
+        "name": "Vegetable oil (standardized estimate)",
+        "quantity_g": 25.0
       },
       {
-        "ingredient_code": "ING_005",
-        "name": "Onion",
-        "quantity_g": 20.0
+        "ingredient_code": "80",
+        "name": "Chicken (standardized estimate)",
+        "quantity_g": 100.0
       },
       {
-        "ingredient_code": "ING_006",
-        "name": "Seasoning & Spices (Thyme, Curry, Stock)",
+        "ingredient_code": "149",
+        "name": "Stock cube (standardized estimate)",
         "quantity_g": 5.0
       }
     ],
     "nutrients_raw_100g": {
-      "calories_kcal": 256.87,
-      "protein_g": 4.33,
-      "fat_g": 7.11,
-      "carbs_g": 43.06,
-      "fiber_g": 1.66,
-      "sodium_mg": 430.06,
-      "calcium_mg": 14.32,
-      "iron_mg": 0.9
+      "calories_kcal": 228.73,
+      "protein_g": 7.01,
+      "fat_g": 6.21,
+      "carbs_g": 35.51,
+      "fiber_g": 1.4,
+      "sodium_mg": 194.27,
+      "calcium_mg": 14.17,
+      "iron_mg": 0.83
     },
     "nutrients_cooked_100g": {
-      "calories_kcal": 291.9,
-      "protein_g": 4.92,
-      "fat_g": 8.08,
-      "carbs_g": 48.93,
-      "fiber_g": 1.88,
-      "sodium_mg": 488.7,
-      "calcium_mg": 16.28,
-      "iron_mg": 1.02
+      "calories_kcal": 114.36,
+      "protein_g": 3.51,
+      "fat_g": 3.1,
+      "carbs_g": 17.75,
+      "fiber_g": 0.7,
+      "sodium_mg": 97.13,
+      "calcium_mg": 7.09,
+      "iron_mg": 0.42
     },
+    "raw_batch_mass_g": 575.0,
     "wafct_code": "01_042",
-    "description": "Nigerian Jollof Rice. Standard portion: 250.0g. Constituent ingredients: Long Grain White Rice, Tomato Paste, Red Bell Pepper & Scotch Bonnet Blend, Vegetable Oil, Onion, Seasoning & Spices (Thyme, Curry, Stock). Cooked yield factor: 0.88.",
-    "aliases": [
-      "jollof",
-      "jollof rice",
-      "nigerian jollof",
-      "nigerian jollof rice",
-      "party jollof",
-      "party jollof rice",
-      "smoky jollof",
-      "rice and stew",
-      "benachin"
-    ]
+    "description": "Jollof rice. Standard portion: 250.0g. Constituent ingredients: Rice - imported, Tomato puree, Fresh pepper, Onions, Vegetable oil (standardized estimate), Chicken (standardized estimate), Stock cube (standardized estimate). Cooked yield factor: 2.0.",
+    "aliases": [],
+    "source_url": "https://www.allnigerianrecipes.com/rice/nigerian-jollof-rice/",
+    "nutrition_note": "Recipe-based estimate using the local food composition table. The published recipe gives rice, tomato stew, chicken, pepper, onions and seasonings but not weights for every ingredient; ingredient weights and cooked yield are standardized estimates. No aliases are indexed."
   },
   "egusi_soup": {
     "dish_id": "egusi_soup",
     "dish_name": "Egusi Melon Seed Soup",
     "standard_serving_g": 200.0,
     "cooking_yield_factor": 0.85,
-    "raw_batch_mass_g": 185.0,
     "raw_ingredients": [
       {
         "ingredient_code": "ING_010",
@@ -129,6 +125,7 @@
       "calcium_mg": 296.1,
       "iron_mg": 5.6
     },
+    "raw_batch_mass_g": 185.0,
     "wafct_code": "03_015",
     "description": "Egusi Melon Seed Soup. Standard portion: 200.0g. Constituent ingredients: Ground Egusi (Melon Seeds), Red Palm Oil, Spinach / Ugwu Leaves, Ground Dried Crayfish, Onion & Pepper Puree, Smoked Fish / Stockfish. Cooked yield factor: 0.85.",
     "aliases": [
@@ -140,64 +137,54 @@
       "egusi with ugwu",
       "fried egusi",
       "egusi and pounded yam"
-    ]
+    ],
+    "source_url": null,
+    "nutrition_note": null
   },
   "amala": {
     "dish_id": "amala",
-    "dish_name": "Amala (Yam Flour Swallow)",
-    "standard_serving_g": 300.0,
+    "dish_name": "Amala",
+    "standard_serving_g": 250.0,
     "cooking_yield_factor": 2.5,
-    "raw_batch_mass_g": 300.0,
     "raw_ingredients": [
       {
         "ingredient_code": "ING_020",
         "name": "Yam Flour (Elubo)",
         "quantity_g": 100.0
-      },
-      {
-        "ingredient_code": "ING_021",
-        "name": "Water",
-        "quantity_g": 200.0
       }
     ],
     "nutrients_raw_100g": {
-      "calories_kcal": 108.87,
-      "protein_g": 2.27,
-      "fat_g": 0.2,
-      "carbs_g": 22.1,
-      "fiber_g": 4.8,
-      "sodium_mg": 6.33,
-      "calcium_mg": 28.67,
-      "iron_mg": 0.67
+      "calories_kcal": 326.6,
+      "protein_g": 6.8,
+      "fat_g": 0.6,
+      "carbs_g": 66.3,
+      "fiber_g": 14.4,
+      "sodium_mg": 19.0,
+      "calcium_mg": 66.0,
+      "iron_mg": 2.0
     },
     "nutrients_cooked_100g": {
-      "calories_kcal": 43.55,
-      "protein_g": 0.91,
-      "fat_g": 0.08,
-      "carbs_g": 8.84,
-      "fiber_g": 1.92,
-      "sodium_mg": 2.53,
-      "calcium_mg": 11.47,
-      "iron_mg": 0.27
+      "calories_kcal": 130.64,
+      "protein_g": 2.72,
+      "fat_g": 0.24,
+      "carbs_g": 26.52,
+      "fiber_g": 5.76,
+      "sodium_mg": 7.6,
+      "calcium_mg": 26.4,
+      "iron_mg": 0.8
     },
+    "raw_batch_mass_g": 100.0,
     "wafct_code": "02_005",
-    "description": "Amala (Yam Flour Swallow). Standard portion: 300.0g. Constituent ingredients: Yam Flour (Elubo), Water. Cooked yield factor: 2.5.",
-    "aliases": [
-      "amala",
-      "amala dudu",
-      "elubo",
-      "yam flour",
-      "yam flour swallow",
-      "amala swallow",
-      "amala isu"
-    ]
+    "description": "Amala. Standard portion: 250.0g. Constituent ingredients: Yam Flour (Elubo). Cooked yield factor: 2.5.",
+    "aliases": [],
+    "source_url": "https://lounje.ng/recipes/cookbook-103",
+    "nutrition_note": "Estimate for yam-flour amala. The source describes yam flour cooked with water; water is not counted as a nutrient-bearing ingredient, and the 2.5 cooked-yield factor represents hydration. No aliases are indexed."
   },
   "fried_plantain": {
     "dish_id": "fried_plantain",
     "dish_name": "Fried Ripe Plantain (Dodo)",
     "standard_serving_g": 150.0,
     "cooking_yield_factor": 0.78,
-    "raw_batch_mass_g": 183.0,
     "raw_ingredients": [
       {
         "ingredient_code": "ING_030",
@@ -235,6 +222,7 @@
       "calcium_mg": 6.53,
       "iron_mg": 0.63
     },
+    "raw_batch_mass_g": 183.0,
     "wafct_code": "02_018",
     "description": "Fried Ripe Plantain (Dodo). Standard portion: 150.0g. Constituent ingredients: Ripe Plantain, Vegetable Oil (Absorbed), Salt. Cooked yield factor: 0.78.",
     "aliases": [
@@ -245,72 +233,313 @@
       "plantain",
       "alloco",
       "kelewele"
-    ]
+    ],
+    "source_url": null,
+    "nutrition_note": null
   },
   "moi_moi": {
     "dish_id": "moi_moi",
-    "dish_name": "Steamed Bean Cake (Moi Moi)",
-    "standard_serving_g": 200.0,
-    "cooking_yield_factor": 1.1,
-    "raw_batch_mass_g": 208.0,
+    "dish_name": "Moi moi",
+    "standard_serving_g": 150.0,
+    "cooking_yield_factor": 1.4,
     "raw_ingredients": [
       {
-        "ingredient_code": "ING_040",
-        "name": "Black-Eyed Peas (Peeled Beans)",
-        "quantity_g": 80.0
+        "ingredient_code": "41",
+        "name": "Brown beans",
+        "quantity_g": 200.0
       },
       {
-        "ingredient_code": "ING_041",
-        "name": "Red Bell Pepper & Onion Paste",
+        "ingredient_code": "76",
+        "name": "Fresh pepper",
+        "quantity_g": 40.0
+      },
+      {
+        "ingredient_code": "72",
+        "name": "Onions",
+        "quantity_g": 30.0
+      },
+      {
+        "ingredient_code": "532",
+        "name": "Vegetable oil",
         "quantity_g": 35.0
       },
       {
-        "ingredient_code": "ING_042",
-        "name": "Vegetable Oil",
-        "quantity_g": 15.0
-      },
-      {
-        "ingredient_code": "ING_043",
-        "name": "Ground Crayfish & Seasoning",
+        "ingredient_code": "1071",
+        "name": "Crayfish (standardized estimate)",
         "quantity_g": 8.0
       },
       {
-        "ingredient_code": "ING_044",
-        "name": "Water",
-        "quantity_g": 70.0
+        "ingredient_code": "149",
+        "name": "Stock cube (standardized estimate)",
+        "quantity_g": 4.0
       }
     ],
     "nutrients_raw_100g": {
-      "calories_kcal": 207.21,
-      "protein_g": 10.35,
-      "fat_g": 8.11,
-      "carbs_g": 20.42,
-      "fiber_g": 5.55,
-      "sodium_mg": 230.55,
-      "calcium_mg": 37.32,
-      "iron_mg": 2.71
+      "calories_kcal": 328.79,
+      "protein_g": 16.61,
+      "fat_g": 12.45,
+      "carbs_g": 33.07,
+      "fiber_g": 9.01,
+      "sodium_mg": 256.54,
+      "calcium_mg": 53.78,
+      "iron_mg": 4.38
     },
     "nutrients_cooked_100g": {
-      "calories_kcal": 188.37,
-      "protein_g": 9.41,
-      "fat_g": 7.38,
-      "carbs_g": 18.57,
-      "fiber_g": 5.04,
-      "sodium_mg": 209.59,
-      "calcium_mg": 33.93,
-      "iron_mg": 2.47
+      "calories_kcal": 234.85,
+      "protein_g": 11.86,
+      "fat_g": 8.89,
+      "carbs_g": 23.62,
+      "fiber_g": 6.43,
+      "sodium_mg": 183.24,
+      "calcium_mg": 38.42,
+      "iron_mg": 3.13
     },
+    "raw_batch_mass_g": 317.0,
     "wafct_code": "04_021",
-    "description": "Steamed Bean Cake (Moi Moi). Standard portion: 200.0g. Constituent ingredients: Black-Eyed Peas (Peeled Beans), Red Bell Pepper & Onion Paste, Vegetable Oil, Ground Crayfish & Seasoning, Water. Cooked yield factor: 1.1.",
-    "aliases": [
-      "moi moi",
-      "moimoi",
-      "moyi moyi",
-      "steamed bean cake",
-      "bean cake",
-      "bean pudding",
-      "steamed beans",
-      "oleleh"
-    ]
+    "description": "Moi moi. Standard portion: 150.0g. Constituent ingredients: Brown beans, Fresh pepper, Onions, Vegetable oil, Crayfish (standardized estimate), Stock cube (standardized estimate). Cooked yield factor: 1.4.",
+    "aliases": [],
+    "source_url": "https://www.allnigerianrecipes.com/beans/moi-moi-with-pouch/",
+    "nutrition_note": "Recipe-based estimate using the local food composition table. Published recipe includes beans, peppers, vegetable oil, onion, crayfish and seasonings; some quantities and the cooked yield are standardized estimates. Water is represented in the yield factor. No aliases are indexed."
+  },
+  "akara": {
+    "dish_id": "akara",
+    "dish_name": "Akara",
+    "standard_serving_g": 120.0,
+    "cooking_yield_factor": 1.15,
+    "raw_ingredients": [
+      {
+        "ingredient_code": "41",
+        "name": "Brown beans",
+        "quantity_g": 150.0
+      },
+      {
+        "ingredient_code": "72",
+        "name": "Onions",
+        "quantity_g": 15.0
+      },
+      {
+        "ingredient_code": "76",
+        "name": "Fresh pepper",
+        "quantity_g": 5.0
+      },
+      {
+        "ingredient_code": "532",
+        "name": "Vegetable oil retained after frying (estimate)",
+        "quantity_g": 18.0
+      },
+      {
+        "ingredient_code": "141",
+        "name": "Salt (standardized estimate)",
+        "quantity_g": 1.0
+      }
+    ],
+    "nutrients_raw_100g": {
+      "calories_kcal": 363.91,
+      "protein_g": 20.09,
+      "fat_g": 11.09,
+      "carbs_g": 40.44,
+      "fiber_g": 11.01,
+      "sodium_mg": 222.87,
+      "calcium_mg": 62.92,
+      "iron_mg": 5.28
+    },
+    "nutrients_cooked_100g": {
+      "calories_kcal": 316.45,
+      "protein_g": 17.47,
+      "fat_g": 9.64,
+      "carbs_g": 35.16,
+      "fiber_g": 9.57,
+      "sodium_mg": 193.8,
+      "calcium_mg": 54.72,
+      "iron_mg": 4.59
+    },
+    "raw_batch_mass_g": 189.0,
+    "wafct_code": "WAFCT_AKARA",
+    "description": "Akara. Standard portion: 120.0g. Constituent ingredients: Brown beans, Onions, Fresh pepper, Vegetable oil retained after frying (estimate), Salt (standardized estimate). Cooked yield factor: 1.15.",
+    "aliases": [],
+    "source_url": "https://www.allnigerianrecipes.com/breakfast-recipes/perfect-nigerian-akara-recipe/",
+    "nutrition_note": "Recipe-based estimate using the local food composition table. Bean, onion, pepper and salt ingredients follow the published recipe; retained frying oil and cooked yield are estimates because the source does not quantify oil absorption."
+  },
+  "beef": {
+    "dish_id": "beef",
+    "dish_name": "Beef",
+    "standard_serving_g": 100.0,
+    "cooking_yield_factor": 1.0,
+    "raw_ingredients": [
+      {
+        "ingredient_code": "90",
+        "name": "Beef",
+        "quantity_g": 100.0
+      }
+    ],
+    "nutrients_raw_100g": {
+      "calories_kcal": 211.06,
+      "protein_g": 19.02,
+      "fat_g": 14.96,
+      "carbs_g": 0.08,
+      "fiber_g": 0.0,
+      "sodium_mg": 72.71,
+      "calcium_mg": 13.36,
+      "iron_mg": 1.54
+    },
+    "nutrients_cooked_100g": {
+      "calories_kcal": 211.06,
+      "protein_g": 19.02,
+      "fat_g": 14.96,
+      "carbs_g": 0.08,
+      "fiber_g": 0.0,
+      "sodium_mg": 72.71,
+      "calcium_mg": 13.36,
+      "iron_mg": 1.54
+    },
+    "raw_batch_mass_g": 100.0,
+    "wafct_code": "WAFCT_BEEF",
+    "description": "Beef. Standard portion: 100.0g. Constituent ingredients: Beef. Cooked yield factor: 1.0.",
+    "aliases": [],
+    "source_url": null,
+    "nutrition_note": "Per-100g composition-table entry for beef. This is the local table's generic beef value and is not adjusted for a specific cut or cooking method."
+  },
+  "fried_rice": {
+    "dish_id": "fried_rice",
+    "dish_name": "Fried rice",
+    "standard_serving_g": 250.0,
+    "cooking_yield_factor": 2.0,
+    "raw_ingredients": [
+      {
+        "ingredient_code": "14",
+        "name": "Rice - imported",
+        "quantity_g": 200.0
+      },
+      {
+        "ingredient_code": "80",
+        "name": "Chicken",
+        "quantity_g": 150.0
+      },
+      {
+        "ingredient_code": "79",
+        "name": "Other vegetables (green-bean proxy)",
+        "quantity_g": 60.0
+      },
+      {
+        "ingredient_code": "72",
+        "name": "Onions (aromatic proxy)",
+        "quantity_g": 20.0
+      },
+      {
+        "ingredient_code": "532",
+        "name": "Vegetable oil",
+        "quantity_g": 42.0
+      },
+      {
+        "ingredient_code": "141",
+        "name": "Salt (standardized estimate)",
+        "quantity_g": 3.0
+      }
+    ],
+    "nutrients_raw_100g": {
+      "calories_kcal": 281.66,
+      "protein_g": 9.51,
+      "fat_g": 11.76,
+      "carbs_g": 33.87,
+      "fiber_g": 1.13,
+      "sodium_mg": 259.35,
+      "calcium_mg": 12.5,
+      "iron_mg": 1.59
+    },
+    "nutrients_cooked_100g": {
+      "calories_kcal": 140.83,
+      "protein_g": 4.76,
+      "fat_g": 5.88,
+      "carbs_g": 16.94,
+      "fiber_g": 0.57,
+      "sodium_mg": 129.67,
+      "calcium_mg": 6.25,
+      "iron_mg": 0.79
+    },
+    "raw_batch_mass_g": 475.0,
+    "wafct_code": "WAFCT_FRIED_RICE",
+    "description": "Fried rice. Standard portion: 250.0g. Constituent ingredients: Rice - imported, Chicken, Other vegetables (green-bean proxy), Onions (aromatic proxy), Vegetable oil, Salt (standardized estimate). Cooked yield factor: 2.0.",
+    "aliases": [],
+    "source_url": "https://apnews.com/article/0e1b2a080a938ae66bf68a60b6772f05",
+    "nutrition_note": "Recipe-based estimate adapted from a Nigerian-inspired fried-rice recipe with rice, chicken, green beans, oil and seasonings. The local food table lacks a green-bean entry, so its quantity uses the generic other-vegetables entry; cooked-rice conversion and yield are standardized estimates."
+  },
+  "efo": {
+    "dish_id": "efo",
+    "dish_name": "Efo",
+    "standard_serving_g": 250.0,
+    "cooking_yield_factor": 0.9,
+    "raw_ingredients": [
+      {
+        "ingredient_code": "7812",
+        "name": "Amaranth (efo/tete) leaves",
+        "quantity_g": 500.0
+      },
+      {
+        "ingredient_code": "50",
+        "name": "Palm oil",
+        "quantity_g": 184.0
+      },
+      {
+        "ingredient_code": "76",
+        "name": "Fresh pepper",
+        "quantity_g": 250.0
+      },
+      {
+        "ingredient_code": "72",
+        "name": "Onions",
+        "quantity_g": 100.0
+      },
+      {
+        "ingredient_code": "90",
+        "name": "Beef (assorted-meat estimate)",
+        "quantity_g": 200.0
+      },
+      {
+        "ingredient_code": "1071",
+        "name": "Crayfish (standardized estimate)",
+        "quantity_g": 16.0
+      },
+      {
+        "ingredient_code": "456",
+        "name": "Locust beans",
+        "quantity_g": 20.0
+      },
+      {
+        "ingredient_code": "149",
+        "name": "Stock cube (standardized estimate)",
+        "quantity_g": 8.0
+      },
+      {
+        "ingredient_code": "141",
+        "name": "Salt (standardized estimate)",
+        "quantity_g": 2.0
+      }
+    ],
+    "nutrients_raw_100g": {
+      "calories_kcal": 188.72,
+      "protein_g": 5.0,
+      "fat_g": 17.11,
+      "carbs_g": 2.82,
+      "fiber_g": 1.7,
+      "sodium_mg": 195.61,
+      "calcium_mg": 116.94,
+      "iron_mg": 2.54
+    },
+    "nutrients_cooked_100g": {
+      "calories_kcal": 209.69,
+      "protein_g": 5.56,
+      "fat_g": 19.02,
+      "carbs_g": 3.14,
+      "fiber_g": 1.89,
+      "sodium_mg": 217.35,
+      "calcium_mg": 129.94,
+      "iron_mg": 2.82
+    },
+    "raw_batch_mass_g": 1280.0,
+    "wafct_code": "WAFCT_EFO",
+    "description": "Efo. Standard portion: 250.0g. Constituent ingredients: Amaranth (efo/tete) leaves, Palm oil, Fresh pepper, Onions, Beef (assorted-meat estimate), Crayfish (standardized estimate), Locust beans, Stock cube (standardized estimate), Salt (standardized estimate). Cooked yield factor: 0.9.",
+    "aliases": [],
+    "source_url": "https://www.allnigerianrecipes.com/soups/efo-riro/",
+    "nutrition_note": "Recipe-based estimate for the vegetable soup, displayed and indexed as Efo. The source quantifies the leaves and palm oil but leaves assorted meat and several seasonings to taste; their quantities and final cooked yield are standardized estimates."
   }
 }

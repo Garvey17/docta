@@ -2,16 +2,19 @@
   "recipes": [
     {
       "dish_id": "jollof_rice",
-      "dish_name": "Nigerian Jollof Rice",
+      "dish_name": "Jollof rice",
       "standard_serving_g": 250.0,
-      "cooking_yield_factor": 0.88,
+      "cooking_yield_factor": 2.0,
+      "source_url": "https://www.allnigerianrecipes.com/rice/nigerian-jollof-rice/",
+      "nutrition_note": "Recipe-based estimate using the local food composition table. The published recipe gives rice, tomato stew, chicken, pepper, onions and seasonings but not weights for every ingredient; ingredient weights and cooked yield are standardized estimates. No aliases are indexed.",
       "ingredients": [
-        { "ingredient_code": "ING_001", "name": "Long Grain White Rice", "quantity_g": 120.0 },
-        { "ingredient_code": "ING_002", "name": "Tomato Paste", "quantity_g": 30.0 },
-        { "ingredient_code": "ING_003", "name": "Red Bell Pepper & Scotch Bonnet Blend", "quantity_g": 40.0 },
-        { "ingredient_code": "ING_004", "name": "Vegetable Oil", "quantity_g": 15.0 },
-        { "ingredient_code": "ING_005", "name": "Onion", "quantity_g": 20.0 },
-        { "ingredient_code": "ING_006", "name": "Seasoning & Spices (Thyme, Curry, Stock)", "quantity_g": 5.0 }
+        {"ingredient_code": "14", "name": "Rice - imported", "quantity_g": 250.0},
+        {"ingredient_code": "71", "name": "Tomato puree", "quantity_g": 120.0},
+        {"ingredient_code": "76", "name": "Fresh pepper", "quantity_g": 35.0},
+        {"ingredient_code": "72", "name": "Onions", "quantity_g": 40.0},
+        {"ingredient_code": "532", "name": "Vegetable oil (standardized estimate)", "quantity_g": 25.0},
+        {"ingredient_code": "80", "name": "Chicken (standardized estimate)", "quantity_g": 100.0},
+        {"ingredient_code": "149", "name": "Stock cube (standardized estimate)", "quantity_g": 5.0}
       ]
     },
     {
@@ -20,22 +23,23 @@
       "standard_serving_g": 200.0,
       "cooking_yield_factor": 0.85,
       "ingredients": [
-        { "ingredient_code": "ING_010", "name": "Ground Egusi (Melon Seeds)", "quantity_g": 60.0 },
-        { "ingredient_code": "ING_011", "name": "Red Palm Oil", "quantity_g": 20.0 },
-        { "ingredient_code": "ING_012", "name": "Spinach / Ugwu Leaves", "quantity_g": 40.0 },
-        { "ingredient_code": "ING_013", "name": "Ground Dried Crayfish", "quantity_g": 10.0 },
-        { "ingredient_code": "ING_014", "name": "Onion & Pepper Puree", "quantity_g": 30.0 },
-        { "ingredient_code": "ING_015", "name": "Smoked Fish / Stockfish", "quantity_g": 25.0 }
+        {"ingredient_code": "ING_010", "name": "Ground Egusi (Melon Seeds)", "quantity_g": 60.0},
+        {"ingredient_code": "ING_011", "name": "Red Palm Oil", "quantity_g": 20.0},
+        {"ingredient_code": "ING_012", "name": "Spinach / Ugwu Leaves", "quantity_g": 40.0},
+        {"ingredient_code": "ING_013", "name": "Ground Dried Crayfish", "quantity_g": 10.0},
+        {"ingredient_code": "ING_014", "name": "Onion & Pepper Puree", "quantity_g": 30.0},
+        {"ingredient_code": "ING_015", "name": "Smoked Fish / Stockfish", "quantity_g": 25.0}
       ]
     },
     {
       "dish_id": "amala",
-      "dish_name": "Amala (Yam Flour Swallow)",
-      "standard_serving_g": 300.0,
-      "cooking_yield_factor": 2.50,
+      "dish_name": "Amala",
+      "standard_serving_g": 250.0,
+      "cooking_yield_factor": 2.5,
+      "source_url": "https://lounje.ng/recipes/cookbook-103",
+      "nutrition_note": "Estimate for yam-flour amala. The source describes yam flour cooked with water; water is not counted as a nutrient-bearing ingredient, and the 2.5 cooked-yield factor represents hydration. No aliases are indexed.",
       "ingredients": [
-        { "ingredient_code": "ING_020", "name": "Yam Flour (Elubo)", "quantity_g": 100.0 },
-        { "ingredient_code": "ING_021", "name": "Water", "quantity_g": 200.0 }
+        {"ingredient_code": "ING_020", "name": "Yam Flour (Elubo)", "quantity_g": 100.0}
       ]
     },
     {
@@ -44,22 +48,85 @@
       "standard_serving_g": 150.0,
       "cooking_yield_factor": 0.78,
       "ingredients": [
-        { "ingredient_code": "ING_030", "name": "Ripe Plantain", "quantity_g": 170.0 },
-        { "ingredient_code": "ING_031", "name": "Vegetable Oil (Absorbed)", "quantity_g": 12.0 },
-        { "ingredient_code": "ING_032", "name": "Salt", "quantity_g": 1.0 }
+        {"ingredient_code": "ING_030", "name": "Ripe Plantain", "quantity_g": 170.0},
+        {"ingredient_code": "ING_031", "name": "Vegetable Oil (Absorbed)", "quantity_g": 12.0},
+        {"ingredient_code": "ING_032", "name": "Salt", "quantity_g": 1.0}
       ]
     },
     {
       "dish_id": "moi_moi",
-      "dish_name": "Steamed Bean Cake (Moi Moi)",
-      "standard_serving_g": 200.0,
-      "cooking_yield_factor": 1.10,
+      "dish_name": "Moi moi",
+      "standard_serving_g": 150.0,
+      "cooking_yield_factor": 1.4,
+      "source_url": "https://www.allnigerianrecipes.com/beans/moi-moi-with-pouch/",
+      "nutrition_note": "Recipe-based estimate using the local food composition table. Published recipe includes beans, peppers, vegetable oil, onion, crayfish and seasonings; some quantities and the cooked yield are standardized estimates. Water is represented in the yield factor. No aliases are indexed.",
       "ingredients": [
-        { "ingredient_code": "ING_040", "name": "Black-Eyed Peas (Peeled Beans)", "quantity_g": 80.0 },
-        { "ingredient_code": "ING_041", "name": "Red Bell Pepper & Onion Paste", "quantity_g": 35.0 },
-        { "ingredient_code": "ING_042", "name": "Vegetable Oil", "quantity_g": 15.0 },
-        { "ingredient_code": "ING_043", "name": "Ground Crayfish & Seasoning", "quantity_g": 8.0 },
-        { "ingredient_code": "ING_044", "name": "Water", "quantity_g": 70.0 }
+        {"ingredient_code": "41", "name": "Brown beans", "quantity_g": 200.0},
+        {"ingredient_code": "76", "name": "Fresh pepper", "quantity_g": 40.0},
+        {"ingredient_code": "72", "name": "Onions", "quantity_g": 30.0},
+        {"ingredient_code": "532", "name": "Vegetable oil", "quantity_g": 35.0},
+        {"ingredient_code": "1071", "name": "Crayfish (standardized estimate)", "quantity_g": 8.0},
+        {"ingredient_code": "149", "name": "Stock cube (standardized estimate)", "quantity_g": 4.0}
+      ]
+    },
+    {
+      "dish_id": "akara",
+      "dish_name": "Akara",
+      "standard_serving_g": 120.0,
+      "cooking_yield_factor": 1.15,
+      "source_url": "https://www.allnigerianrecipes.com/breakfast-recipes/perfect-nigerian-akara-recipe/",
+      "nutrition_note": "Recipe-based estimate using the local food composition table. Bean, onion, pepper and salt ingredients follow the published recipe; retained frying oil and cooked yield are estimates because the source does not quantify oil absorption.",
+      "ingredients": [
+        {"ingredient_code": "41", "name": "Brown beans", "quantity_g": 150.0},
+        {"ingredient_code": "72", "name": "Onions", "quantity_g": 15.0},
+        {"ingredient_code": "76", "name": "Fresh pepper", "quantity_g": 5.0},
+        {"ingredient_code": "532", "name": "Vegetable oil retained after frying (estimate)", "quantity_g": 18.0},
+        {"ingredient_code": "141", "name": "Salt (standardized estimate)", "quantity_g": 1.0}
+      ]
+    },
+    {
+      "dish_id": "beef",
+      "dish_name": "Beef",
+      "standard_serving_g": 100.0,
+      "cooking_yield_factor": 1.0,
+      "nutrition_note": "Per-100g composition-table entry for beef. This is the local table's generic beef value and is not adjusted for a specific cut or cooking method.",
+      "ingredients": [
+        {"ingredient_code": "90", "name": "Beef", "quantity_g": 100.0}
+      ]
+    },
+    {
+      "dish_id": "fried_rice",
+      "dish_name": "Fried rice",
+      "standard_serving_g": 250.0,
+      "cooking_yield_factor": 2.0,
+      "source_url": "https://apnews.com/article/0e1b2a080a938ae66bf68a60b6772f05",
+      "nutrition_note": "Recipe-based estimate adapted from a Nigerian-inspired fried-rice recipe with rice, chicken, green beans, oil and seasonings. The local food table lacks a green-bean entry, so its quantity uses the generic other-vegetables entry; cooked-rice conversion and yield are standardized estimates.",
+      "ingredients": [
+        {"ingredient_code": "14", "name": "Rice - imported", "quantity_g": 200.0},
+        {"ingredient_code": "80", "name": "Chicken", "quantity_g": 150.0},
+        {"ingredient_code": "79", "name": "Other vegetables (green-bean proxy)", "quantity_g": 60.0},
+        {"ingredient_code": "72", "name": "Onions (aromatic proxy)", "quantity_g": 20.0},
+        {"ingredient_code": "532", "name": "Vegetable oil", "quantity_g": 42.0},
+        {"ingredient_code": "141", "name": "Salt (standardized estimate)", "quantity_g": 3.0}
+      ]
+    },
+    {
+      "dish_id": "efo",
+      "dish_name": "Efo",
+      "standard_serving_g": 250.0,
+      "cooking_yield_factor": 0.9,
+      "source_url": "https://www.allnigerianrecipes.com/soups/efo-riro/",
+      "nutrition_note": "Recipe-based estimate for the vegetable soup, displayed and indexed as Efo. The source quantifies the leaves and palm oil but leaves assorted meat and several seasonings to taste; their quantities and final cooked yield are standardized estimates.",
+      "ingredients": [
+        {"ingredient_code": "7812", "name": "Amaranth (efo/tete) leaves", "quantity_g": 500.0},
+        {"ingredient_code": "50", "name": "Palm oil", "quantity_g": 184.0},
+        {"ingredient_code": "76", "name": "Fresh pepper", "quantity_g": 250.0},
+        {"ingredient_code": "72", "name": "Onions", "quantity_g": 100.0},
+        {"ingredient_code": "90", "name": "Beef (assorted-meat estimate)", "quantity_g": 200.0},
+        {"ingredient_code": "1071", "name": "Crayfish (standardized estimate)", "quantity_g": 16.0},
+        {"ingredient_code": "456", "name": "Locust beans", "quantity_g": 20.0},
+        {"ingredient_code": "149", "name": "Stock cube (standardized estimate)", "quantity_g": 8.0},
+        {"ingredient_code": "141", "name": "Salt (standardized estimate)", "quantity_g": 2.0}
       ]
     }
   ]

@@ -114,6 +114,8 @@ def compute_composite_profile(
         wafct_code=wafct_code,
         description=description,
         aliases=aliases or [],
+        source_url=recipe.source_url,
+        nutrition_note=recipe.nutrition_note,
     )
 
 

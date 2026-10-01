@@ -9,9 +9,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
-# Install python dependencies
+# Install backend and data-pipeline dependencies
 COPY requirements.txt .
-RUN pip install --no-cache-dir --user -r requirements.txt
+COPY src/data_pipeline/requirements.txt ./data-pipeline-requirements.txt
+RUN pip install --no-cache-dir --user -r requirements.txt -r data-pipeline-requirements.txt
 
 # Final runtime container
 FROM python:3.12-slim AS runtime

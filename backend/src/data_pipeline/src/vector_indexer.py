@@ -1,13 +1,14 @@
 """Qdrant Vector Indexer using LangChain and OpenAI Embeddings for Qdrant Cloud.
 
 Handles embedding composite Nigerian dishes and indexing them into Qdrant Cloud
-using LangChain's QdrantVectorStore with graceful offline fallback.
+using LangChain's QdrantVectorStore and live OpenAI embeddings.
 """
 
 import hashlib
 import json
 import logging
 import os
+import uuid
 from pathlib import Path
 from typing import Dict, Any, List, Optional
 import numpy as np
@@ -106,10 +107,12 @@ class TextEmbedder:
 
 
 def get_embeddings(settings: Optional[Settings] = None):
-    """Initialize LangChain OpenAI Embeddings."""
+    """Initialize real OpenAI embeddings or fail with a configuration error."""
     cfg = settings or get_settings()
-    if not cfg.openai_api_key or OpenAIEmbeddings is None:
-        return None
+    if not cfg.openai_api_key:
+        raise ValueError("OPENAI_API_KEY is required for Qdrant semantic search.")
+    if OpenAIEmbeddings is None:
+        raise ImportError("langchain-openai is required for Qdrant semantic search.")
     return OpenAIEmbeddings(
         api_key=cfg.openai_api_key,
         model=cfg.embedding_model,
@@ -130,31 +133,22 @@ def get_qdrant_client(
     if path is not None:
         return QdrantClient(path=path)
 
-    if use_memory or os.getenv("USE_IN_MEMORY_FALLBACK", "false").lower() == "true":
+    if use_memory:
         return QdrantClient(":memory:")
 
     cfg = settings or get_settings()
 
-    # If Qdrant Cloud credentials are provided, connect to Cloud
-    if cfg.qdrant_url and not host:
-        try:
-            client = QdrantClient(
-                url=cfg.qdrant_url,
-                api_key=cfg.qdrant_api_key,
-                timeout=30.0,
-            )
-            client.get_collections()
-            return client
-        except Exception as e:
-            logger.warning(f"Could not connect to Qdrant Cloud at {cfg.qdrant_url}: {e}. Falling back to in-memory mode.")
-
     if host:
-        try:
-            return QdrantClient(host=host, port=port, timeout=2.0)
-        except Exception:
-            return QdrantClient(":memory:")
+        client = QdrantClient(host=host, port=port, timeout=10.0)
+        client.get_collections()
+        return client
 
-    return QdrantClient(":memory:")
+    if not cfg.qdrant_url or not cfg.qdrant_api_key:
+        raise ValueError("QDRANT_URL and QDRANT_API_KEY are required for live RAG.")
+
+    client = QdrantClient(url=cfg.qdrant_url, api_key=cfg.qdrant_api_key, timeout=30.0)
+    client.get_collections()
+    return client
 
 
 def build_dish_document_text(dish: Dict[str, Any]) -> str:
@@ -189,6 +183,8 @@ def create_dish_documents(dishes: Dict[str, Any]) -> List[Document]:
                 "wafct_code": dish.get("wafct_code", "00_COMPOSITE"),
                 "nutrients_cooked_100g": json.dumps(dish.get("nutrients_cooked_100g", {})),
                 "aliases": json.dumps(dish.get("aliases", [])),
+                "source_url": dish.get("source_url") or "",
+                "nutrition_note": dish.get("nutrition_note") or "",
             }
         )
         docs.append(doc)
@@ -201,6 +197,7 @@ def index_composite_dishes(
     collection_name: Optional[str] = None,
     settings: Optional[Settings] = None,
     embedder: Optional[Any] = None,
+    recreate_collection: bool = False,
 ) -> int:
     """Index composite dishes into Qdrant Cloud using LangChain."""
     cfg = settings or get_settings()
@@ -224,6 +221,12 @@ def index_composite_dishes(
     collections = [c.name for c in target_client.get_collections().collections]
     vector_size = VECTOR_DIMENSION
     
+    if target_coll in collections and recreate_collection:
+        # This operation is intentionally explicit: it replaces this one
+        # configured collection, removing legacy payloads and duplicate points.
+        target_client.delete_collection(collection_name=target_coll)
+        collections.remove(target_coll)
+
     if target_coll not in collections:
         target_client.create_collection(
             collection_name=target_coll,
@@ -233,36 +236,19 @@ def index_composite_dishes(
             ),
         )
 
-    # Use QdrantVectorStore if embeddings are configured
-    if embeddings is not None and QdrantVectorStore is not None:
-        try:
-            vector_store = QdrantVectorStore(
-                client=target_client,
-                collection_name=target_coll,
-                embedding=embeddings,
-            )
-            vector_store.add_documents(docs)
-            logger.info(f"Indexed {len(docs)} dish documents into Qdrant Cloud via LangChain.")
-            return len(docs)
-        except Exception as e:
-            logger.warning(f"Error indexing via LangChain QdrantVectorStore: {e}")
-
-    # Fallback direct insertion
-    fallback_embedder = embedder or TextEmbedder()
-    texts = [d.page_content for d in docs]
-    vectors = fallback_embedder.embed_texts(texts)
-    
-    points = []
-    for idx, (doc, vector) in enumerate(zip(docs, vectors)):
-        point = qmodels.PointStruct(
-            id=idx + 1,
-            vector=vector,
-            payload=doc.metadata,
-        )
-        points.append(point)
-
-    target_client.upsert(
+    if QdrantVectorStore is None:
+        raise ImportError("langchain-qdrant is required to index live dish records.")
+    vector_store = QdrantVectorStore(
+        client=target_client,
         collection_name=target_coll,
-        points=points,
+        embedding=embeddings,
     )
-    return len(points)
+    # Stable point IDs make ordinary re-indexes update each dish instead of
+    # accumulating duplicate records in the collection.
+    point_ids = [
+        str(uuid.uuid5(uuid.NAMESPACE_URL, f"{target_coll}/{doc.metadata['dish_id']}"))
+        for doc in docs
+    ]
+    vector_store.add_documents(docs, ids=point_ids)
+    logger.info("Indexed %s dish documents into Qdrant.", len(docs))
+    return len(docs)

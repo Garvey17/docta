@@ -87,6 +87,8 @@ class Recipe(BaseModel):
     standard_serving_g: float = Field(..., gt=0.0)
     cooking_yield_factor: float = Field(..., gt=0.0)
     ingredients: List[Ingredient]
+    source_url: Optional[str] = None
+    nutrition_note: Optional[str] = None
 
 
 class RecipeIngredientLookup(BaseModel):
@@ -111,6 +113,8 @@ class CompositeDish(BaseModel):
     wafct_code: str = "WAFCT_COMPOSITE"
     description: Optional[str] = None
     aliases: List[str] = Field(default_factory=list)
+    source_url: Optional[str] = None
+    nutrition_note: Optional[str] = None
 
 
 class ScaledItemNutrition(BaseModel):

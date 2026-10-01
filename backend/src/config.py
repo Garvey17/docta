@@ -49,8 +49,8 @@ class Settings(BaseSettings):
     supabase_storage_bucket: str = "meals"
 
     # Service Bridges & Mocking
-    use_mock_ai: bool = Field(default=True, alias="USE_MOCK_AI")
-    use_mock_rag: bool = Field(default=True, alias="USE_MOCK_RAG")
+    use_mock_ai: bool = Field(default=False, alias="USE_MOCK_AI")
+    use_mock_rag: bool = Field(default=False, alias="USE_MOCK_RAG")
     cv_service_url: Optional[str] = Field(default=None, alias="CV_SERVICE_URL")
     rag_service_url: Optional[str] = Field(default=None, alias="RAG_SERVICE_URL")
 
