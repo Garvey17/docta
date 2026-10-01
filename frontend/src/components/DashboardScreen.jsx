@@ -11,6 +11,7 @@ function DashboardScreen({
   dashboardData = null,
   onStartCapture,
   onOpenTelemetry,
+  onLogout,
 }) {
   // Aggregate daily totals from real history
   const todayTotals = mealHistory.reduce(
@@ -35,7 +36,7 @@ function DashboardScreen({
       {/* Top Greeting & Notification Header */}
       <HeaderSection
         user={user}
-        onNotificationClick={onOpenTelemetry}
+        onLogout={onLogout}
       />
 
       {/* Weekly Calendar Card */}

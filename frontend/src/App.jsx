@@ -10,7 +10,7 @@ import { analyzeMeal, logMeal, fetchMealHistory, fetchDashboardSummary } from '.
 import { fetchCurrentUser, logoutUser } from './api/authApi';
 import { initializeDraftItems, buildTelemetryPayload } from './store/mealDraftStore';
 import { getStoredAuth, clearAuth } from './store/authStore';
-import { CheckCircle2, AlertTriangle, ShieldCheck } from 'lucide-react';
+import { CheckCircle2, AlertTriangle, MessageCircle } from 'lucide-react';
 
 class ErrorBoundary extends React.Component {
   constructor(props) {
@@ -63,6 +63,7 @@ function App() {
   const [currentScreen, setCurrentScreen] = useState('dashboard');
   const [auth, setAuth] = useState(getStoredAuth());
   const [showTelemetryModal, setShowTelemetryModal] = useState(false);
+  const [isInsightsOpen, setIsInsightsOpen] = useState(false);
 
   const [draftMeal, setDraftMeal] = useState(null);
   const [mealHistory, setMealHistory] = useState([]);
@@ -137,6 +138,7 @@ function App() {
   };
 
   const handleStartCapture = () => {
+    setIsInsightsOpen(false);
     setCurrentScreen('capture');
   };
 
@@ -277,6 +279,7 @@ function App() {
               dashboardData={dashboardData}
               onStartCapture={handleStartCapture}
               onOpenTelemetry={() => setCurrentScreen('telemetry')}
+              onLogout={handleLogout}
             />
           )}
 
@@ -286,16 +289,6 @@ function App() {
               mealHistory={mealHistory}
               onBack={() => setCurrentScreen('dashboard')}
               onOptionsClick={() => setShowTelemetryModal(true)}
-            />
-          )}
-
-          {(currentScreen === 'insights' || (currentScreen === 'review' && !draftMeal)) && (
-            <InsightsChatScreen
-              user={auth.user}
-              mealHistory={mealHistory}
-              onBack={() => setCurrentScreen('dashboard')}
-              onOptionsClick={() => setShowTelemetryModal(true)}
-              onStartCapture={handleStartCapture}
             />
           )}
 
@@ -321,14 +314,32 @@ function App() {
 
 
         {/* Floating Bottom Navigation Bar (Shown on Dashboard & Statistics) */}
-        {currentScreen !== 'review' && currentScreen !== 'insights' && (
+        {currentScreen !== 'review' && (
           <Navbar
             currentScreen={currentScreen}
             onNavigate={handleNavigate}
-            hasActiveReview={Boolean(draftMeal)}
-            onLogout={handleLogout}
           />
         )}
+
+        {currentScreen !== 'capture' && currentScreen !== 'review' && (
+          <button
+            type="button"
+            onClick={() => setIsInsightsOpen(true)}
+            aria-label="Open AI insights chat"
+            className="fixed bottom-[88px] right-5 lg:right-28 z-[65] flex h-14 w-14 items-center justify-center rounded-full bg-gray-950 text-white shadow-xl shadow-black/20 transition-transform hover:scale-105 active:scale-95"
+          >
+            <MessageCircle className="h-6 w-6" strokeWidth={2} />
+            <span className="absolute -right-0.5 -top-0.5 h-3.5 w-3.5 rounded-full border-2 border-white bg-lime-400" />
+          </button>
+        )}
+
+        <InsightsChatScreen
+          user={auth.user}
+          mealHistory={mealHistory}
+          isOpen={isInsightsOpen}
+          onClose={() => setIsInsightsOpen(false)}
+          onStartCapture={handleStartCapture}
+        />
 
 
         {/* Active Learning Telemetry Modal */}

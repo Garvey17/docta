@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { ArrowLeft, MoreVertical } from 'lucide-react';
+import { X } from 'lucide-react';
 import ChatMessageList from './ChatMessageList';
 import ChatInputDock from './ChatInputDock';
 
@@ -51,8 +51,8 @@ function generateContextualAIResponse(query, mealHistory = [], user) {
 function InsightsChatScreen({
   user,
   mealHistory = [],
-  onBack,
-  onOptionsClick,
+  isOpen,
+  onClose,
   onStartCapture,
 }) {
   const [messages, setMessages] = useState([
@@ -101,8 +101,8 @@ function InsightsChatScreen({
   };
 
   useEffect(() => {
-    scrollToBottom();
-  }, []);
+    if (isOpen) scrollToBottom();
+  }, [isOpen]);
 
   const handleSendMessage = (text) => {
     const userMsg = {
@@ -133,18 +133,27 @@ function InsightsChatScreen({
     }, 700);
   };
 
+  if (!isOpen) return null;
+
   return (
-    <div className="w-full max-w-md mx-auto h-[100dvh] max-h-screen flex flex-col bg-[#f7f8fa] select-none overflow-hidden">
+    <div className="fixed inset-0 z-[70] flex items-end justify-end bg-black/25 p-0 sm:p-5" onClick={onClose}>
+      <section
+        role="dialog"
+        aria-modal="true"
+        aria-label="Chatbot Insights"
+        onClick={(event) => event.stopPropagation()}
+        className="w-full sm:w-[min(420px,calc(100vw-2.5rem))] h-[100dvh] sm:h-[min(700px,calc(100dvh-2.5rem))] flex flex-col bg-[#f7f8fa] select-none overflow-hidden sm:rounded-3xl sm:border sm:border-gray-200 sm:shadow-2xl animate-fade-in"
+      >
       {/* 1. Static Top Header */}
       <header className="flex items-center justify-between pt-3 pb-2.5 px-4 shrink-0 bg-[#f7f8fa] z-10">
         {/* Back Button */}
         <button
           type="button"
-          onClick={onBack}
-          aria-label="Go back"
+          onClick={onClose}
+          aria-label="Close insights chat"
           className="w-11 h-11 bg-white hover:bg-gray-50 rounded-full flex items-center justify-center shadow-xs border border-gray-100 transition-transform active:scale-95 text-gray-800"
         >
-          <ArrowLeft className="w-5 h-5 stroke-[2]" />
+          <X className="w-5 h-5 stroke-[2]" />
         </button>
 
         {/* Page Title */}
@@ -184,6 +193,7 @@ function InsightsChatScreen({
           disabled={isThinking}
         />
       </div>
+      </section>
     </div>
   );
 }
