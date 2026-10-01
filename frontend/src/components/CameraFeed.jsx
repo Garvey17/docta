@@ -4,6 +4,7 @@ import { MOCK_ANALYZE_RESPONSE, MOCK_ALTERNATIVE_ANALYSIS } from '../data/mockDa
 
 function CameraFeed({ onCaptureImage, onSelectSample, isAnalyzing }) {
   const [streamActive, setStreamActive] = useState(false);
+  const [videoReady, setVideoReady] = useState(false);
   const [cameraError, setCameraError] = useState(null);
   const [dragOver, setDragOver] = useState(false);
   const videoRef = useRef(null);
@@ -20,9 +21,7 @@ function CameraFeed({ onCaptureImage, onSelectSample, isAnalyzing }) {
         video: { facingMode: 'environment', width: { ideal: 1280 }, height: { ideal: 720 } },
       });
       streamRef.current = stream;
-      if (videoRef.current) {
-        videoRef.current.srcObject = stream;
-      }
+      setVideoReady(false);
       setStreamActive(true);
     } catch (err) {
       console.warn('Unable to access device camera:', err.message);
@@ -31,11 +30,36 @@ function CameraFeed({ onCaptureImage, onSelectSample, isAnalyzing }) {
     }
   };
 
+  // The video element is rendered only after streamActive changes, so attach the
+  // stream after React has mounted it (rather than immediately after permission).
+  useEffect(() => {
+    const video = videoRef.current;
+    const stream = streamRef.current;
+    if (!streamActive || !video || !stream) return undefined;
+
+    video.srcObject = stream;
+    const playVideo = async () => {
+      try {
+        await video.play();
+        setVideoReady(true);
+      } catch (err) {
+        console.warn('Unable to start camera preview:', err.message);
+        setCameraError('The camera opened but the preview could not start. Please close and reopen the camera.');
+      }
+    };
+    playVideo();
+
+    return () => {
+      if (video.srcObject === stream) video.srcObject = null;
+    };
+  }, [streamActive]);
+
   const stopCamera = () => {
     if (streamRef.current) {
       streamRef.current.getTracks().forEach((track) => track.stop());
       streamRef.current = null;
     }
+    setVideoReady(false);
     setStreamActive(false);
   };
 
@@ -46,7 +70,7 @@ function CameraFeed({ onCaptureImage, onSelectSample, isAnalyzing }) {
   }, []);
 
   const captureFrame = () => {
-    if (!videoRef.current) return;
+    if (!videoRef.current || !videoReady || !videoRef.current.videoWidth || !videoRef.current.videoHeight) return;
     const canvas = document.createElement('canvas');
     canvas.width = videoRef.current.videoWidth || 640;
     canvas.height = videoRef.current.videoHeight || 480;
@@ -99,8 +123,14 @@ function CameraFeed({ onCaptureImage, onSelectSample, isAnalyzing }) {
               autoPlay
               playsInline
               muted
+              onCanPlay={() => setVideoReady(true)}
               className="w-full h-full object-cover"
             />
+            {!videoReady && (
+              <div className="absolute inset-0 flex items-center justify-center bg-black/70 px-6 text-center text-sm font-medium text-white">
+                {cameraError || 'Starting camera preview…'}
+              </div>
+            )}
             {/* Viewfinder Target Overlay */}
             <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
               <div className="w-56 h-56 border-2 border-white/60 rounded-3xl relative">
@@ -123,6 +153,7 @@ function CameraFeed({ onCaptureImage, onSelectSample, isAnalyzing }) {
               <button
                 type="button"
                 onClick={captureFrame}
+                disabled={!videoReady}
                 className="w-16 h-16 rounded-full bg-white border-4 border-gray-950 flex items-center justify-center shadow-xl active:scale-95 transition-transform"
                 title="Capture Photo"
               >
