@@ -12,7 +12,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Install backend and data-pipeline dependencies
 COPY requirements.txt .
 COPY src/data_pipeline/requirements.txt ./data-pipeline-requirements.txt
-RUN pip install --no-cache-dir --user -r requirements.txt -r data-pipeline-requirements.txt
+RUN python -m venv /opt/venv && \
+    /opt/venv/bin/pip install --no-cache-dir -r requirements.txt -r data-pipeline-requirements.txt
 
 # Final runtime container
 FROM python:3.12-slim AS runtime
@@ -24,9 +25,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy installed packages from builder
-COPY --from=builder /root/.local /root/.local
-ENV PATH=/root/.local/bin:$PATH
+# Copy installed packages from builder into a path accessible to the non-root user
+COPY --from=builder /opt/venv /opt/venv
+ENV PATH=/opt/venv/bin:$PATH
 ENV PYTHONUNBUFFERED=1
 ENV PYTHONDONTWRITEBYTECODE=1
 
