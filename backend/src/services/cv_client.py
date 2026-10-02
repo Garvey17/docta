@@ -43,6 +43,8 @@ class CVClient(BaseCVProvider):
         settings = get_settings()
         self.service_url = settings.cv_service_url
         self.use_mock = settings.use_mock_ai
+        self.modal_proxy_token_id = settings.modal_proxy_token_id
+        self.modal_proxy_token_secret = settings.modal_proxy_token_secret
 
     async def detect_dishes(
         self,
@@ -55,17 +57,30 @@ class CVClient(BaseCVProvider):
             raise RuntimeError("Mock AI is disabled for this application. Set USE_MOCK_AI=false.")
         if not self.service_url:
             raise RuntimeError("CV_SERVICE_URL is required when mock AI is disabled.")
+        if bool(self.modal_proxy_token_id) != bool(self.modal_proxy_token_secret):
+            raise RuntimeError(
+                "Both MODAL_PROXY_TOKEN_ID and MODAL_PROXY_TOKEN_SECRET must be configured together."
+            )
+
+        headers = {}
+        if self.modal_proxy_token_id and self.modal_proxy_token_secret:
+            headers = {
+                "Modal-Key": self.modal_proxy_token_id,
+                "Modal-Secret": self.modal_proxy_token_secret,
+            }
 
         async with httpx.AsyncClient(timeout=30.0) as client:
             if image_bytes:
                 resp = await client.post(
                     f"{self.service_url.rstrip('/')}/detect",
+                    headers=headers,
                     files={"file": ("image.jpg", image_bytes, "image/jpeg")},
                     data={"prompt": prompt} if prompt else None,
                 )
             else:
                 resp = await client.post(
                     f"{self.service_url.rstrip('/')}/detect",
+                    headers=headers,
                     json={"image_url": image_url, "prompt": prompt},
                 )
             resp.raise_for_status()

@@ -52,6 +52,8 @@ class Settings(BaseSettings):
     use_mock_ai: bool = Field(default=False, alias="USE_MOCK_AI")
     use_mock_rag: bool = Field(default=False, alias="USE_MOCK_RAG")
     cv_service_url: Optional[str] = Field(default=None, alias="CV_SERVICE_URL")
+    modal_proxy_token_id: Optional[str] = Field(default=None, alias="MODAL_PROXY_TOKEN_ID")
+    modal_proxy_token_secret: Optional[str] = Field(default=None, alias="MODAL_PROXY_TOKEN_SECRET")
     rag_service_url: Optional[str] = Field(default=None, alias="RAG_SERVICE_URL")
 
     @field_validator("cors_origins", mode="before")
