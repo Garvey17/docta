@@ -51,9 +51,7 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  event.respondWith(
-    caches.match(event.request).then((cached) => {
-      return cached || fetch(event.request);
-    })
-  );
+  // Let the browser fetch scripts, styles, images, and fonts directly. These
+  // files are content-hashed by Vite and should come from the same deployment
+  // as the HTML; a service-worker cache can otherwise mix deployment versions.
 });
