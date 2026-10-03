@@ -6,31 +6,15 @@ import { sendInsightChatMessage } from '../api/insightApi';
 
 function InsightsChatScreen({
   user,
-  mealHistory = [],
   isOpen,
   onClose,
   onStartCapture,
 }) {
-  const todayDateStr = new Date().toISOString().slice(0, 10);
-  const todaysMeals = mealHistory.filter((m) => (m.logged_at || '').startsWith(todayDateStr));
-  const totalCalories = Math.round(
-    todaysMeals.reduce((acc, m) => acc + (m.total_calories_kcal || 0), 0)
-  );
-  const calTarget = user?.dailyCalorieTarget || 2200;
-  const percent = Math.min(100, Math.round((totalCalories / calTarget) * 100));
-
   const [messages, setMessages] = useState([
     {
       id: 'msg-init',
       sender: 'assistant',
       text: `Hello ${user?.name ? user.name.split(' ')[0] : 'there'}! 👋 I am your AI Clinical Nutritionist for docta.\n\nI have access to your logged meals and nutrition targets. I can analyze your calorie & macro progress, answer dietary questions, or suggest healthy meals tailored to your goals. What would you like to know?`,
-      calorieCard: {
-        current: totalCalories,
-        goal: calTarget,
-        percent: percent || 0,
-        heartRate: 72,
-        steps: 4500,
-      },
       timestamp: 'Just now',
     },
   ]);
@@ -117,7 +101,7 @@ function InsightsChatScreen({
         aria-modal="true"
         aria-label="Chatbot Insights"
         onClick={(event) => event.stopPropagation()}
-        className="w-full sm:w-[min(420px,calc(100vw-2.5rem))] h-[100dvh] sm:h-[min(700px,calc(100dvh-2.5rem))] flex flex-col bg-[#f7f8fa] select-none overflow-hidden sm:rounded-3xl sm:border sm:border-gray-200 sm:shadow-2xl animate-fade-in"
+        className="w-full sm:w-[min(420px,calc(100vw-2.5rem))] h-[100dvh] sm:h-[min(700px,calc(100dvh-2.5rem))] flex flex-col bg-[#f7f8fa] select-none overflow-hidden rounded-3xl sm:border sm:border-gray-200 sm:shadow-2xl animate-fade-in"
       >
         {/* 1. Static Top Header */}
         <header className="flex items-center justify-between pt-3 pb-2.5 px-4 shrink-0 bg-[#f7f8fa] z-10">

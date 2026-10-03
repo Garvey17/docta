@@ -283,7 +283,7 @@ function ChatMessageList({ messages = [], isThinking = false }) {
         // User message — Homepage-style Lime Pill Bubble
         return (
           <div key={msg.id} className="flex justify-end animate-fade-in">
-            <div className="bg-[#e3f79e] text-gray-950 rounded-[24px] rounded-br-[4px] px-4.5 py-3 text-[13.5px] sm:text-[14px] font-semibold max-w-[82%] leading-relaxed shadow-2xs border border-[#d6f284]/60">
+            <div className="bg-[#e3f79e] text-gray-950 rounded-[24px] rounded-br-[4px] px-5 py-3 text-[13.5px] sm:text-[14px] font-semibold max-w-[82%] leading-relaxed shadow-2xs border border-[#d6f284]/60">
               {msg.text}
             </div>
           </div>
