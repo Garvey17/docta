@@ -1,7 +1,5 @@
-const CACHE_NAME = 'docta-v1';
+const CACHE_NAME = 'docta-v2';
 const ASSETS_TO_CACHE = [
-  '/',
-  '/index.html',
   '/favicon.svg',
   '/manifest.json'
 ];
@@ -33,9 +31,29 @@ self.addEventListener('fetch', (event) => {
   if (event.request.url.includes('/api/')) {
     return;
   }
+
+  // Always fetch the app shell from the current deployment first. Caching
+  // index.html indefinitely can leave it pointing at deleted hashed assets.
+  if (event.request.method === 'GET' && event.request.mode === 'navigate') {
+    event.respondWith((async () => {
+      try {
+        const response = await fetch(event.request);
+        if (response.ok) {
+          const cache = await caches.open(CACHE_NAME);
+          await cache.put('/index.html', response.clone());
+        }
+        return response;
+      } catch {
+        const cachedShell = await caches.match('/index.html');
+        return cachedShell || Response.error();
+      }
+    })());
+    return;
+  }
+
   event.respondWith(
     caches.match(event.request).then((cached) => {
-      return cached || fetch(event.request).catch(() => caches.match('/index.html'));
+      return cached || fetch(event.request);
     })
   );
 });
