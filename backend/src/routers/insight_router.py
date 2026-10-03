@@ -1,14 +1,11 @@
 """Insight Chatbot Router providing Agentic RAG nutrition insights."""
 
-from typing import Optional
 from fastapi import APIRouter, Depends, status
 
-from ..dependencies.auth import get_current_user_optional
+from ..dependencies.auth import get_current_user
 from ..schemas.auth import UserResponse
 from ..schemas.insight import InsightChatRequest, InsightChatResponse
 from ..services.insight_service import InsightService
-
-DEFAULT_DEMO_USER_ID = "f47ac10b-58cc-4372-a567-0e02b2c3d479"
 
 router = APIRouter(prefix="/api/v1/insights", tags=["Insights & Nutritionist Chatbot"])
 
@@ -21,7 +18,7 @@ router = APIRouter(prefix="/api/v1/insights", tags=["Insights & Nutritionist Cha
 )
 async def chat_with_nutritionist(
     payload: InsightChatRequest,
-    current_user: Optional[UserResponse] = Depends(get_current_user_optional),
+    current_user: UserResponse = Depends(get_current_user),
 ):
     """
     Chat with the Agentic Nutritionist AI.
@@ -29,10 +26,8 @@ async def chat_with_nutritionist(
     - Dynamically queries database tools for the current user's logged meals and nutrition targets.
     - Uses retrieved data as context (RAG) to produce personalized insights.
     """
-    user_id = current_user.id if current_user else DEFAULT_DEMO_USER_ID
-
     reply = await InsightService.chat(
-        user_id=user_id,
+        user_id=current_user.id,
         message=payload.message,
         history=payload.history,
     )
