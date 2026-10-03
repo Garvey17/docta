@@ -8,6 +8,7 @@ from .telemetry_router import router as telemetry_router
 from .dashboard_router import router as dashboard_router
 from .profile_router import router as profile_router
 from .dish_router import router as dish_router
+from .insight_router import router as insight_router
 
 __all__ = [
     "health_router",
@@ -18,4 +19,5 @@ __all__ = [
     "dashboard_router",
     "profile_router",
     "dish_router",
+    "insight_router",
 ]

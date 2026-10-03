@@ -26,6 +26,11 @@ from .dashboard import (
     DailyMacroSummary,
     DashboardStatsResponse,
 )
+from .insight import (
+    ChatMessage,
+    InsightChatRequest,
+    InsightChatResponse,
+)
 
 __all__ = [
     "UserRegister",
@@ -50,4 +55,7 @@ __all__ = [
     "MacroTarget",
     "DailyMacroSummary",
     "DashboardStatsResponse",
+    "ChatMessage",
+    "InsightChatRequest",
+    "InsightChatResponse",
 ]

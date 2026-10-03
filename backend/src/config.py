@@ -56,6 +56,10 @@ class Settings(BaseSettings):
     modal_proxy_token_secret: Optional[str] = Field(default=None, alias="MODAL_PROXY_TOKEN_SECRET")
     rag_service_url: Optional[str] = Field(default=None, alias="RAG_SERVICE_URL")
 
+    # OpenAI / AI Settings
+    openai_api_key: Optional[str] = Field(default=None, alias="OPENAI_API_KEY")
+    openai_model: str = Field(default="gpt-4o", alias="OPENAI_MODEL")
+
     @field_validator("cors_origins", mode="before")
     @classmethod
     def parse_cors_origins(cls, v: Union[List[str], str]) -> List[str]:

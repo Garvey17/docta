@@ -24,6 +24,7 @@ from .routers import (
     dashboard_router,
     profile_router,
     dish_router,
+    insight_router,
 )
 
 settings = get_settings()
@@ -77,6 +78,7 @@ app.include_router(telemetry_router)
 app.include_router(dashboard_router)
 app.include_router(profile_router)
 app.include_router(dish_router)
+app.include_router(insight_router)
 
 
 @app.get("/", tags=["Root"])

@@ -7,6 +7,7 @@ AI_SERVICES_DIR = Path(__file__).resolve().parent
 
 image = (
     modal.Image.debian_slim(python_version="3.12")
+    .apt_install("libgl1", "libglib2.0-0")
     .pip_install_from_requirements(str(AI_SERVICES_DIR / "requirements.txt"))
     .add_local_dir(str(AI_SERVICES_DIR), remote_path="/root/ai_services")
 )

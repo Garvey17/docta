@@ -6,6 +6,7 @@ from .cv_client import CVClient, get_cv_client
 from .rag_client import RAGClient, get_rag_client
 from .telemetry_service import TelemetryService
 from .orchestrator_service import OrchestratorService, get_orchestrator_service
+from .insight_service import InsightService
 
 __all__ = [
     "AuthService",
@@ -19,4 +20,5 @@ __all__ = [
     "TelemetryService",
     "OrchestratorService",
     "get_orchestrator_service",
+    "InsightService",
 ]
