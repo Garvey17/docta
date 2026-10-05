@@ -5,7 +5,7 @@ from typing import Optional, Dict, Any
 import jwt
 
 from ..config import get_settings
-from ..supabase_client import get_supabase_client
+from ..supabase_client import get_supabase_auth_client, get_supabase_client
 from ..schemas.auth import UserResponse, Token
 
 logger = logging.getLogger(__name__)
@@ -18,11 +18,12 @@ class AuthService:
     @staticmethod
     async def sign_up(email: str, password: str, name: Optional[str] = None) -> Token:
         """Register a new user in Supabase Auth and create a profile."""
+        auth_client = get_supabase_auth_client()
         supabase = get_supabase_client()
         user_name = name or email.split("@")[0]
 
         try:
-            res = supabase.auth.sign_up({
+            res = auth_client.auth.sign_up({
                 "email": email,
                 "password": password,
                 "options": {"data": {"name": user_name, "full_name": user_name}},
@@ -80,9 +81,10 @@ class AuthService:
     @staticmethod
     async def login(email: str, password: str) -> Token:
         """Authenticate user against Supabase Auth."""
+        auth_client = get_supabase_auth_client()
         supabase = get_supabase_client()
         try:
-            res = supabase.auth.sign_in_with_password({"email": email, "password": password})
+            res = auth_client.auth.sign_in_with_password({"email": email, "password": password})
         except Exception as e:
             logger.warning("Supabase sign_in error: %s", e)
             raise ValueError("Invalid email or password")
@@ -142,9 +144,10 @@ class AuthService:
     @staticmethod
     async def get_user_from_token(token: str) -> Optional[UserResponse]:
         """Validate bearer token and retrieve user profile."""
+        auth_client = get_supabase_auth_client()
         supabase = get_supabase_client()
         try:
-            user_res = supabase.auth.get_user(token)
+            user_res = auth_client.auth.get_user(token)
             if user_res and getattr(user_res, "user", None):
                 u = user_res.user
                 u_id = str(getattr(u, "id", ""))
@@ -216,13 +219,13 @@ class AuthService:
     @staticmethod
     async def logout(token: Optional[str] = None) -> bool:
         """Sign out user from Supabase Auth."""
-        supabase = get_supabase_client()
+        auth_client = get_supabase_auth_client()
         try:
-            if hasattr(supabase, "auth") and hasattr(supabase.auth, "sign_out"):
+            if hasattr(auth_client, "auth") and hasattr(auth_client.auth, "sign_out"):
                 try:
-                    supabase.auth.sign_out(token)
+                    auth_client.auth.sign_out(token)
                 except TypeError:
-                    supabase.auth.sign_out()
+                    auth_client.auth.sign_out()
             return True
         except Exception as e:
             logger.warning("Sign out error: %s", e)
