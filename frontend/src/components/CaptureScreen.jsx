@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import { ArrowLeft, MoreVertical, Sparkles, MessageSquare, ArrowRight, Loader2 } from 'lucide-react';
+import { ArrowLeft, Sparkles, ArrowRight, Loader2 } from 'lucide-react';
 import CameraFeed from './CameraFeed';
 
 function CaptureScreen({ onAnalyze, isAnalyzing, onBack, onOptionsClick }) {
   const [capturedFile, setCapturedFile] = useState(null);
   const [capturedPreview, setCapturedPreview] = useState(null);
-  const [promptText, setPromptText] = useState('');
 
   const handleCaptureImage = (file, previewUrl) => {
     setCapturedFile(file);
@@ -18,7 +17,7 @@ function CaptureScreen({ onAnalyze, isAnalyzing, onBack, onOptionsClick }) {
 
   const handleSubmitAnalysis = () => {
     if (!capturedFile) return;
-    onAnalyze(capturedFile, promptText);
+    onAnalyze(capturedFile, '');
   };
 
   return (
@@ -77,24 +76,6 @@ function CaptureScreen({ onAnalyze, isAnalyzing, onBack, onOptionsClick }) {
             isAnalyzing={isAnalyzing}
           />
         )}
-
-        {/* 3. Optional Context Input */}
-        <div className="bg-white rounded-[28px] p-5 shadow-xs border border-gray-100/60">
-          <label className="block text-[13px] font-bold text-gray-900 mb-1.5 flex items-center gap-2">
-            <MessageSquare className="w-4 h-4 text-gray-700" />
-            <span>Additional Context (Optional)</span>
-          </label>
-          <p className="text-[11px] text-gray-400 mb-3">
-            Add context like extra oil, spicy stew, condiments, or swallow type.
-          </p>
-          <textarea
-            value={promptText}
-            onChange={(e) => setPromptText(e.target.value)}
-            placeholder="e.g. Nigerian party jollof with extra plantains and beef..."
-            rows={2}
-            className="w-full bg-[#f8f9fa] border border-gray-100 rounded-2xl px-4 py-3 text-xs sm:text-sm text-gray-900 placeholder:text-gray-400 focus:bg-white focus:ring-2 focus:ring-lime-400 outline-none transition-all resize-none"
-          />
-        </div>
 
         {/* 4. Action Button */}
         {capturedPreview && (
