@@ -1,0 +1,5 @@
+# Convenience requirements for the FastAPI backend and its live RAG pipeline.
+# The computer-vision service and optional LLM evaluation runner have separate
+# dependency files because they add large ML and evaluation packages.
+-r backend/requirements.txt
+-r backend/src/data_pipeline/requirements.txt

@@ -163,3 +163,4 @@ telemetry_exports/
 tmp/
 .tmp/
 scratch/
+.deepeval

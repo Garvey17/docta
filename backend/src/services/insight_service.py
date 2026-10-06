@@ -1,11 +1,13 @@
-"""Insight Service implementing an Agentic RAG Nutritionist Chatbot using LangChain and OpenAI."""
+"""Agentic RAG nutritionist chatbot using a configurable local or hosted LLM."""
 
 import os
 import logging
 from datetime import datetime, timezone, timedelta
 from typing import List, Optional
 
+import httpx
 from langchain_openai import ChatOpenAI
+from langchain_ollama import ChatOllama
 from langchain_core.messages import HumanMessage, AIMessage
 from langchain_core.tools import tool
 from langchain.agents import create_agent
@@ -28,11 +30,13 @@ RETRIEVAL-AUGMENTED CONTEXT (RAG):
 - You have access to database tools that query ONLY the current authenticated user's logged meals and nutrition profile targets.
 - Whenever answering questions about what the user ate, their calories, protein, carbs, fats, remaining allowances, or tailored dietary recommendations, ALWAYS call the database tool to retrieve their real data as context.
 - Ground your insights, calculations, and recommendations directly in this retrieved context.
+- Call tools silently. Never show internal reasoning, plans, or narration about which tool you intend to call.
 
 NUTRITION GUIDANCE:
 - Provide clear, actionable, encouraging advice.
 - When suggesting meals, emphasize balanced, nutrient-dense foods. Where culturally relevant, incorporate West African / Nigerian dietary staples (e.g., steamed moi-moi, grilled fish/chicken, efo riro, okra soup, beans, brown rice, unripe plantain).
 - Keep responses concise, well-structured, and easy to read using markdown bullet points and bold highlights.
+- Return only the final user-facing answer. Do not reveal chain-of-thought, hidden analysis, or step-by-step internal planning.
 """
 
 
@@ -178,22 +182,55 @@ class InsightService:
         history: Optional[List[ChatMessage]] = None,
     ) -> str:
         """Run the nutritionist agent for the authenticated user and return the response."""
-        settings = get_settings()
-        api_key = settings.openai_api_key or os.getenv("OPENAI_API_KEY")
-        model_name = settings.openai_model or os.getenv("OPENAI_MODEL", "gpt-4o")
-
-        if not api_key:
+        normalized_message = " ".join(message.lower().strip().split()).rstrip(".!?,")
+        if normalized_message in {
+            "hi", "hi there", "hello", "hello there", "hey", "hey there", "hiya",
+            "good morning", "good afternoon", "good evening",
+        }:
             return (
-                "OpenAI API key is not configured. Please set the OPENAI_API_KEY environment "
-                "variable to use the AI Nutritionist chatbot."
+                "Hi! I’m Docta’s nutrition assistant. Ask me about your logged meals, "
+                "nutrition targets, or food choices."
             )
+
+        settings = get_settings()
+        provider = settings.llm_provider.strip().lower()
 
         try:
-            llm = ChatOpenAI(
-                model=model_name,
-                api_key=api_key,
-                temperature=0.3,
-            )
+            if provider == "ollama":
+                logger.info(
+                    "Insights LLM selected provider=ollama model=%s",
+                    settings.ollama_model,
+                )
+                llm = ChatOllama(
+                    model=settings.ollama_model,
+                    base_url=settings.ollama_base_url,
+                    temperature=0.3,
+                    reasoning=False,
+                    num_predict=256,
+                    keep_alive="30m",
+                )
+            elif provider == "openai":
+                api_key = settings.openai_api_key or os.getenv("OPENAI_API_KEY")
+                if not api_key:
+                    return (
+                        "OpenAI API key is not configured. Set OPENAI_API_KEY or use "
+                        "LLM_PROVIDER=ollama for the local model."
+                    )
+                model_name = settings.openai_model or os.getenv("OPENAI_MODEL", "gpt-4o-mini")
+                logger.info(
+                    "Insights LLM selected provider=openai model=%s",
+                    model_name,
+                )
+                llm = ChatOpenAI(
+                    model=model_name,
+                    api_key=api_key,
+                    temperature=0.3,
+                )
+            else:
+                return (
+                    f"Unsupported LLM_PROVIDER '{settings.llm_provider}'. "
+                    "Choose 'ollama' or 'openai'."
+                )
 
             # Build tools strictly scoped to this user_id
             tools = _build_user_tools(user_id=user_id)
@@ -218,14 +255,23 @@ class InsightService:
 
             response = await agent.ainvoke({"messages": messages})
             output_messages = response.get("messages", [])
-            if output_messages:
-                last_msg = output_messages[-1]
-                return str(getattr(last_msg, "content", "") or "")
+            for last_msg in reversed(output_messages):
+                if not isinstance(last_msg, AIMessage) or getattr(last_msg, "tool_calls", None):
+                    continue
+                content = getattr(last_msg, "content", "")
+                if content:
+                    return str(content).strip()
 
             return "I have reviewed your nutrition records. How else can I assist with your dietary goals today?"
 
         except Exception as e:
             logger.error(f"Error in InsightService.chat: {e}", exc_info=True)
+            if provider == "ollama" and isinstance(e, httpx.ConnectError):
+                return (
+                    f"The local Ollama service is not reachable at {settings.ollama_base_url}. "
+                    f"Start Ollama and make sure the '{settings.ollama_model}' model is installed, "
+                    "then try again."
+                )
             return (
                 "I apologize, but I encountered an unexpected error analyzing your nutrition data. "
                 "Please try again in a moment."

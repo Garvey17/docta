@@ -56,9 +56,14 @@ class Settings(BaseSettings):
     modal_proxy_token_secret: Optional[str] = Field(default=None, alias="MODAL_PROXY_TOKEN_SECRET")
     rag_service_url: Optional[str] = Field(default=None, alias="RAG_SERVICE_URL")
 
-    # OpenAI / AI Settings
+    # Chat model provider (Ollama for local demos, OpenAI remains configurable)
+    llm_provider: str = Field(default="openai", alias="LLM_PROVIDER")
+    ollama_base_url: str = Field(default="http://localhost:11434", alias="OLLAMA_BASE_URL")
+    ollama_model: str = Field(default="qwen3:4b", alias="OLLAMA_MODEL")
+
+    # Optional OpenAI chat provider and data-pipeline settings
     openai_api_key: Optional[str] = Field(default=None, alias="OPENAI_API_KEY")
-    openai_model: str = Field(default="gpt-4o", alias="OPENAI_MODEL")
+    openai_model: str = Field(default="gpt-4o-mini", alias="OPENAI_MODEL")
 
     @field_validator("cors_origins", mode="before")
     @classmethod
