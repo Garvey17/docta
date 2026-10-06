@@ -18,15 +18,17 @@ function WeeklyCalorieBarChart({
 
   const dataToRender = weeklyData || defaultWeeklyData;
   const [selectedDayIndex, setSelectedDayIndex] = useState(new Date().getDay());
+  const selectedDay = dataToRender[selectedDayIndex];
+  const displayedCalories = selectedDay?.calories ?? currentCalories;
 
   return (
     <div className="w-full bg-white rounded-[28px] p-5 sm:p-6 mb-4 shadow-xs border border-gray-100/60 select-none">
-      {/* Top Header: Current Calories & Target Calories */}
+      {/* Selected day calories & daily target */}
       <div className="flex items-center justify-between mb-4 px-1">
         <div className="flex items-center gap-1.5 text-gray-950">
           <Flame className="w-5 h-5 fill-gray-950 stroke-none" />
           <span className="text-[20px] font-extrabold tracking-tight">
-            {currentCalories}
+            {displayedCalories}
           </span>
           <span className="text-[13px] font-medium text-gray-500 ml-0.5">
             kcal
@@ -50,7 +52,17 @@ function WeeklyCalorieBarChart({
             return (
               <div
                 key={item.day}
+                role="button"
+                tabIndex={0}
+                aria-label={`${item.day}${item.date ? `, ${new Date(item.date).toLocaleDateString()}` : ''}: ${item.calories} calories`}
+                aria-pressed={isSelected}
                 onClick={() => setSelectedDayIndex(index)}
+                onKeyDown={(event) => {
+                  if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    setSelectedDayIndex(index);
+                  }
+                }}
                 className="flex flex-col items-center h-full justify-end cursor-pointer group relative"
               >
                 {/* Floating Tooltip Badge for Active Day */}
@@ -70,7 +82,7 @@ function WeeklyCalorieBarChart({
                     className={`w-full rounded-full transition-all duration-500 ease-out ${
                       isSelected
                         ? 'bg-gradient-to-t from-[#84cc16] via-[#bef264] to-[#dcfce7] shadow-xs'
-                        : 'bg-[#f0f2f4] group-hover:bg-[#e4e7ec]'
+                        : 'bg-[#cbd5e1] group-hover:bg-[#94a3b8]'
                     }`}
                     style={{ height: `${item.percentage}%` }}
                   />

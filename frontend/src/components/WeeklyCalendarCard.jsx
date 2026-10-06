@@ -20,8 +20,7 @@ function sameDay(first, second) {
     && first.getDate() === second.getDate();
 }
 
-function WeeklyCalendarCard() {
-  const [selectedDate, setSelectedDate] = useState(() => new Date());
+function WeeklyCalendarCard({ selectedDate = new Date(), onDateChange }) {
   const weekStart = startOfWeek(selectedDate);
   const days = Array.from({ length: 7 }, (_, index) => addDays(weekStart, index));
   const monthLabel = selectedDate.toLocaleDateString(undefined, {
@@ -43,7 +42,7 @@ function WeeklyCalendarCard() {
           <button
             type="button"
             aria-label="Previous week"
-            onClick={() => setSelectedDate((date) => addDays(date, -7))}
+            onClick={() => onDateChange?.(addDays(selectedDate, -7))}
             className="w-8 h-8 rounded-full bg-white/90 hover:bg-white flex items-center justify-center text-gray-800 shadow-2xs transition-all active:scale-95"
           >
             <ArrowLeft className="w-3.5 h-3.5 stroke-[2.2]" />
@@ -51,7 +50,7 @@ function WeeklyCalendarCard() {
           <button
             type="button"
             aria-label="Next week"
-            onClick={() => setSelectedDate((date) => addDays(date, 7))}
+            onClick={() => onDateChange?.(addDays(selectedDate, 7))}
             className="w-8 h-8 rounded-full bg-white/90 hover:bg-white flex items-center justify-center text-gray-800 shadow-2xs transition-all active:scale-95"
           >
             <ArrowRight className="w-3.5 h-3.5 stroke-[2.2]" />
@@ -76,7 +75,7 @@ function WeeklyCalendarCard() {
               type="button"
               aria-label={accessibleDate}
               aria-pressed={isSelected}
-              onClick={() => setSelectedDate(date)}
+              onClick={() => onDateChange?.(date)}
               className="flex flex-col items-center gap-2 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#527d12] focus-visible:ring-offset-2 focus-visible:ring-offset-[#e3f79e] rounded-xl"
             >
               <span className={`text-[12px] font-medium transition-colors ${isSelected ? 'text-gray-900 font-bold' : 'text-gray-700/80 group-hover:text-gray-900'}`}>

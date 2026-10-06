@@ -3,22 +3,36 @@ import { LogOut, Menu } from 'lucide-react';
 
 function HeaderSection({ user, onLogout }) {
   const [showMenu, setShowMenu] = useState(false);
+  const [currentHour, setCurrentHour] = useState(() => new Date().getHours());
   const menuRef = useRef(null);
   const userName = user?.name || 'Alex Jemison';
+  const greeting = currentHour < 12 ? 'Good morning' : currentHour < 17 ? 'Good afternoon' : 'Good evening';
 
   useEffect(() => {
+    const updateHour = () => setCurrentHour(new Date().getHours());
+    const delayToNextMinute = 60_000 - (Date.now() % 60_000);
+    let interval;
+    const initialTimeout = window.setTimeout(() => {
+      updateHour();
+      interval = window.setInterval(updateHour, 60_000);
+    }, delayToNextMinute);
+
     const onPointerDown = (event) => {
       if (!menuRef.current?.contains(event.target)) setShowMenu(false);
     };
     document.addEventListener('pointerdown', onPointerDown);
-    return () => document.removeEventListener('pointerdown', onPointerDown);
+    return () => {
+      window.clearTimeout(initialTimeout);
+      window.clearInterval(interval);
+      document.removeEventListener('pointerdown', onPointerDown);
+    };
   }, []);
 
   return (
     <header className="flex items-center justify-between pt-2 pb-5 px-1">
       <div>
         <p className="text-xs sm:text-sm text-gray-400 font-medium tracking-normal flex items-center gap-1.5">
-          Good morning <span className="inline-block animate-pulse">👋</span>
+          {greeting} <span className="inline-block animate-pulse">👋</span>
         </p>
         <h1 className="text-2xl sm:text-[26px] font-bold text-gray-900 tracking-tight mt-0.5">
           {userName}

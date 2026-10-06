@@ -3,65 +3,56 @@ import { ArrowLeft } from 'lucide-react';
 
 import WeeklyCalorieBarChart from './WeeklyCalorieBarChart';
 import NutritionTrendsChart from './NutritionTrendsChart';
-import VitalsMetricCards from './VitalsMetricCards';
 
-function StatisticScreen({ user, mealHistory = [], onBack, onOptionsClick }) {
+function StatisticScreen({ user, mealHistory = [], onBack }) {
   const targetCal = user?.dailyCalorieTarget || 2200;
 
-  // Compute days of the week calories from real mealHistory
   const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-  const dayTotals = { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0 };
-  let currentDayCals = 0;
-  const todayDayIndex = new Date().getDay();
+  const today = new Date();
+  const weekStart = new Date(today.getFullYear(), today.getMonth(), today.getDate() - today.getDay());
+  const weekDates = Array.from({ length: 7 }, (_, index) => (
+    new Date(weekStart.getFullYear(), weekStart.getMonth(), weekStart.getDate() + index)
+  ));
+  const dateKey = (date) => `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
+  const indexByDate = new Map(weekDates.map((date, index) => [dateKey(date), index]));
+  const dayTotals = Array.from({ length: 7 }, () => ({
+    calories: 0,
+    protein: 0,
+    carbs: 0,
+    fats: 0,
+  }));
 
   mealHistory.forEach((meal) => {
-    if (meal.logged_at) {
-      const d = new Date(meal.logged_at);
-      const dayIdx = d.getDay();
-      const cals = meal.total_calories_kcal || 0;
-      dayTotals[dayIdx] += cals;
-      if (dayIdx === todayDayIndex) {
-        currentDayCals += cals;
-      }
-    }
+    if (!meal.logged_at) return;
+    const loggedDate = new Date(meal.logged_at);
+    if (Number.isNaN(loggedDate.getTime())) return;
+    const dayIndex = indexByDate.get(dateKey(loggedDate));
+    if (dayIndex === undefined) return;
+    dayTotals[dayIndex].calories += Number(meal.total_calories_kcal) || 0;
+    dayTotals[dayIndex].protein += Number(meal.total_protein_g) || 0;
+    dayTotals[dayIndex].carbs += Number(meal.total_carbs_g) || 0;
+    dayTotals[dayIndex].fats += Number(meal.total_fat_g) || 0;
   });
 
+  const currentDayCals = dayTotals[today.getDay()].calories;
   const weeklyData = dayNames.map((day, idx) => {
-    const cals = Math.round(dayTotals[idx]);
+    const cals = Math.round(dayTotals[idx].calories);
     const pct = targetCal > 0 ? Math.min(100, Math.round((cals / targetCal) * 100)) : 0;
     return {
       day,
+      date: weekDates[idx],
       calories: cals,
       percentage: Math.max(8, pct),
       label: `${pct}%`,
     };
   });
 
-  const today = new Date();
-  const weekStart = new Date(today.getFullYear(), today.getMonth(), today.getDate() - today.getDay());
-  const nutritionByDate = new Map();
-  mealHistory.forEach((meal) => {
-    if (!meal.logged_at) return;
-    const loggedDate = new Date(meal.logged_at);
-    if (Number.isNaN(loggedDate.getTime())) return;
-    const dateKey = `${loggedDate.getFullYear()}-${loggedDate.getMonth()}-${loggedDate.getDate()}`;
-    const totals = nutritionByDate.get(dateKey) || { protein: 0, carbs: 0, fats: 0 };
-    totals.protein += Number(meal.total_protein_g) || 0;
-    totals.carbs += Number(meal.total_carbs_g) || 0;
-    totals.fats += Number(meal.total_fat_g) || 0;
-    nutritionByDate.set(dateKey, totals);
-  });
-  const nutritionData = Array.from({ length: 7 }, (_, index) => {
-    const date = new Date(weekStart.getFullYear(), weekStart.getMonth(), weekStart.getDate() + index);
-    const dateKey = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
-    const totals = nutritionByDate.get(dateKey) || { protein: 0, carbs: 0, fats: 0 };
-    return {
-      day: dayNames[index],
-      protein: Math.round(totals.protein),
-      carbs: Math.round(totals.carbs),
-      fats: Math.round(totals.fats),
-    };
-  });
+  const nutritionData = dayTotals.map((totals, index) => ({
+    day: dayNames[index],
+    protein: Math.round(totals.protein),
+    carbs: Math.round(totals.carbs),
+    fats: Math.round(totals.fats),
+  }));
 
   return (
     <div className="max-w-md mx-auto px-4 pt-2 pb-28 animate-fade-in select-none">
@@ -95,16 +86,6 @@ function StatisticScreen({ user, mealHistory = [], onBack, onOptionsClick }) {
 
       {/* 3. Weekly nutrition trends */}
       <NutritionTrendsChart data={nutritionData} />
-
-      {/* 4. Blood Pressure & Glucose Level Cards */}
-      <VitalsMetricCards
-        bloodPressure={120}
-        bloodPressureUnit="bpm"
-        glucoseLevel={88}
-        glucoseUnit="mg"
-        onBpClick={onOptionsClick}
-        onGlucoseClick={onOptionsClick}
-      />
     </div>
   );
 }

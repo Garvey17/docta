@@ -67,6 +67,7 @@ function App() {
 
   const [draftMeal, setDraftMeal] = useState(null);
   const [mealHistory, setMealHistory] = useState([]);
+  const [dashboardDate, setDashboardDate] = useState(() => new Date());
   const [dashboardData, setDashboardData] = useState(null);
   const [lastTelemetryPayload, setLastTelemetryPayload] = useState(null);
 
@@ -276,6 +277,8 @@ function App() {
             <DashboardScreen
               user={auth.user}
               mealHistory={mealHistory}
+              selectedDate={dashboardDate}
+              onDateChange={setDashboardDate}
               dashboardData={dashboardData}
               onStartCapture={handleStartCapture}
               onOpenTelemetry={() => setCurrentScreen('telemetry')}
@@ -288,7 +291,6 @@ function App() {
               user={auth.user}
               mealHistory={mealHistory}
               onBack={() => setCurrentScreen('dashboard')}
-              onOptionsClick={() => setShowTelemetryModal(true)}
             />
           )}
 

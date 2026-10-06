@@ -1,7 +1,7 @@
 import React from 'react';
 import { Droplets, Flame } from 'lucide-react';
 
-function ActivityMetricCards({ streakDays = 4, waterGlasses = 12, onWaterClick }) {
+function ActivityMetricCards({ streakDays = 0, waterGlasses = 12, onWaterClick }) {
   return (
     <div className="grid grid-cols-2 gap-3 sm:gap-4 mb-4">
       <article className="bg-white rounded-[26px] p-4 sm:p-5 shadow-xs border border-gray-100/60 flex flex-col justify-between">
@@ -22,7 +22,7 @@ function ActivityMetricCards({ streakDays = 4, waterGlasses = 12, onWaterClick }
           </span>
         </div>
         <span className="mt-2 text-[10px] font-semibold uppercase tracking-wider text-gray-400">
-          Preview value
+          {streakDays > 0 ? 'Current streak' : 'Log a meal to start'}
         </span>
       </article>
 
